@@ -12,6 +12,10 @@ public class User {
 	
 	private String token;
 	
+	
+	/*
+	 * DICK COMMENT!
+	 */
 	public void setToken(String token){
 		this.token = token;
 	}
