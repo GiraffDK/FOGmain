@@ -3,15 +3,18 @@ package dk.vinael.fogmain;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import dk.vinael.classes.FOGmain;
-import dk.vinael.classes.User;
-import dk.vinael.classes.WebserviceCaller;
+import dk.vinael.domain.FOGmain;
+import dk.vinael.domain.User;
 import dk.vinael.interfaces.FogActivityInterface;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import asynctasks.WebserviceCaller;
 
 public class LoginActivity extends Activity implements FogActivityInterface {
 
@@ -21,6 +24,8 @@ public class LoginActivity extends Activity implements FogActivityInterface {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
+		((FOGmain)getApplicationContext()).user = new User();
+		this.user = ((FOGmain)getApplicationContext()).user;
 	}
 
 	@Override
@@ -30,15 +35,30 @@ public class LoginActivity extends Activity implements FogActivityInterface {
 	}
 
 	public void login(View view){
-		user = new User();
-		user.setUsername("");
-		user.setPassword("");
-		new WebserviceCaller(this, user, "checkSelect").execute("SELECT * FROM party;");
+		EditText txt_email = (EditText) findViewById(R.id.txt_email);
+		EditText txt_password = (EditText) findViewById(R.id.txt_password);
+		user.setEmail(txt_email.getText().toString());
+		user.setPassword(txt_password.getText().toString());
+		
+		new WebserviceCaller(this, user, "getUser").execute("SELECT * FROM user WHERE email = '"+user.getEmail()+"' AND password ='"+user.getPassword()+"';");
 	}
 	
 	@Override
 	public void jsonArrayHandler(JSONArray ja, String identifier) {
-		
+		if (identifier.equals("getUser")){
+			try {
+				user.setUserByJson(ja.getJSONObject(0));
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			if (user.getToken()!=null){
+				// Should go to MenuActivity
+				Intent intent = new Intent(this, AddEditPartyActivity.class);
+				this.finish();
+				this.startActivity(intent);
+				
+			}
+		}
 	}
 
 	

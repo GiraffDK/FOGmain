@@ -1,4 +1,4 @@
-package dk.vinael.classes;
+package dk.vinael.domain;
 
 import android.app.Application;
 

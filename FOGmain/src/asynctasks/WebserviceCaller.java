@@ -1,4 +1,4 @@
-package dk.vinael.classes;
+package asynctasks;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,6 +17,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import dk.vinael.domain.User;
 import dk.vinael.fogmain.LoginActivity;
 import dk.vinael.interfaces.FogActivityInterface;
 import android.app.Activity;
@@ -51,8 +52,10 @@ public class WebserviceCaller extends AsyncTask<String, Void, String> {
 		}
 		else{
 			if (this.user.getToken()==null){ // Login post (sends username and password)
+				// check for username / password OR facebook
+				// 
 				nameValuePairs = new ArrayList<NameValuePair>();
-		        nameValuePairs.add(new BasicNameValuePair("username", user.getUsername()));
+		        nameValuePairs.add(new BasicNameValuePair("email", user.getEmail()));
 		        nameValuePairs.add(new BasicNameValuePair("password", user.getPassword()));
 			}
 			else{ // SQL post (sends token, mode and query)
@@ -98,13 +101,14 @@ public class WebserviceCaller extends AsyncTask<String, Void, String> {
 			if (jo.has("access")){
 				// If username or password is wrong
 				if (jo.getString("access").toString().equals("denied")){
-					Toast.makeText((Activity) callingActivity, "DENIED", Toast.LENGTH_LONG).show();
+					//Toast.makeText((Activity) callingActivity, "user + pass = not ok", Toast.LENGTH_LONG).show();
 					Intent intent = new Intent((Activity) callingActivity, LoginActivity.class);
-					((Activity) callingActivity).startActivity(intent);
 					((Activity) callingActivity).finish();
+					((Activity) callingActivity).startActivity(intent);
 				}
 				// If username and password is right
 				else{ 
+					//Toast.makeText((Activity) callingActivity, "user + pass = ok", Toast.LENGTH_LONG).show();
 					user.setToken(jo.getString("access").toString());
 					callingActivity.jsonArrayHandler(jsonArray, identifier);
 				}
@@ -112,6 +116,8 @@ public class WebserviceCaller extends AsyncTask<String, Void, String> {
 			}
 			else{
 				// Return resultset as JSONArray
+				//Toast.makeText((Activity) callingActivity, "no \"access\" object", Toast.LENGTH_LONG).show();
+				//Toast.makeText((Activity) callingActivity, identifier, Toast.LENGTH_LONG).show();
 				callingActivity.jsonArrayHandler(jsonArray, identifier);
 			}
 			
@@ -120,10 +126,6 @@ public class WebserviceCaller extends AsyncTask<String, Void, String> {
 			//Toast.makeText((Activity) callingActivity, e.toString(), Toast.LENGTH_LONG).show();
 			e.printStackTrace();
 		}
-		
-		
-    	
-    	
     }
 
 }

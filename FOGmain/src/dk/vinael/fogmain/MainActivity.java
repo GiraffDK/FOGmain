@@ -2,19 +2,22 @@ package dk.vinael.fogmain;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import dk.vinael.classes.FOGmain;
-import dk.vinael.classes.User;
-import dk.vinael.classes.WebserviceCaller;
+
+import dk.vinael.domain.FOGmain;
+import dk.vinael.domain.User;
 import dk.vinael.interfaces.FogActivityInterface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
+import asynctasks.WebserviceCaller;
 
 public class MainActivity extends Activity implements FogActivityInterface {
 
-	User user;
+	private User user;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -25,55 +28,34 @@ public class MainActivity extends Activity implements FogActivityInterface {
 		// ## Set user to global variable
 		// ## Handle resume, pause, etc.
 		
-		// ## only testing below 
-		user = ((FOGmain)getApplicationContext()).user;
-		if (user==null){
-			user = new User();
-			//user.setToken("test");
-			user.setUsername("kevin");
-			user.setPassword("test");
-		}
-		new WebserviceCaller(this, user, "checkSelect").execute("select", "SELECT * FROM user;");
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
-	
-	public void getAllParties(View view){
-		// there should be an identifier so there can be different handlers inside of jsonArrayHandler
-		new WebserviceCaller(this, user, "selectAllParties").execute("select", "SELECT * FROM party;");
+		Handler handler = new Handler();
+		handler.postDelayed(new Runnable(){
+			@Override
+			public void run() {
+				user = ((FOGmain)getApplicationContext()).user;
+				if (user==null){
+					user = new User();
+					((FOGmain)getApplicationContext()).user = user;
+				}
+				user.setToken("kevin98f13708210194c475687be6106a3b84");
+				new WebserviceCaller(MainActivity.this, user, "checkAndSetUser").execute("select", "SELECT * FROM user WHERE token='kevin98f13708210194c475687be6106a3b84';");
+			}
+		}, 1000);
 	}
 
 	@Override
 	public void jsonArrayHandler(JSONArray ja, String identifier) {
-		TextView tv_hello = (TextView)findViewById(R.id.helloworld);
-		//tv_hello.setText(ja.toString());
-		
 		// Print out username from all users
-		if (identifier.equals("checkSelect")){
-			String s = "";
-			for (int i=0; i<ja.length(); i++){
-				try {
-					s += ja.getJSONObject(i).getString("username")+"\n";
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
+		if (identifier.equals("checkAndSetUser")){
+			try {
+				user.setUserByJson(ja.getJSONObject(0));
+				Intent intent = new Intent(this, ViewPartyActivity.class);
+				this.finish();
+				this.startActivity(intent);
+			} catch (JSONException e) {
+				e.printStackTrace();
 			}
-			tv_hello.setText(s);
-		}
-		if (identifier.equals("selectAllParties")){
-			String s = "";
-			for (int i=0; i<ja.length(); i++){
-				try {
-					s += ja.getJSONObject(i).getString("name")+"\n"+ja.getJSONObject(i).getString("description")+"\n\n";
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
-			}
-			tv_hello.setText(s);
+			
 		}
 	}
 

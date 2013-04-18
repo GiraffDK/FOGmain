@@ -6,7 +6,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity" >
+    tools:context=".LoginActivity" 
+    >
 
     <EditText
         android:id="@+id/txt_email"
@@ -17,11 +18,8 @@
         android:ems="10"
         android:hint="Email"
         android:inputType="textEmailAddress" >
-
         <requestFocus />
     </EditText>
-
-    <!-- Allans kommentar -->
     
     <EditText
         android:id="@+id/txt_password"
@@ -30,6 +28,7 @@
         android:layout_alignLeft="@+id/txt_email"
         android:layout_below="@+id/txt_email"
         android:ems="10"
+        android:hint="Password"
         android:inputType="textPassword" />
 
     <Button
@@ -38,6 +37,8 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/txt_password"
         android:layout_below="@+id/txt_password"
-        android:text="Login" />
+        android:text="Login"
+        android:onClick="login"
+         />
 
 </RelativeLayout>

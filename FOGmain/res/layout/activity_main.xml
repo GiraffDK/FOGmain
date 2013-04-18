@@ -13,7 +13,9 @@
         android:id="@+id/helloworld"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:text="@string/hello_world"
+        android:visibility="invisible"
+         />
 
     <Button
         android:id="@+id/getusers"
@@ -23,6 +25,36 @@
         android:layout_centerVertical="true"
         android:text="get parties"
         android:onClick="getAllParties"
+        android:visibility="invisible"
         />
+
+    <ProgressBar
+        android:id="@+id/progressBar1"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/getusers"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="27dp" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/progressBar1"
+        android:layout_alignLeft="@+id/progressBar1"
+        android:layout_marginBottom="14dp"
+        android:text="Loading"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/getusers"
+        android:layout_alignBottom="@+id/getusers"
+        android:layout_alignLeft="@+id/progressBar1"
+        android:text="Please wait.."
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>
