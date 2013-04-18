@@ -1,0 +1,52 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/getusers"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity" >
+    
+    <Button
+        android:id="@+id/btn_addparty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="Add Party" 
+        android:onClick="gotoAddParty"
+        />
+
+    <Button
+        android:id="@+id/btn_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btn_addparty"
+        android:layout_below="@+id/btn_addparty"
+        android:text="Search" 
+        android:onClick="gotoSearch"
+        />
+
+    <Button
+        android:id="@+id/btn_parties"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btn_search"
+        android:layout_below="@+id/btn_search"
+        android:text="Parties" 
+        android:onClick="gotoParties"
+        />
+
+    <Button
+        android:id="@+id/btn_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btn_parties"
+        android:layout_below="@+id/btn_parties"
+        android:text="Profile" 
+        android:onClick="gotoProfile"
+        />
+
+</RelativeLayout>

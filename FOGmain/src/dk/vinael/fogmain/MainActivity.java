@@ -49,7 +49,7 @@ public class MainActivity extends Activity implements FogActivityInterface {
 		if (identifier.equals("checkAndSetUser")){
 			try {
 				user.setUserByJson(ja.getJSONObject(0));
-				Intent intent = new Intent(this, ViewPartyActivity.class);
+				Intent intent = new Intent(this, MenuActivity.class);
 				this.finish();
 				this.startActivity(intent);
 			} catch (JSONException e) {
