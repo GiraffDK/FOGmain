@@ -18,6 +18,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.widget.Toast;
 
 public class MapsActivity extends FragmentActivity implements OnMapClickListener, LocationListener {
 
@@ -64,14 +65,14 @@ public class MapsActivity extends FragmentActivity implements OnMapClickListener
 					// db2.execSQL("INSERT INTO locations (lan, lon) VALUES ('"
 					// + house.getLatitude() + "', '" +house.getLongitude()+
 					// "')");
-					// Toast.makeText(MainActivity.this, "You finger was @ (" +
-					// house.getLatitude() + ", " +house.getLongitude()+ ")" ,
-					// Toast.LENGTH_SHORT).show();
-					Intent i = new Intent();
-					i.putExtra("newLocation", house);
-					setResult(RESULT_OK, i);
-					finish();
-					break;
+					 Toast.makeText(MapsActivity.this, "You finger was @ (" +
+					 house.getLatitude() + ", " +house.getLongitude()+ ")" ,
+					 Toast.LENGTH_SHORT).show();
+//					Intent i = new Intent();
+//					i.putExtra("newLocation", house);
+//					setResult(RESULT_OK, i);
+//					finish();
+//					break;
 				case DialogInterface.BUTTON_NEGATIVE:
 					mark.remove();
 					break;

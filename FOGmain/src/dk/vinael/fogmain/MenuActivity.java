@@ -23,8 +23,8 @@ public class MenuActivity extends Activity implements FogActivityInterface {
 	}
 	
 	public void gotoSearch(View view){
-		//Intent intent = new Intent(this, SearchPartyActivity.class);
-		//this.startActivity(intent);
+		Intent intent = new Intent(this, SearchForPartyActivity.class);
+		this.startActivity(intent);
 	}
 	
 	public void gotoParties(View view){

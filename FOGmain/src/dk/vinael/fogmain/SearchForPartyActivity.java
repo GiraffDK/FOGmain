@@ -31,7 +31,7 @@ public class SearchForPartyActivity extends Activity implements LocationListener
 		
 		// Setting Pickers:
 		np_radius = (NumberPicker) findViewById(R.id.np_radius);
-		np_radius.setMaxValue(30);
+		np_radius.setMaxValue(2000);
 		np_radius.setMinValue(1);
 		np_age_low = (NumberPicker) findViewById(R.id.np_age_low);
 		np_age_low.setMaxValue(60);

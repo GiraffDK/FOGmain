@@ -1,14 +1,14 @@
 package dk.vinael.fogmain;
 
 import java.util.ArrayList;
-
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
+import org.json.JSONArray;
+import org.json.JSONException;
+import dk.vinael.domain.FOGmain;
+import dk.vinael.domain.Party;
+import dk.vinael.interfaces.FogActivityInterface;
 
 import android.app.Activity;
-import android.app.ListActivity;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
 import android.os.Bundle;
@@ -19,13 +19,13 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+import asynctasks.WebserviceCaller;
 
-public class SearchResultActivity extends Activity implements OnClickListener {
+public class SearchResultActivity extends Activity implements OnClickListener, FogActivityInterface {
 	
-	private ArrayList<String> items = new ArrayList<String>();
+	private ArrayList<Party> ps = new ArrayList<Party>();
 	private Bundle bundle;
 	private double radius;
-	private SQLiteDatabase db2;
 	private Location loc = new Location("");
 	
 	
@@ -38,20 +38,24 @@ public class SearchResultActivity extends Activity implements OnClickListener {
 		bundle = getIntent().getExtras();
 		radius = (double) bundle.getInt("Radius");
 		loc.set((Location) bundle.get("Location"));
+		
 		getPartiesByRadius();
-		ListView lv = (ListView) findViewById(R.id.listView1);
-		lv.setOnItemClickListener(new OnItemClickListener()
-		{
-			@Override
-			public void onItemClick(AdapterView<?> l, View v, int position, long id) {
-				moveToParty(items.get(position));
-			}
-		});
-		ArrayAdapter<String> myarrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items);
-		lv.setAdapter(myarrayAdapter);
-		lv.setTextFilterEnabled(true);	
+		
 	}
 	public void getPartiesByRadius() {
+		Double loclat = loc.getLatitude();
+		Double loclon = loc.getLongitude();
+		
+		new WebserviceCaller(this, ((FOGmain)getApplicationContext()).user, "getParties")
+			.execute("select", "SELECT * FROM party WHERE lat > '"+(loclat - radius)+"' AND " +
+					"lat < '"+(loclat + radius)+"' AND " +
+					"lon > '"+(loclon - radius)+"' AND " +
+					"lon < '"+(loclon + radius)+"';");
+		Toast.makeText(this,"SELECT * FROM party WHERE lat > "+(loclat - radius)+" AND " +
+				"lat < "+(loclat + radius)+" AND " +
+				"lon > "+(loclon - radius)+" AND " +
+				"lon < "+(loclon + radius)+"", Toast.LENGTH_LONG).show();
+		
 		/*MySQLiteHelper db = new MySQLiteHelper(this);
 		db2 = db.getWritableDatabase();
 		Cursor cur = db2.rawQuery("SELECT * FROM locations", null);
@@ -85,7 +89,34 @@ public class SearchResultActivity extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		Intent in = new Intent(this, MapsActivity.class);
 		in.putExtra("Location", loc);
-		in.putExtra("list", items);
+		in.putExtra("list", ps);
 		startActivity(in);
+	}
+	@Override
+	public void jsonArrayHandler(JSONArray ja, String identifier) {
+		
+		if (identifier.equals("getParties")) {
+			Toast.makeText(this, ""+ja.length(), Toast.LENGTH_LONG).show();
+			try {
+				for (int i = 0; i < ja.length(); i++) {
+					Party temp = new Party();
+					temp.setPartyWithJSON(ja.getJSONObject(i));
+					ps.add(temp); 
+				}
+				ListView lv = (ListView) findViewById(R.id.list_search_result);
+				lv.setOnItemClickListener(new OnItemClickListener()
+				{
+					@Override
+					public void onItemClick(AdapterView<?> l, View v, int position, long id) {
+						//moveToParty(ps.get(position));
+					}
+				});
+				ArrayAdapter<Party> myarrayAdapter = new ArrayAdapter<Party>(this, android.R.layout.simple_list_item_1, ps);
+				lv.setAdapter(myarrayAdapter);
+				lv.setTextFilterEnabled(true);	
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }
