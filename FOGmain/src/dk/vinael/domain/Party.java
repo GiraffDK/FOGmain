@@ -205,11 +205,27 @@ public class Party implements Serializable {
 			this.max_age = obj.getInt("max_age");
 			this.photos = Boolean.parseBoolean("" + obj.getInt("show_photos"));
 			this.wall = Boolean.parseBoolean("" + obj.getInt("show_wall"));
-			this.lat = obj.getInt("lat");
-			this.lon = obj.getInt("lon");
+			this.setLat(obj.getInt("lat"));
+			this.setLon(obj.getInt("lon"));
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 
+	}
+
+	public double getLat() {
+		return lat;
+	}
+
+	public void setLat(double lat) {
+		this.lat = lat;
+	}
+
+	public double getLon() {
+		return lon;
+	}
+
+	public void setLon(double lon) {
+		this.lon = lon;
 	}
 }

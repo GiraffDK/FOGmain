@@ -6,10 +6,13 @@ import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import dk.vinael.domain.Party;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -20,11 +23,13 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.widget.Toast;
 
-public class MapsActivity extends FragmentActivity implements OnMapClickListener, LocationListener {
+public class MapsActivity extends FragmentActivity implements OnMapClickListener, LocationListener, OnMarkerClickListener {
 
 	private Location loc = new Location("Your Location");
 	private GoogleMap map;
+	private ArrayList<Party> parties;
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -44,7 +49,8 @@ public class MapsActivity extends FragmentActivity implements OnMapClickListener
 		
 		if (bundle.size() > 1) {
 			map.addMarker(new MarkerOptions().position(new LatLng(loc.getLatitude(), loc.getLongitude())).title("new location"));
-			addExisting(bundle.getStringArrayList("list"));
+			parties = (ArrayList<Party>) bundle.get("list");
+			addExisting();
 		} else {
 			map.setOnMapClickListener(this);
 		}
@@ -73,21 +79,19 @@ public class MapsActivity extends FragmentActivity implements OnMapClickListener
 				}
 			}
 		};
-
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setMessage("Want to set location here?").setPositiveButton("Yes", dialogClickListener).setNegativeButton("No", dialogClickListener).show();
 	}
 
-	public void addExisting(ArrayList<String> items) {
-		for (int i = 0; i < items.size(); i++) {
-				String[] temp = items.get(i).split("-");
-				double lan = Double.parseDouble(temp[0]);
-				double lon = Double.parseDouble(temp[1]);
-				LatLng latLng = new LatLng(lan, lon);
+	public void addExisting() {
+		for (int i = 0; i < parties.size(); i++) {
+				double lat = parties.get(i).getLat();
+				double lon = parties.get(i).getLon();
+				LatLng latLng = new LatLng(lat, lon);
 				Location temp2 = new Location("Point");
-				temp2.setLatitude(lan);
+				temp2.setLatitude(lat);
 				temp2.setLongitude(lon);
-				map.addMarker(new MarkerOptions().position(latLng).title("new location"));
+				map.addMarker(new MarkerOptions().position(latLng).title(parties.get(i).getName()));
 		}
 	}
 	@Override
@@ -111,5 +115,30 @@ public class MapsActivity extends FragmentActivity implements OnMapClickListener
 	public void onStatusChanged(String provider, int status, Bundle extras) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public boolean onMarkerClick(final Marker marker) {
+		DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				switch (which) {
+				case DialogInterface.BUTTON_POSITIVE:
+					for (Party p : parties) {
+						if (p.getName().equals(marker.getTitle())) {
+							Intent i = new Intent(MapsActivity.this, ViewPartyActivity.class);
+							i.putExtra("party", p);
+							MapsActivity.this.startActivity(i);
+						}
+					}
+					break;
+				case DialogInterface.BUTTON_NEGATIVE:
+					break;
+				}
+			}
+		};
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage("Go to this party?").setPositiveButton("Yes", dialogClickListener).setNegativeButton("No", dialogClickListener).show();
+		return false;
 	}
 }
