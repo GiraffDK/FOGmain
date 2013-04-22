@@ -22,13 +22,14 @@
             android:orientation="vertical" >
 
             <Spinner
-                android:id="@+id/spinner1"
+                android:id="@+id/spin_party_status"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                >
             </Spinner>
 
             <EditText
-                android:id="@+id/party_name"
+                android:id="@+id/et_party_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -36,23 +37,128 @@
             </EditText>
 
             <EditText
-                android:id="@+id/party_description"
+                android:id="@+id/et_party_description"
                 android:layout_width="match_parent"
                 android:layout_height="110dp"
                 android:ems="10"
                 android:gravity="center_vertical|top"
-                android:inputType="textMultiLine"
-                android:hint="Description" >
+                android:hint="Description"
+                android:inputType="textMultiLine" >
 
             </EditText>
 
+            <EditText
+                android:id="@+id/et_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Address"
+                android:inputType="textPostalAddress" >
+            </EditText>
+
+            <EditText
+                android:id="@+id/et_zip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Zip" />
+
+            <EditText
+                android:id="@+id/et_city"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="City" />
+
+
+            <EditText
+                android:id="@+id/et_country"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Country" />
+
+            <EditText
+                android:id="@+id/et_door_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Door Code" />
+
+            <TextView
+                android:id="@+id/tv_start_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2013-04-20 00:00:00" />
+
             <Button
-                android:id="@+id/button1"
+                android:id="@+id/btn_set_start_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Set Start Time" 
+                android:onClick="setStartTime" />
+            
+            <TextView
+                android:id="@+id/tv_end_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2013-04-20 00:00:00" />
+            
+            <Button
+                android:id="@+id/btn_set_end_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Set End Time" 
+                android:onClick="setEndTime"
+                />
+            
+            <EditText
+                android:id="@+id/et_min_age"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Min. Age (18)"
+                android:inputType="number"
+                 >
+            </EditText>
+
+            <EditText
+                android:id="@+id/et_max_age"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Min. Age (100)"
+                android:inputType="number" >
+            </EditText>
+            
+            <CheckBox
+                android:id="@+id/cb_show_photos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Show Photos" />
+            
+            <CheckBox
+                android:id="@+id/cb_show_wall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Show Wall" />
+
+            <Button
+                android:id="@+id/btn_createParty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Create Party" 
                 android:onClick="createParty"
                 />
+            
+            
+            <Button
+                android:id="@+id/btn_view_latest_party"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Latest party"
+                android:onClick="viewParty"
+                 />
 
         </LinearLayout>
     </ScrollView>
