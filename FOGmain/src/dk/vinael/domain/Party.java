@@ -1,12 +1,20 @@
 package dk.vinael.domain;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Party {
+import dk.vinael.interfaces.FogActivityInterface;
 
+import android.app.Activity;
+import asynctasks.WebserviceCaller;
+
+public class Party implements Serializable {
+
+	// Attributes
+	
 	private int id;
 	private int owner_id;
 	private int status_id;
@@ -20,25 +28,9 @@ public class Party {
 	private double lat;
 	private double lon;
 
-	public Party() {
-
-	}
-
-	public Party(int id, int own, int status, String name, String desc, String add, String code, Date s, Date e, int agel, int agem, boolean pho, boolean wal) {
-		this.id = id;
-		this.owner_id = own;
-		this.status_id = status;
-		this.description = desc;
-		this.address = add;
-		this.door_code = code;
-		this.start_time = s;
-		this.end = e;
-		this.min_age = agel;
-		this.max_age = agem;
-		this.photos = pho;
-		this.wall = wal;
-	}
-
+	
+	// Getters / Setters
+	
 	public int getId() {
 		return id;
 	}
@@ -170,7 +162,31 @@ public class Party {
 	public void setCountry(String country) {
 		this.country = country;
 	}
+	
+	// Constructor(s)
+	
+	public Party() {
 
+	}
+
+	public Party(int id, int own, int status, String name, String desc, String add, String code, Date s, Date e, int agel, int agem, boolean pho, boolean wal) {
+		this.id = id;
+		this.owner_id = own;
+		this.status_id = status;
+		this.description = desc;
+		this.address = add;
+		this.door_code = code;
+		this.start_time = s;
+		this.end = e;
+		this.min_age = agel;
+		this.max_age = agem;
+		this.photos = pho;
+		this.wall = wal;
+	}
+	
+	
+	// Methods
+	
 	public void setPartyWithJSON(JSONObject obj) {
 		try {
 			this.id = obj.getInt("id");

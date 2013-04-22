@@ -38,7 +38,7 @@ public class MainActivity extends Activity implements FogActivityInterface {
 					((FOGmain)getApplicationContext()).user = user;
 				}
 				user.setToken("kevin98f13708210194c475687be6106a3b84");
-				new WebserviceCaller(MainActivity.this, user, "checkAndSetUser").execute("select", "SELECT * FROM user WHERE token='kevin98f13708210194c475687be6106a3b84';");
+				new WebserviceCaller(MainActivity.this, "checkAndSetUser").execute("select", "SELECT * FROM user WHERE token='kevin98f13708210194c475687be6106a3b84';");
 			}
 		}, 1000);
 	}

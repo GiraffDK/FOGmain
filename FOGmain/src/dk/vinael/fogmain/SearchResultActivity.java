@@ -46,7 +46,7 @@ public class SearchResultActivity extends Activity implements OnClickListener, F
 		Double loclat = loc.getLatitude();
 		Double loclon = loc.getLongitude();
 		
-		new WebserviceCaller(this, ((FOGmain)getApplicationContext()).user, "getParties")
+		new WebserviceCaller(this, "getParties")
 			.execute("select", "SELECT * FROM party WHERE lat > '"+(loclat - radius)+"' AND " +
 					"lat < '"+(loclat + radius)+"' AND " +
 					"lon > '"+(loclon - radius)+"' AND " +

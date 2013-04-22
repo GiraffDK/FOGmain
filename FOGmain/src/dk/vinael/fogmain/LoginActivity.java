@@ -40,7 +40,7 @@ public class LoginActivity extends Activity implements FogActivityInterface {
 		user.setEmail(txt_email.getText().toString());
 		user.setPassword(txt_password.getText().toString());
 		
-		new WebserviceCaller(this, user, "getUser").execute("SELECT * FROM user WHERE email = '"+user.getEmail()+"' AND password ='"+user.getPassword()+"';");
+		new WebserviceCaller(this, "getUser").execute("SELECT * FROM user WHERE email = '"+user.getEmail()+"' AND password ='"+user.getPassword()+"';");
 	}
 	
 	@Override

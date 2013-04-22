@@ -8,27 +8,30 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import dk.vinael.domain.FOGmain;
+import dk.vinael.domain.Party;
 import dk.vinael.domain.User;
 import dk.vinael.interfaces.FogActivityInterface;
 
 public class ViewPartyActivity extends Activity implements FogActivityInterface {
 
 	private User user;
+	private Party party;
+	private Bundle bundle;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_viewparty);
-		user = ((FOGmain)getApplicationContext()).user;
-		TextView tv_data = (TextView) findViewById(R.id.textViewUserdata);
-		if (user!=null){
-			tv_data.setText("false");
-		}
-		else{
-			tv_data.setText("true");
-		}
-		tv_data.setText(user.toString());
 		
+		bundle = getIntent().getExtras();
+		
+		user = ((FOGmain)getApplicationContext()).user;
+		party = (Party) bundle.getSerializable("party");
+		
+		TextView tv_data = (TextView) findViewById(R.id.textViewUserdata);
+		if (party!=null){
+			tv_data.setText(party.getName());
+		}
 	}
 	
 	public void addNewParty(View view){

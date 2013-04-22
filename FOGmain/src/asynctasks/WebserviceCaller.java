@@ -17,6 +17,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import dk.vinael.domain.FOGmain;
 import dk.vinael.domain.User;
 import dk.vinael.fogmain.LoginActivity;
 import dk.vinael.interfaces.FogActivityInterface;
@@ -39,9 +40,11 @@ public class WebserviceCaller extends AsyncTask<String, Void, String> {
     private HttpPost httppost = new HttpPost("http://bluerocketmedia.dk/fog/index.php");
 	
     // Constructor (setting calling activity and user)
-    public WebserviceCaller(FogActivityInterface callingActivity, User user, String identifier){
+    public WebserviceCaller(FogActivityInterface callingActivity, String identifier){
     	this.callingActivity = callingActivity;
-		this.user = user;
+    	
+		//this.user = ((FOGmain)callingActivity).user;
+		this.user = ((FOGmain)((Activity)callingActivity).getApplicationContext()).user;
 		this.identifier = identifier;
 	}
     
