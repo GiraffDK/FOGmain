@@ -1,15 +1,12 @@
 package dk.vinael.fogmain;
 
 import java.util.ArrayList;
+
 import org.json.JSONArray;
 import org.json.JSONException;
-import dk.vinael.domain.FOGmain;
-import dk.vinael.domain.Party;
-import dk.vinael.interfaces.FogActivityInterface;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
@@ -20,25 +17,34 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import asynctasks.WebserviceCaller;
+import dk.vinael.domain.FOGmain;
+import dk.vinael.domain.Party;
+import dk.vinael.interfaces.FogActivityInterface;
 
 public class SearchResultActivity extends Activity implements OnClickListener, FogActivityInterface {
 	
 	private ArrayList<Party> ps = new ArrayList<Party>();
-	private Bundle bundle;
-	private double radius;
-	private Location loc = new Location("");
+	private Bundle bun;
 	
+	private Location loc;
+	private double radius;
+	private int min_age;
+	private int max_age;
+	private String start_date;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_resultview);
 		
-		bundle = getIntent().getExtras();
-		radius = (double) bundle.getInt("Radius");
-		loc.set((Location) bundle.get("Location"));
-		
+		// Getting incoming data.
+		bun = getIntent().getExtras();
+		loc = new Location("");
+		loc.set((Location) bun.get("Location"));
+		radius = (double) bun.getInt("Radius");
+		min_age = bun.getInt("Min_age");
+		max_age = bun.getInt("Max_age");
+		start_date = bun.getString("Start_date");
 		getPartiesByRadius();
 		
 	}
@@ -51,28 +57,7 @@ public class SearchResultActivity extends Activity implements OnClickListener, F
 					"lat < '"+(loclat + radius)+"' AND " +
 					"lon > '"+(loclon - radius)+"' AND " +
 					"lon < '"+(loclon + radius)+"';");
-		Toast.makeText(this,"SELECT * FROM party WHERE lat > "+(loclat - radius)+" AND " +
-				"lat < "+(loclat + radius)+" AND " +
-				"lon > "+(loclon - radius)+" AND " +
-				"lon < "+(loclon + radius)+"", Toast.LENGTH_LONG).show();
 		
-		/*MySQLiteHelper db = new MySQLiteHelper(this);
-		db2 = db.getWritableDatabase();
-		Cursor cur = db2.rawQuery("SELECT * FROM locations", null);
-		
-		if (cur.moveToFirst()) {
-			do {
-				double lan = cur.getDouble(1);
-				double lon = cur.getDouble(2);
-				Location temp = new Location("Point");
-				temp.setLatitude(lan);
-				temp.setLongitude(lon);
-
-				if ((temp.distanceTo(loc) / 1000) <= radius) {
-					items.add(lan + "-" + lon);
-				}
-			} while (cur.moveToNext());
-		}*/
 	}
 	public void moveToParty(String picked) {
 //		Intent in = new Intent(this, PartyView.class);

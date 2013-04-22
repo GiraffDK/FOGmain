@@ -62,17 +62,11 @@ public class MapsActivity extends FragmentActivity implements OnMapClickListener
 					Location house = new Location("Selected Location");
 					house.setLatitude(location.latitude);
 					house.setLongitude(location.longitude);
-					// db2.execSQL("INSERT INTO locations (lan, lon) VALUES ('"
-					// + house.getLatitude() + "', '" +house.getLongitude()+
-					// "')");
-					 Toast.makeText(MapsActivity.this, "You finger was @ (" +
-					 house.getLatitude() + ", " +house.getLongitude()+ ")" ,
-					 Toast.LENGTH_SHORT).show();
-//					Intent i = new Intent();
-//					i.putExtra("newLocation", house);
-//					setResult(RESULT_OK, i);
-//					finish();
-//					break;
+					Intent i = new Intent();
+					i.putExtra("newLocation", house);
+					setResult(RESULT_OK, i);
+					finish();
+					break;
 				case DialogInterface.BUTTON_NEGATIVE:
 					mark.remove();
 					break;
@@ -96,17 +90,6 @@ public class MapsActivity extends FragmentActivity implements OnMapClickListener
 				map.addMarker(new MarkerOptions().position(latLng).title("new location"));
 		}
 	}
-
-//	Don't use this method, doesn't work at the moment.
-//	public void SQLtry(double d) {
-//		// lan and lon is text - doesn't work
-//		Cursor cur = db2.rawQuery("SELECT * FROM locations " + "WHERE lan > " + (loc.getLatitude() - d) + " AND lan < " + (loc.getLatitude() + d) + " " + "AND lon > " + (loc.getLongitude() - d)
-//				+ " AND lon < " + (loc.getLongitude() + d) + ";", null);
-//
-//		Toast.makeText(this, cur.getCount() + "", Toast.LENGTH_LONG).show();
-//		addExisting(cur, 1000);
-//	}
-
 	@Override
 	public void onLocationChanged(Location location) {
 		loc.set(location);
