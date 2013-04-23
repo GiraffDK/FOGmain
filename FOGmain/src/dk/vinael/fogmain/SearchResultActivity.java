@@ -19,6 +19,7 @@ import android.widget.Toast;
 import asynctasks.WebserviceCaller;
 import dk.vinael.domain.FOGmain;
 import dk.vinael.domain.Party;
+import dk.vinael.domain.SqlWrapper;
 import dk.vinael.interfaces.FogActivityInterface;
 
 public class SearchResultActivity extends Activity implements OnClickListener, FogActivityInterface {
@@ -44,7 +45,7 @@ public class SearchResultActivity extends Activity implements OnClickListener, F
 		radius = (double) bun.getInt("Radius");
 		min_age = bun.getInt("Min_age");
 		max_age = bun.getInt("Max_age");
-		start_date = bun.getString("Start_date");
+		//start_date = bun.getString("Start_date");
 		getPartiesByRadius();
 		
 	}
@@ -52,12 +53,15 @@ public class SearchResultActivity extends Activity implements OnClickListener, F
 		Double loclat = loc.getLatitude();
 		Double loclon = loc.getLongitude();
 		
+		/*
 		new WebserviceCaller(this, "getParties")
 			.execute("select", "SELECT * FROM party WHERE lat > '"+(loclat - radius)+"' AND " +
 					"lat < '"+(loclat + radius)+"' AND " +
 					"lon > '"+(loclon - radius)+"' AND " +
 					"lon < '"+(loclon + radius)+"';");
+		*/
 		
+		SqlWrapper.selectParties(this, "getParties", loclat, loclon, radius, min_age, max_age);
 	}
 
 	@Override
@@ -67,9 +71,10 @@ public class SearchResultActivity extends Activity implements OnClickListener, F
 		in.putExtra("List", ps);
 		startActivity(in);
 	}
+	
 	@Override
 	public void jsonArrayHandler(JSONArray ja, String identifier) {
-		
+		Toast.makeText(this, ""+ja.length(), Toast.LENGTH_LONG).show();
 		if (identifier.equals("getParties")) {
 			Toast.makeText(this, ""+ja.length(), Toast.LENGTH_LONG).show();
 			try {
@@ -83,7 +88,9 @@ public class SearchResultActivity extends Activity implements OnClickListener, F
 				{
 					@Override
 					public void onItemClick(AdapterView<?> l, View v, int position, long id) {
-						//moveToParty(ps.get(position));
+						Intent intent = new Intent(SearchResultActivity.this, ViewPartyActivity.class);
+						intent.putExtra("party", ps.get(position));
+						SearchResultActivity.this.startActivity(intent);
 					}
 				});
 				ArrayAdapter<Party> myarrayAdapter = new ArrayAdapter<Party>(this, android.R.layout.simple_list_item_1, ps);

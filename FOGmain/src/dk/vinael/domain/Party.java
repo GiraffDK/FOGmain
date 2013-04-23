@@ -1,32 +1,21 @@
 package dk.vinael.domain;
 
 import java.io.Serializable;
-import java.sql.Date;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import dk.vinael.interfaces.FogActivityInterface;
 
-import android.app.Activity;
-import asynctasks.WebserviceCaller;
-
 public class Party implements Serializable {
 
 	// Attributes
 	
-	private int id;
-	private int owner_id;
-	private int status_id;
-	private String name, description, address, zip, city, country, door_code;
-	private Date start_time;
-	private Date end;
-	private int min_age;
-	private int max_age;
-	private boolean photos;
-	private boolean wall;
-	private double lat;
-	private double lon;
+	private int id, owner_user_id, status_id; // id's
+	private String name, description, address, zip, city, country, door_code; // party data
+	private String start_time, end_time; // party time
+	private int min_age, max_age; // part age
+	private int show_photos, show_wall; // show
+	private double lat, lon; // geolocation
 
 	
 	// Getters / Setters
@@ -39,19 +28,19 @@ public class Party implements Serializable {
 		this.id = id;
 	}
 
-	public int getOwner_id() {
-		return owner_id;
+	public int getOwnerId() {
+		return owner_user_id;
 	}
 
-	public void setOwner_id(int owner_id) {
-		this.owner_id = owner_id;
+	public void setOwnerId(int owner_id) {
+		this.owner_user_id = owner_id;
 	}
 
-	public int getStatus_id() {
+	public int getStatusId() {
 		return status_id;
 	}
 
-	public void setStatus_id(int status_id) {
+	public void setStatusId(int status_id) {
 		this.status_id = status_id;
 	}
 
@@ -79,64 +68,60 @@ public class Party implements Serializable {
 		this.address = address;
 	}
 
-	public String getDoor_code() {
+	public String getDoorCode() {
 		return door_code;
 	}
 
-	public void setDoor_code(String door_code) {
+	public void setDoorCode(String door_code) {
 		this.door_code = door_code;
 	}
 
-	public Date getStart() {
+	public String getStartTime() {
 		return start_time;
 	}
 
-	public void setStart(Date start) {
-		this.start_time = start;
+	public void setStartTime(String start_time) {
+		this.start_time = start_time;
 	}
 
-	public Date getEnd() {
-		return end;
+	public String getEndTime() {
+		return end_time;
 	}
 
-	public void setEnd(Date end) {
-		this.end = end;
+	public void setEndTime(String end_time) {
+		this.end_time = end_time;
 	}
 
-	public int getAge_low() {
+	public int getMinAge() {
 		return min_age;
 	}
 
-	public void setAge_low(int age_low) {
-		this.min_age = age_low;
+	public void setMinAge(int min_age) {
+		this.min_age = min_age;
 	}
 
-	public int getAge_max() {
+	public int getMaxAge() {
 		return max_age;
 	}
 
-	public void setAge_max(int age_max) {
-		this.max_age = age_max;
+	public void setMaxAge(int max_age) {
+		this.max_age = max_age;
 	}
 
-	public boolean isPhotos() {
-		return photos;
+	public int getShowPhotos() {
+		return show_photos;
 	}
 
-	public void setPhotos(boolean photos) {
-		this.photos = photos;
+	public void setShowPhotos(int showPhotos) {
+		this.show_photos = showPhotos;
 	}
 
-	public boolean isWall() {
-		return wall;
+	public int getShowWall() {
+		return show_wall;
 	}
 
-	public void setWall(boolean wall) {
-		this.wall = wall;
-	}
-
-	public String toString() {
-		return name;
+	public void setShowWall(int showWall) {
+		this.show_wall = showWall;
 	}
 
 	public String getZip() {
@@ -163,56 +148,6 @@ public class Party implements Serializable {
 		this.country = country;
 	}
 	
-	// Constructor(s)
-	
-	public Party() {
-
-	}
-
-	public Party(int id, int own, int status, String name, String desc, String add, String code, Date s, Date e, int agel, int agem, boolean pho, boolean wal) {
-		this.id = id;
-		this.owner_id = own;
-		this.status_id = status;
-		this.description = desc;
-		this.address = add;
-		this.door_code = code;
-		this.start_time = s;
-		this.end = e;
-		this.min_age = agel;
-		this.max_age = agem;
-		this.photos = pho;
-		this.wall = wal;
-	}
-	
-	
-	// Methods
-	
-	public void setPartyWithJSON(JSONObject obj) {
-		try {
-			this.id = obj.getInt("id");
-			this.owner_id = obj.getInt("owner_user_id");
-			this.status_id = obj.getInt("status_id");
-			this.name = obj.getString("name");
-			this.description = obj.getString("description");
-			this.address = obj.getString("address");
-			this.zip = obj.getString("zip");
-			this.city = obj.getString("city");
-			this.country = obj.getString("country");
-			this.door_code = obj.getString("door_code");
-//			this.start_time = Date.valueOf(obj.getString("start_time"));
-//			this.end = Date.valueOf(obj.getString("end_time"));
-			this.min_age = obj.getInt("min_age");
-			this.max_age = obj.getInt("max_age");
-			this.photos = Boolean.parseBoolean("" + obj.getInt("show_photos"));
-			this.wall = Boolean.parseBoolean("" + obj.getInt("show_wall"));
-			this.setLat(obj.getInt("lat"));
-			this.setLon(obj.getInt("lon"));
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-
-	}
-
 	public double getLat() {
 		return lat;
 	}
@@ -228,4 +163,97 @@ public class Party implements Serializable {
 	public void setLon(double lon) {
 		this.lon = lon;
 	}
+	
+	
+	// Constructor(s)
+	
+	public Party() {
+
+	}	
+	
+	
+	// Methods
+	
+	public String toString() {
+		return name;
+	}
+	
+	public void reset(){
+		setId(0);
+		setOwnerId(0);
+		setStatusId(0);
+		setName("");
+		setDescription("");
+		setAddress("");
+		setZip("");
+		setCity("");
+		setCountry("");
+		setDoorCode("");
+		setStartTime("");
+		setEndTime("");
+		setMinAge(0);
+		setMaxAge(0);
+		setShowPhotos(0);
+		setShowWall(0);
+		setLat(0);
+		setLon(0);
+	}
+	
+	public void setPartyWithJSON(JSONObject obj) {
+		try {
+			setId(obj.getInt("id"));
+			setOwnerId(obj.getInt("owner_user_id"));
+			setStatusId(obj.getInt("status_id"));
+			setName(obj.getString("name"));
+			setDescription(obj.getString("description"));
+			setAddress(obj.getString("address"));
+			setZip(obj.getString("zip"));
+			setCity(obj.getString("city"));
+			setCountry(obj.getString("country"));
+			setDoorCode(obj.getString("door_code"));
+			setStartTime(obj.getString("start_time"));
+			setEndTime(obj.getString("end_time"));
+			setMinAge(obj.getInt("min_age"));
+			setMaxAge(obj.getInt("max_age"));
+			setShowPhotos(obj.getInt("show_photos"));
+			setShowWall(obj.getInt("show_wall"));
+			setLat(obj.getInt("lat"));
+			setLon(obj.getInt("lon"));
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	public void setPartyWithAttributes(
+			int id, int owner_user_id, int status_id, 
+			String name, String description, String address, String zip, String city, String country, 
+			String door_code, String start_time, String end_time, int min_age, int max_age,
+			int show_photos, int show_wall, double lat, double lon){
+		
+		setId(id);
+		setOwnerId(owner_user_id);
+		setStatusId(status_id);
+		setName(name);
+		setDescription(description);
+		setAddress(address);
+		setZip(zip);
+		setCity(city);
+		setCountry(country);
+		setDoorCode(door_code);
+		setStartTime(start_time);
+		setEndTime(end_time);
+		setMinAge(min_age);
+		setMaxAge(max_age);
+		setShowPhotos(show_photos);
+		setShowWall(show_wall);
+		setLat(lat);
+		setLon(lon);
+	}
+	
+	// Statements
+	public void getPartyById(FogActivityInterface activity, String identifier,int party_id){
+		SqlWrapper.selectParty(activity, identifier, party_id);
+	}
+
 }

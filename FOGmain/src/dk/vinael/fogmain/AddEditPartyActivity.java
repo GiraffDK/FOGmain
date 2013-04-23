@@ -33,6 +33,7 @@ public class AddEditPartyActivity extends Activity implements FogActivityInterfa
 	private Party party;
 	private Bundle bundle;
 	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -79,10 +80,10 @@ public class AddEditPartyActivity extends Activity implements FogActivityInterfa
 		String end_time 	= ((TextView) findViewById(R.id.tv_end_time)).getText().toString();
 		
 		int min_age = 18;
-		int max_age = 100;
+		int max_age = 60;
 		try{
 			min_age = Integer.parseInt(((EditText) findViewById(R.id.et_min_age)).getText().toString());
-			min_age = Integer.parseInt(((EditText) findViewById(R.id.et_max_age)).getText().toString());
+			max_age = Integer.parseInt(((EditText) findViewById(R.id.et_max_age)).getText().toString());
 		}
 		catch(Exception e){
 			
@@ -97,45 +98,18 @@ public class AddEditPartyActivity extends Activity implements FogActivityInterfa
 			show_wall = 1;
 		}
 		
+		double lat = 55.55;
+		double lon = 12.12;
 		
-		String query = "INSERT INTO party " +
-				"(" +
-					"owner_user_id, " +
-					"status_id, " +
-					"name, " +
-					"description, " +
-					"address, " +
-					"zip, " +
-					"city, " +
-					"country, " +
-					"door_code, " +
-					"start_time, " +
-					"end_time, " +
-					"min_age, " +
-					"max_age, " +
-					"show_photos, " +
-					"show_wall" +
-				") VALUES " +
-				"(" +
-					""+owner_user_id+", " +
-					""+status_id+", " +
-					"'"+name+"', " +
-					"'"+description+"', " +
-					"'"+address+"', " +
-					"'"+zip+"', " +
-					"'"+city+"', " +
-					"'"+country+"', " +
-					"'"+door_code+"', " +
-					"'"+start_time+"', " +
-					"'"+end_time+"', " +
-					""+min_age+", " +
-					""+max_age+", " +
-					""+show_photos+", " +
-					""+show_wall+"" +
-							");";
+		party = new Party();
+		party.setPartyWithAttributes(0, owner_user_id, status_id, name, description, address, zip, city, 
+				country, door_code, start_time, end_time, min_age, max_age, show_photos, show_wall, lat, lon
+				);
 		
-		Toast.makeText(this.getBaseContext(), query, Toast.LENGTH_LONG).show();
-		new WebserviceCaller(this, "partyCreated").execute("insert", query);
+		SqlWrapper.createParty(this, "partyCreated", party);
+		
+		//Toast.makeText(this.getBaseContext(), query, Toast.LENGTH_LONG).show();
+		//new WebserviceCaller(this, "partyCreated").execute("insert", query);
 	}
 	
 	public void viewParty(View view){
@@ -154,40 +128,48 @@ public class AddEditPartyActivity extends Activity implements FogActivityInterfa
 	@Override
 	public void jsonArrayHandler(JSONArray ja, String identifier) {
 		if (identifier.equals("partyCreated")){
-			String s = "created";
 			try {
 				JSONObject jo = ja.getJSONObject(0);
-				s = Integer.toString(jo.getInt("affected_rows"));
-				s += " : " + jo.getInt("inserted_id");
+				int createdPartyId = jo.getInt("inserted_id");
+				
+				Toast.makeText(this, ""+createdPartyId, Toast.LENGTH_LONG).show();
+				// Go to ViewPartyActivity
+				party = new Party();
+				party.getPartyById(this, "getParty", createdPartyId);
+				
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			Toast.makeText(this.getBaseContext(), s, Toast.LENGTH_LONG).show();
-			
-			// Go to ViewPartyActivity
-			//Intent intent = new Intent(this, ViewPartyActivity.class);
-			//intent.putExtra(name, value);
-			//this.finish();
-			//this.startActivity(intent);
 		}
 		else if(identifier.equals("latestParty")){
-			
 			Party partyToView = new Party();
 			try {
 				partyToView.setPartyWithJSON(ja.getJSONObject(0));
+				if (partyToView!=null){
+					// Toast.makeText(this.getBaseContext(), partyToView.getName(), Toast.LENGTH_LONG).show();
+					Intent intent = new Intent(this, ViewPartyActivity.class);
+					intent.putExtra("party", partyToView);
+					this.startActivity(intent);
+				}
+				
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
+				Toast.makeText(this.getBaseContext(), "Party could not be loaded..", Toast.LENGTH_LONG).show();
+				e.printStackTrace();
+			}
+		}
+		else if(identifier.equals("getParty")){
+			try {
+				party.reset();
+				party.setPartyWithJSON(ja.getJSONObject(0));
+				Intent intent = new Intent(this, ViewPartyActivity.class);
+				intent.putExtra("party", party);
+				this.finish();
+				this.startActivity(intent);
+			} catch (JSONException e) {
+				Toast.makeText(this.getBaseContext(), "Party could not be loaded..", Toast.LENGTH_LONG).show();
 				e.printStackTrace();
 			}
 			
-			if (partyToView!=null){
-				Toast.makeText(this.getBaseContext(), partyToView.getName(), Toast.LENGTH_LONG).show();
-			}
-			
-			Intent intent = new Intent(this, ViewPartyActivity.class);
-			intent.putExtra("party", partyToView);
-			this.startActivity(intent);
 		}
 	}
 

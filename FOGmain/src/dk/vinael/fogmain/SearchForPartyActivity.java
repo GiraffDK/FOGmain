@@ -55,7 +55,7 @@ public class SearchForPartyActivity extends Activity implements LocationListener
 		in.putExtra("Location", loc);
 		in.putExtra("Radius", np_radius.getValue());
 		in.putExtra("Min_age", np_age_low.getValue());
-		in.putExtra("Max_age", np_age_low.getValue());
+		in.putExtra("Max_age", np_age_max.getValue());
 		startActivity(in);
 	}
 	public void selectOnMap(View view) {
