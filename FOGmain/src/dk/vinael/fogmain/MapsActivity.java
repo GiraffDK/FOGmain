@@ -2,18 +2,6 @@ package dk.vinael.fogmain;
 
 import java.util.ArrayList;
 
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
-import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
-
-import dk.vinael.domain.Party;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -21,45 +9,94 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.TextView;
 
-public class MapsActivity extends FragmentActivity implements OnMapClickListener, LocationListener, OnMarkerClickListener {
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
+import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
+import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
-	private Location loc = new Location("Your Location");
+import dk.vinael.domain.Party;
+
+public class MapsActivity extends FragmentActivity implements OnMapClickListener, LocationListener, OnInfoWindowClickListener {
+
+	private Location loc;
 	private GoogleMap map;
 	private ArrayList<Party> parties;
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.framelayout);
-		
-		// Getting Data From Bundle
-		Bundle bundle = getIntent().getExtras();
+
+		Bundle bundle = getIntent().getExtras(); 		// Getting Data From Bundle
+		loc = new Location("Your Location");
 		loc.set((Location) bundle.get("Location"));
-		
+
 		// Standard Google Maps Setup.
 		map = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
 		CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng(loc.getLatitude(), loc.getLongitude()));
 		CameraUpdate zoom = CameraUpdateFactory.zoomTo(14);
 		map.moveCamera(center);
 		map.animateCamera(zoom);
-
+		map.setOnInfoWindowClickListener(this); 		// Adding listener to the marker info window.
 		
-		if (bundle.size() > 1) {
-			map.addMarker(new MarkerOptions().position(new LatLng(loc.getLatitude(), loc.getLongitude())).title("new location"));
-			parties = (ArrayList<Party>) bundle.get("list");
-			addExisting();
-		} else {
-			map.setOnMapClickListener(this);
+		addingNewInfoWindow(); 		// Adding new Layout/View for the marker info.
+		checkingCaller(bundle); 	// Checking how we want to use this map.
+
+	}
+	/**
+	 * Checks if the maps should be used for placing parties as markers or
+	 * if you want to use the map to set your a location by clicking on the map.
+	 * @param bundle
+	 */
+	@SuppressWarnings("unchecked")
+	public void checkingCaller(Bundle bundle) {
+		if (bundle.size() > 1) 
+		{
+			parties = (ArrayList<Party>) bundle.get("List"); 		// Contains a list over parties that should be added to the map.
+			addExisting(); 		// Calls the methods to add the list of parties.
+		} 
+		else 
+		{
+			map.setOnMapClickListener(this); 		// Doesn't contain a list and therefore the map is used for finding a location etc.
 		}
 	}
+	/**
+	 * This method is used to change the info window of a marker when you click it.
+	 * It inflates the default window with a title and button.
+	 */
+	public void addingNewInfoWindow() {
+		map.setInfoWindowAdapter(new InfoWindowAdapter() {
+			@Override
+			public View getInfoWindow(Marker marker) {
+				return null;
+			}
+			@Override
+			public View getInfoContents(Marker marker) {	
+				View v = getLayoutInflater().inflate(R.layout.infowindow_view, null);	
+				TextView tvTitle = (TextView) v.findViewById(R.id.tv_party_title);
+				tvTitle.setText(marker.getTitle());
+				return v;
+			}
+		});
+	}
 
+	/**
+	 * This method is only used if you want to set a location on the map rather than writing the address.
+	 * The listener is only added to the map in method "checkingCaller()"
+	 */
 	@Override
 	public void onMapClick(LatLng point) {
 		final LatLng location = point;
-		final Marker mark = map.addMarker(new MarkerOptions().position(location).title("new location"));
+		final Marker mark = map.addMarker(new MarkerOptions().position(location).title("New location"));
 		DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
@@ -69,7 +106,7 @@ public class MapsActivity extends FragmentActivity implements OnMapClickListener
 					house.setLatitude(location.latitude);
 					house.setLongitude(location.longitude);
 					Intent i = new Intent();
-					i.putExtra("newLocation", house);
+					i.putExtra("Choosen Location", house);
 					setResult(RESULT_OK, i);
 					finish();
 					break;
@@ -80,20 +117,27 @@ public class MapsActivity extends FragmentActivity implements OnMapClickListener
 			}
 		};
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setMessage("Want to set location here?").setPositiveButton("Yes", dialogClickListener).setNegativeButton("No", dialogClickListener).show();
+		builder.setMessage("Want to search from the location?").setPositiveButton("Yes", dialogClickListener).setNegativeButton("No", dialogClickListener).show();
 	}
 
+	/**
+	 * Simple loop that takes each party in the ps list and adds its location as a marker on the map.
+	 */
 	public void addExisting() {
 		for (int i = 0; i < parties.size(); i++) {
-				double lat = parties.get(i).getLat();
-				double lon = parties.get(i).getLon();
-				LatLng latLng = new LatLng(lat, lon);
-				Location temp2 = new Location("Point");
-				temp2.setLatitude(lat);
-				temp2.setLongitude(lon);
-				map.addMarker(new MarkerOptions().position(latLng).title(parties.get(i).getName()));
+			double lat = parties.get(i).getLat();
+			double lon = parties.get(i).getLon();
+			LatLng latLng = new LatLng(lat, lon);
+			Location temp2 = new Location("");
+			temp2.setLatitude(lat);
+			temp2.setLongitude(lon);
+			map.addMarker(new MarkerOptions().position(latLng).title(parties.get(i).getName()));
 		}
 	}
+
+	/**
+	 * If the provider (Could be the network) detects a new position if will update the loc (Location).
+	 */
 	@Override
 	public void onLocationChanged(Location location) {
 		loc.set(location);
@@ -116,9 +160,14 @@ public class MapsActivity extends FragmentActivity implements OnMapClickListener
 		// TODO Auto-generated method stub
 
 	}
-
+	/**
+	 * implementation of the "OnInfoWindowClick"
+	 * If you click the info window this method will ask you if you want to see the party in the "Party view".
+	 * Yes = you will go to the party.
+	 * No = DialogBox closes.
+	 */
 	@Override
-	public boolean onMarkerClick(final Marker marker) {
+	public void onInfoWindowClick(final Marker marker) {
 		DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
@@ -139,6 +188,5 @@ public class MapsActivity extends FragmentActivity implements OnMapClickListener
 		};
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setMessage("Go to this party?").setPositiveButton("Yes", dialogClickListener).setNegativeButton("No", dialogClickListener).show();
-		return false;
 	}
 }

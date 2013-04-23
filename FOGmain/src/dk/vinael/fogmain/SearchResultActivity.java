@@ -59,22 +59,12 @@ public class SearchResultActivity extends Activity implements OnClickListener, F
 					"lon < '"+(loclon + radius)+"';");
 		
 	}
-	public void moveToParty(String picked) {
-//		Intent in = new Intent(this, PartyView.class);
-//		String[] t = picked.split("-");
-//		double lan = Double.parseDouble(t[0]);
-//		double lon = Double.parseDouble(t[1]);
-//		Location temp = new Location("Point");
-//		temp.setLatitude(lan);
-//		temp.setLongitude(lon);
-//		in.putExtra("party", temp);
-//		startActivity(in);
-	}
+
 	@Override
 	public void onClick(View v) {
 		Intent in = new Intent(this, MapsActivity.class);
 		in.putExtra("Location", loc);
-		in.putExtra("list", ps);
+		in.putExtra("List", ps);
 		startActivity(in);
 	}
 	@Override
