@@ -127,7 +127,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Min. Age (100)"
+                android:hint="Max. Age (100)"
                 android:inputType="number" >
             </EditText>
             
