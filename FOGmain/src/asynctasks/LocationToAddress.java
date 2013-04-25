@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import dk.vinael.fogmain.R;
 import dk.vinael.fogmain.SearchForPartyActivity;
 
 import android.app.Activity;
@@ -12,6 +13,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.AsyncTask;
+import android.widget.TextView;
 
 public class LocationToAddress extends AsyncTask<Location, Void, String> {
 	private Activity mContext;
@@ -19,37 +21,42 @@ public class LocationToAddress extends AsyncTask<Location, Void, String> {
 	private Location loc;
 	private String addressText;
 	private String caller;
-	
+	private TextView tv_address; 
+
 	public LocationToAddress(Location loc, Activity inContext, String caller) {
 		super();
 		this.loc = loc;
 		this.mContext = inContext;
 		this.caller = caller;
+		tv_address = (TextView) inContext.findViewById(R.id.et_location);
 	}
-	
 
 	@Override
 	protected String doInBackground(Location... params) {
 		Geocoder geocoder = new Geocoder(mContext.getBaseContext(), Locale.getDefault());
 		addresses = new ArrayList<Address>();
+
 		if (Geocoder.isPresent()) {
 			try {
-				// Call the synchronous getFromLocation() method by passing in
-				// the
-				// lat/long values.
-				addresses = geocoder.getFromLocation(loc.getLatitude(), loc.getLongitude(), 1);
+				if (caller.equals("AddressToLocation")) {
+					addresses = geocoder.getFromLocationName(tv_address.getText().toString(), 5);
+					return "AddressToLocation";
+				} else if (caller.equals("SearchParty")) {
+
+					addresses = geocoder.getFromLocation(loc.getLatitude(), loc.getLongitude(), 1);
+
+					if (addresses != null && addresses.size() > 0) {
+						Address address = addresses.get(0);
+						// Format the first line of address (if available),
+						// city,
+						// and
+						// country name.
+						setAddressText(String.format("%s, %s, %s", address.getMaxAddressLineIndex() > 0 ? address.getAddressLine(0) : "", address.getLocality(), address.getCountryName()));
+						return addressText;
+					}
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
-				// Update UI field with the exception.
-
-			}
-
-			if (addresses != null && addresses.size() > 0) {
-				Address address = addresses.get(0);
-				// Format the first line of address (if available), city, and
-				// country name.
-				setAddressText(String.format("%s, %s, %s", address.getMaxAddressLineIndex() > 0 ? address.getAddressLine(0) : "", address.getLocality(), address.getCountryName()));
-				return addressText;
 			}
 		}
 		return null;
@@ -58,16 +65,18 @@ public class LocationToAddress extends AsyncTask<Location, Void, String> {
 	@Override
 	protected void onPostExecute(String result) {
 		if (caller.equals("PartyView")) {
-			//((PartyView) mContext).setAddress(getAddressText());	
+			// ((PartyView) mContext).setAddress(getAddressText());
 		} else if (caller.equals("SearchParty")) {
 			((SearchForPartyActivity) mContext).setLocationText(getAddressText());
-		}	
-		super.onPostExecute(result);		
+		} else if (caller.equals("AddressToLocation")) {
+			((SearchForPartyActivity) mContext).checkAddress(addresses);
+		}
+		super.onPostExecute(result);
 	}
+
 	public String getAddressText() {
 		return addressText;
 	}
-
 
 	public void setAddressText(String addressText) {
 		this.addressText = addressText;

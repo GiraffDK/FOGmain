@@ -16,8 +16,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-import asynctasks.WebserviceCaller;
-import dk.vinael.domain.FOGmain;
 import dk.vinael.domain.Party;
 import dk.vinael.domain.SqlWrapper;
 import dk.vinael.interfaces.FogActivityInterface;
