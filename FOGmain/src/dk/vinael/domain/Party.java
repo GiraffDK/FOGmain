@@ -174,6 +174,20 @@ public class Party implements Serializable {
 	
 	// Methods
 	
+	public boolean doShowPhotos(){
+		if (getShowPhotos()==1){
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean doShowWall(){
+		if (getShowWall()==1){
+			return true;
+		}
+		return false;
+	}
+	
 	public String toString() {
 		return name;
 	}
@@ -227,8 +241,8 @@ public class Party implements Serializable {
 	
 	public void setPartyWithAttributes(
 			int id, int owner_user_id, int status_id, 
-			String name, String description, String address, String zip, String city, String country, 
-			String door_code, String start_time, String end_time, int min_age, int max_age,
+			String name, String description, String address, String zip, String city, String country, String door_code, 
+			String start_time, String end_time, int min_age, int max_age,
 			int show_photos, int show_wall, double lat, double lon){
 		
 		setId(id);
@@ -254,6 +268,10 @@ public class Party implements Serializable {
 	// Statements
 	public void getPartyById(FogActivityInterface activity, String identifier,int party_id){
 		SqlWrapper.selectParty(activity, identifier, party_id);
+	}
+	
+	public void create(FogActivityInterface activity, String identifier){
+		SqlWrapper.createParty(activity, identifier, this);
 	}
 
 }

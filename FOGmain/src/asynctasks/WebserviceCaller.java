@@ -46,6 +46,8 @@ public class WebserviceCaller extends AsyncTask<String, Void, String> {
 		//this.user = ((FOGmain)callingActivity).user;
 		this.user = ((FOGmain)((Activity)callingActivity).getApplicationContext()).user;
 		this.identifier = identifier;
+		
+		//Toast.makeText((Activity) callingActivity, identifier, Toast.LENGTH_LONG).show();
 	}
     
 	@Override
@@ -91,6 +93,7 @@ public class WebserviceCaller extends AsyncTask<String, Void, String> {
     protected void onPostExecute(String result) {
 		JSONArray jsonArray;
 		//Toast.makeText((Activity) callingActivity, "test", Toast.LENGTH_LONG).show();
+		//Toast.makeText((Activity) callingActivity, result, Toast.LENGTH_LONG).show();
 		try {
 			// Create JSONArray out of result string
 			jsonArray = new JSONArray(result);
@@ -126,7 +129,7 @@ public class WebserviceCaller extends AsyncTask<String, Void, String> {
 			
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
-			//Toast.makeText((Activity) callingActivity, e.toString(), Toast.LENGTH_LONG).show();
+			Toast.makeText((Activity) callingActivity, result, Toast.LENGTH_LONG).show();
 			e.printStackTrace();
 		}
     }

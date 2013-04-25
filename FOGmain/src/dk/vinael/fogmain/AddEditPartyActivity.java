@@ -33,37 +33,84 @@ public class AddEditPartyActivity extends Activity implements FogActivityInterfa
 	private Party party;
 	private Bundle bundle;
 	
+	// GUI items
+	
+	private Spinner spin_party_status;
+	private EditText et_party_name;
+	private EditText et_party_description;
+	private EditText et_address;
+	private EditText et_zip;
+	private EditText et_city;
+	private EditText et_country;
+	private EditText et_door_code;
+	private TextView tv_start_time;
+	private TextView tv_end_time;
+	private EditText et_min_age;
+	private EditText et_max_age;
+	private CheckBox cb_show_photos;
+	private CheckBox cb_show_wall;
+	
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_addeditparty);
 		
+		// Set Gui items
+		spin_party_status 		= (Spinner) findViewById(R.id.spin_party_status);
+		et_party_name 			= (EditText) findViewById(R.id.et_party_name);
+		et_party_description	= (EditText) findViewById(R.id.et_party_description);
+		et_address				= (EditText) findViewById(R.id.et_address);
+		et_zip					= (EditText) findViewById(R.id.et_zip);
+		et_city					= (EditText) findViewById(R.id.et_city);
+		et_country				= (EditText) findViewById(R.id.et_country);
+		et_door_code			= (EditText) findViewById(R.id.et_door_code);
+		tv_start_time			= (TextView) findViewById(R.id.tv_start_time);
+		tv_end_time				= (TextView) findViewById(R.id.tv_end_time);
+		et_min_age				= (EditText) findViewById(R.id.et_min_age);
+		et_max_age				= (EditText) findViewById(R.id.et_max_age);
+		cb_show_photos			= (CheckBox) findViewById(R.id.cb_show_photos);
+		cb_show_wall			= (CheckBox) findViewById(R.id.cb_show_wall);
+		
 		user = ((FOGmain)getApplicationContext()).user;
 		list = new ArrayList<String>();
 		
-		Spinner spinner = (Spinner) findViewById(R.id.spin_party_status);
 		
 		list.add("Cancel");
 		list.add("Active");
 		
+		// Set spinner
 		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, list);
 		dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spinner.setAdapter(dataAdapter);
-		spinner.setSelection(1);
+		spin_party_status.setAdapter(dataAdapter);
+		spin_party_status.setSelection(1);
 		
 		// Edit party
 		bundle = getIntent().getExtras();
 		if (bundle!=null){
 			party = (Party) bundle.getSerializable("party");
 			if (party!=null){
-			
+				putDataInItems(party);
 			}
 		}
 	}
 	
 	public void putDataInItems(Party p){
-		
+		spin_party_status.setSelection(p.getStatusId());
+		et_party_name.setText(p.getName());
+		et_party_description.setText(p.getDescription());
+		et_address.setText(p.getAddress());
+		et_zip.setText(p.getZip());
+		et_city.setText(p.getCity());
+		et_country.setText(p.getCountry());
+		et_door_code.setText(p.getDoorCode());
+		tv_start_time.setText(p.getStartTime());
+		tv_end_time.setText(p.getEndTime());
+		et_min_age.setText(String.valueOf(p.getMinAge()));
+		et_max_age.setText(String.valueOf(p.getMaxAge()));
+		cb_show_photos.setChecked(p.doShowPhotos());
+		cb_show_wall.setChecked(p.doShowWall());
 	}
 
 	public void createParty(View view){
@@ -102,11 +149,14 @@ public class AddEditPartyActivity extends Activity implements FogActivityInterfa
 		double lon = 12.12;
 		
 		party = new Party();
-		party.setPartyWithAttributes(0, owner_user_id, status_id, name, description, address, zip, city, 
-				country, door_code, start_time, end_time, min_age, max_age, show_photos, show_wall, lat, lon
+		party.setPartyWithAttributes(0, owner_user_id, status_id, 
+				name, description, address, zip, city, country, door_code, 
+				start_time, end_time, min_age, max_age, 
+				show_photos, show_wall, lat, lon
 				);
 		
-		SqlWrapper.createParty(this, "partyCreated", party);
+		
+		party.create(this, "partyCreated");
 		
 		//Toast.makeText(this.getBaseContext(), query, Toast.LENGTH_LONG).show();
 		//new WebserviceCaller(this, "partyCreated").execute("insert", query);
@@ -132,7 +182,7 @@ public class AddEditPartyActivity extends Activity implements FogActivityInterfa
 				JSONObject jo = ja.getJSONObject(0);
 				int createdPartyId = jo.getInt("inserted_id");
 				
-				Toast.makeText(this, ""+createdPartyId, Toast.LENGTH_LONG).show();
+				//Toast.makeText(this, ""+createdPartyId, Toast.LENGTH_LONG).show();
 				// Go to ViewPartyActivity
 				party = new Party();
 				party.getPartyById(this, "getParty", createdPartyId);
@@ -161,6 +211,7 @@ public class AddEditPartyActivity extends Activity implements FogActivityInterfa
 			try {
 				party.reset();
 				party.setPartyWithJSON(ja.getJSONObject(0));
+				//Intent intent = new Intent(this, ViewPartyActivity.class);
 				Intent intent = new Intent(this, ViewPartyActivity.class);
 				intent.putExtra("party", party);
 				this.finish();

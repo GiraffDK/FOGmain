@@ -1,6 +1,8 @@
 package dk.vinael.domain;
 
 import dk.vinael.interfaces.FogActivityInterface;
+import android.app.Activity;
+import android.widget.Toast;
 import asynctasks.WebserviceCaller;
 
 public class SqlWrapper {
@@ -30,6 +32,7 @@ public class SqlWrapper {
 	public static void createParty(FogActivityInterface activity, String identifier, Party p){
 		String sqlString = "INSERT INTO party " +
 				"(" +
+					"id, "+
 					"owner_user_id, " +
 					"status_id, " +
 					"name, " +
@@ -49,7 +52,8 @@ public class SqlWrapper {
 					"lon" +
 				") VALUES " +
 				"(" +
-					""+p.getId()+", " +
+					0+", "+
+					""+p.getOwnerId()+", " +
 					""+p.getStatusId()+", " +
 					"'"+p.getName()+"', " +
 					"'"+p.getDescription()+"', " +
@@ -57,7 +61,7 @@ public class SqlWrapper {
 					"'"+p.getZip()+"', " +
 					"'"+p.getCity()+"', " +
 					"'"+p.getCountry()+"', " +
-					"'"+p.getCountry()+"', " +
+					"'"+p.getDoorCode()+"', " +
 					"'"+p.getStartTime()+"', " +
 					"'"+p.getEndTime()+"', " +
 					""+p.getMinAge()+", " +
@@ -67,7 +71,12 @@ public class SqlWrapper {
 					"'"+p.getLat()+"', " +
 					"'"+p.getLon()+"'" +
 							");";
+		//Toast.makeText((Activity) activity, sqlString, Toast.LENGTH_LONG).show();
 		new WebserviceCaller(activity, identifier).execute("insert", sqlString);
 	}
 	
+	public static void selectUserByToken(FogActivityInterface activity, String identifier, User u){
+		String sqlString ="SELECT * FROM user WHERE token = '"+u.getToken()+"';";
+		new WebserviceCaller(activity, identifier).execute("select", sqlString);
+	}
 }

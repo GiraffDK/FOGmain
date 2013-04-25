@@ -38,7 +38,7 @@
         android:layout_marginBottom="27dp" />
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/tv_loading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/progressBar1"
@@ -48,12 +48,12 @@
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/tv_pleasewait"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/getusers"
         android:layout_alignBottom="@+id/getusers"
-        android:layout_alignLeft="@+id/progressBar1"
+        android:layout_centerHorizontal="true"
         android:text="Please wait.."
         android:textAppearance="?android:attr/textAppearanceSmall" />
 

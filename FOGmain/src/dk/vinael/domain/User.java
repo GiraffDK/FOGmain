@@ -6,6 +6,11 @@ import java.security.NoSuchAlgorithmException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
+import android.widget.Toast;
+
+import dk.vinael.interfaces.FogActivityInterface;
+
 public class User {
 	
 	// User attributes
@@ -183,6 +188,7 @@ public class User {
 				"\ncountry: " + getCountry() +
 				"";
 	}
+	
 	public void setUserByJson(JSONObject jo){
 		// set attributes by jo
 		try {
@@ -203,4 +209,9 @@ public class User {
 			e.printStackTrace();
 		}
 	}
+	
+	public void selectUserByToken(FogActivityInterface a, String i){
+		SqlWrapper.selectUserByToken(a, i, this);
+	}
+	
 }

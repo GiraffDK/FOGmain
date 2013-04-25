@@ -39,6 +39,12 @@ public class ViewPartyActivity extends Activity implements FogActivityInterface 
 		this.startActivity(intent);
 	}
 	
+	public void editParty(View view){
+		Intent intent = new Intent(this, AddEditPartyActivity.class);
+		intent.putExtra("party", party);
+		this.startActivity(intent);
+	}
+	
 	@Override
 	public void jsonArrayHandler(JSONArray ja, String identifier) {
 		if (identifier.equals("getUserData")){

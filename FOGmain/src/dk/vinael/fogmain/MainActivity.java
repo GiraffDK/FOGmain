@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 import asynctasks.WebserviceCaller;
 
 public class MainActivity extends Activity implements FogActivityInterface {
@@ -28,6 +29,17 @@ public class MainActivity extends Activity implements FogActivityInterface {
 		// ## Set user to global variable
 		// ## Handle resume, pause, etc.
 		
+		user = ((FOGmain)getApplicationContext()).user;
+		if (user==null){
+			user = new User();
+			((FOGmain)getApplicationContext()).user = user;
+		}
+		user.setToken("kevin98f13708210194c475687be6106a3b84");
+		user.selectUserByToken(MainActivity.this, "checkAndSetUser");
+		TextView tv_please_wait = (TextView) findViewById(R.id.tv_pleasewait);
+		tv_please_wait.setText("Trying to login.. Hold on!");
+		
+		/*
 		Handler handler = new Handler();
 		handler.postDelayed(new Runnable(){
 			@Override
@@ -38,14 +50,17 @@ public class MainActivity extends Activity implements FogActivityInterface {
 					((FOGmain)getApplicationContext()).user = user;
 				}
 				user.setToken("kevin98f13708210194c475687be6106a3b84");
-				new WebserviceCaller(MainActivity.this, "checkAndSetUser").execute("select", "SELECT * FROM user WHERE token='kevin98f13708210194c475687be6106a3b84';");
+				user.selectUserByToken(MainActivity.this, "checkAndSetUser");
+				//new WebserviceCaller(MainActivity.this, "checkAndSetUser").execute("select", "SELECT * FROM user WHERE token='kevin98f13708210194c475687be6106a3b84';");
 			}
 		}, 1000);
+		*/
 	}
 
 	@Override
 	public void jsonArrayHandler(JSONArray ja, String identifier) {
 		// Print out username from all users
+		//Toast.makeText(this.getBaseContext(), ja.length(), Toast.LENGTH_LONG).show();
 		if (identifier.equals("checkAndSetUser")){
 			try {
 				user.setUserByJson(ja.getJSONObject(0));
