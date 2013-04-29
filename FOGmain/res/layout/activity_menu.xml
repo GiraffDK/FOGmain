@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:text="Add Party" 
+        android:text="@string/AddParty" 
         android:onClick="gotoAddParty"
         />
 
@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/btn_addparty"
         android:layout_below="@+id/btn_addparty"
-        android:text="Search" 
+        android:text="@string/Search" 
         android:onClick="gotoSearch"
         />
 
@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/btn_search"
         android:layout_below="@+id/btn_search"
-        android:text="Parties" 
+        android:text="@string/Parties" 
         android:onClick="gotoParties"
         />
 
@@ -45,7 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/btn_parties"
         android:layout_below="@+id/btn_parties"
-        android:text="Profile" 
+        android:text="@string/Profile" 
         android:onClick="gotoProfile"
         />
 
