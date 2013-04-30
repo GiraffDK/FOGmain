@@ -45,6 +45,16 @@
     <string name="Profile">Profile</string>
     
     
+    <!-- Profile -->
+    <string name="back">Back</string>
+    <string name="drsPro">Profile Image</string>
+    <string name="firstname">Første navn</string>
+    <string name="lastname">Sidste navn...</string>
+    <string name="locations">Lokation: </string>
+    <string name="DynLocations">Dynamisk Lokation</string>
+    <string name="biografi">Her indsættes biografien fra ens facebook login. Sådan der kommer til at stå en masse her.</string>
+    
+    
     <!-- ResultView -->
     <string name="SeeOnMap">See On Map</string>
     
