@@ -33,7 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Name of party" >
+                android:hint="@string/NameOfParty" >
             </EditText>
 
             <EditText
@@ -42,7 +42,7 @@
                 android:layout_height="110dp"
                 android:ems="10"
                 android:gravity="center_vertical|top"
-                android:hint="Description"
+                android:hint="@string/Description"
                 android:inputType="textMultiLine" >
 
             </EditText>
@@ -52,7 +52,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Address"
+                android:hint="@string/Address"
                 android:inputType="textPostalAddress" >
             </EditText>
 
@@ -61,14 +61,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Zip" />
+                android:hint="@string/Zip" />
 
             <EditText
                 android:id="@+id/et_city"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="City" />
+                android:hint="@string/City" />
 
 
             <EditText
@@ -76,39 +76,39 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Country" />
+                android:hint="@string/Country" />
 
             <EditText
                 android:id="@+id/et_door_code"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Door Code" />
+                android:hint="@string/DoorCode" />
 
             <TextView
                 android:id="@+id/tv_start_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2013-04-30 00:00:00" />
+                android:text="@string/TVstartTime" />
 
             <Button
                 android:id="@+id/btn_set_start_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Set Start Time" 
+                android:text="@string/SetStartTime" 
                 android:onClick="setStartTime" />
             
             <TextView
                 android:id="@+id/tv_end_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2013-05-01 00:00:00" />
+                android:text="@string/TVendTime" />
             
             <Button
                 android:id="@+id/btn_set_end_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Set End Time" 
+                android:text="@string/SetEndTime" 
                 android:onClick="setEndTime"
                 />
             
@@ -117,7 +117,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Min. Age (18)"
+                android:hint="@string/MinAge18"
                 android:inputType="number"
                  >
             </EditText>
@@ -127,7 +127,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Max. Age (100)"
+                android:hint="@string/MaxAge100"
                 android:inputType="number" >
             </EditText>
             
@@ -135,19 +135,19 @@
                 android:id="@+id/cb_show_photos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Show Photos" />
+                android:text="@string/ShowPhotos" />
             
             <CheckBox
                 android:id="@+id/cb_show_wall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Show Wall" />
+                android:text="@string/ShowWall" />
 
             <Button
                 android:id="@+id/btn_createParty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Create Party" 
+                android:text="@string/CreateParty" 
                 android:onClick="createParty"
                 />
             
@@ -156,7 +156,7 @@
                 android:id="@+id/btn_view_latest_party"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Latest party"
+                android:text="@string/LatestParty"
                 android:onClick="viewParty"
                  />
 
