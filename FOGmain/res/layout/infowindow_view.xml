@@ -8,13 +8,13 @@
         android:id="@+id/tv_party_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="11111111111111"
+        android:text="@string/PartyTitle"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <Button
         android:id="@+id/btn_goToParty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Go To Party!" />
+        android:text="@string/GoToParty" />
 
 </LinearLayout>

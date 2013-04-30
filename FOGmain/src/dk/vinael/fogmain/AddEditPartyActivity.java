@@ -272,12 +272,6 @@ public class AddEditPartyActivity extends FragmentActivity implements FogActivit
 	
 	
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
-	
-	@Override
 	public void jsonArrayHandler(JSONArray ja, String identifier) {
 		if (identifier.equals("partyCreated")){
 			try {

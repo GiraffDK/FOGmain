@@ -31,12 +31,6 @@ public class LoginActivity extends Activity implements FogActivityInterface {
 		this.user = ((FOGmain)getApplicationContext()).user;
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
-
 	public void login(View view){
 		EditText txt_email = (EditText) findViewById(R.id.txt_email);
 		EditText txt_password = (EditText) findViewById(R.id.txt_password);
