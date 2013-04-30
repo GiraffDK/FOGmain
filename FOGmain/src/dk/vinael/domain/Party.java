@@ -176,21 +176,21 @@ public class Party implements Serializable {
 	
 	// Methods
 	
-	public String getStartDate(){
-		return DateAndTimeStringHandler.getDateFromDateAndTime(start_date_time);
-	}
-	
-	public String getStartTime(){
-		return DateAndTimeStringHandler.getTimeFromDateAndTime(start_date_time);
-	}
-	
-	public String getEndDate(){
-		return DateAndTimeStringHandler.getDateFromDateAndTime(end_date_time);
-	}
-	
-	public String getEndTime(){
-		return DateAndTimeStringHandler.getTimeFromDateAndTime(end_date_time);
-	}
+//	public String getStartDate(){
+//		return DateAndTimeStringHandler.getDateFromDateAndTime(start_date_time);
+//	}
+//	
+//	public String getStartTime(){
+//		return DateAndTimeStringHandler.getTimeFromDateAndTime(start_date_time);
+//	}
+//	
+//	public String getEndDate(){
+//		return DateAndTimeStringHandler.getDateFromDateAndTime(end_date_time);
+//	}
+//	
+//	public String getEndTime(){
+//		return DateAndTimeStringHandler.getTimeFromDateAndTime(end_date_time);
+//	}
 	
 	public boolean doShowPhotos(){
 		if (getShowPhotos()==1){

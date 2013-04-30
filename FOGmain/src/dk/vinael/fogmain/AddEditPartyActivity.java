@@ -105,8 +105,8 @@ public class AddEditPartyActivity extends Activity implements FogActivityInterfa
 		et_city.setText(p.getCity());
 		et_country.setText(p.getCountry());
 		et_door_code.setText(p.getDoorCode());
-		tv_start_time.setText(p.getStartTime());
-		tv_end_time.setText(p.getEndTime());
+		//tv_start_time.setText(p.getStartTime());
+		//tv_end_time.setText(p.getEndTime());
 		et_min_age.setText(String.valueOf(p.getMinAge()));
 		et_max_age.setText(String.valueOf(p.getMaxAge()));
 		cb_show_photos.setChecked(p.doShowPhotos());

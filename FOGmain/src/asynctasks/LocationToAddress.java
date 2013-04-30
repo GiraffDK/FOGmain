@@ -58,7 +58,7 @@ public class LocationToAddress extends AsyncTask<Location, Void, String> {
 					}
 				}
 				else if (caller.equals("addressLookup")){
-					addresses = geocoder.getFromLocationName(((AddEditPartyActivity) mContext).addressToLookup, 5);
+					//addresses = geocoder.getFromLocationName(((AddEditPartyActivity) mContext).addressToLookup, 5);
 					return "addressLookup";
 				}
 			} catch (IOException e) {
@@ -78,7 +78,7 @@ public class LocationToAddress extends AsyncTask<Location, Void, String> {
 			((SearchForPartyActivity) mContext).checkAddress(addresses);
 		} else if (caller.equals("addressLookup")) {
 			Toast.makeText(mContext, "returning!", Toast.LENGTH_LONG).show();
-			((AddEditPartyActivity) mContext).setLocation(addresses);
+			//((AddEditPartyActivity) mContext).setLocation(addresses);
 		}
 		
 		super.onPostExecute(result);

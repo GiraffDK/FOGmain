@@ -21,7 +21,7 @@ public class MenuActivity extends Activity implements FogActivityInterface {
 		setContentView(R.layout.activity_menu);
 		
 		user = ((FOGmain)getApplicationContext()).user;
-		((TextView)findViewById(R.id.tv_username_menu)).setText("Logged in as: " + user.getFirstName() + " " + user.getLastName());
+		//((TextView)findViewById(R.id.tv_username_menu)).setText("Logged in as: " + user.getFirstName() + " " + user.getLastName());
 	}
 	
 	public void gotoAddParty(View view){
