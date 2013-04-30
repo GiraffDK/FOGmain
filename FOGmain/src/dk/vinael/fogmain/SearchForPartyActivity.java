@@ -16,6 +16,8 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.NumberPicker;
@@ -57,6 +59,7 @@ public class SearchForPartyActivity extends Activity implements LocationListener
 		super.onAttachedToWindow();
 		new LocationToAddress(loc, this, "SearchParty").execute(loc);
 	}
+
 	
 	public void setLocationText(String text) {
 		EditText et = (EditText) findViewById(R.id.et_location);
