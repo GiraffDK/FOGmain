@@ -5,7 +5,6 @@
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
 
-    
     <!-- AddEditParty -->
     <string name="NameOfParty">Name of Party</string>
     <string name="Description">Description</string>
@@ -24,51 +23,57 @@
     <string name="ShowWall">Show Wall</string>
     <string name="CreateParty">Create Party</string>
     <string name="LatestParty">Latest Party</string>
-    
-    
+
     <!-- Login -->
     <string name="Email">Email</string>
     <string name="Password">Password</string>
     <string name="Login">Login</string>
-    
-    
+
     <!-- Main -->
     <string name="getParties">get parties</string>
     <string name="Loading">Loading</string>
     <string name="PleaseWait">Please wait..</string>
-    
-    
+
     <!-- Menu -->
     <string name="AddParty">Add Party</string>
     <string name="Search">Search</string>
     <string name="Parties">Parties</string>
     <string name="Profile">Profile</string>
-    
-    
+
     <!-- ResultView -->
     <string name="SeeOnMap">See On Map</string>
-    
-    
+
     <!-- SearchParty -->
     <string name="Radius">Radius:</string>
     <string name="SelectLocationOnMap">Select Location On Map</string>
     <string name="FromLocation">From Location</string>
     <string name="Age">Age:</string>
     <!-- And a search here aswell -->
-    
-    
+
+
     <!-- ViewParty -->
     <string name="TextView">TextView</string>
     <!-- And a AddParty here aswell -->
     <string name="EditParty">Edit Party</string>
-    
-    
+
     <!-- frameLayout -->
-    
-    
+
+
     <!-- infoWindowView -->
     <string name="PartyTitle">11111111111111</string>
     <string name="GoToParty">Go To Party!</string>
-    
-    
+
+    <!-- editProfil -->
+    <string name="btn_change_pic">Change Profil Picture</string>
+    <string name="Hint_fname">Firstname</string>
+    <string name="Hint_lname">Lastname</string>
+    <string name="Hint_bday">Birthday</string>
+    <string name="Hint_street">Street</string>
+    <string name="Hint_zip">Zip</string>
+    <string name="Hint_city">City</string>
+    <string name="Hint_country">Country</string>
+    <string name="Hint_phone">Phone Number</string>
+    <string name="Hint_email">Email</string>
+    <string name="Hint_desc">Description of you</string>
+
 </resources>

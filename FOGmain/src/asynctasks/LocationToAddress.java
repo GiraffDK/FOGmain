@@ -7,6 +7,7 @@ import java.util.Locale;
 
 import dk.vinael.fogmain.R;
 import dk.vinael.fogmain.SearchForPartyActivity;
+import dk.vinael.fogmain.AddEditPartyActivity;
 
 import android.app.Activity;
 import android.location.Address;
@@ -14,6 +15,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class LocationToAddress extends AsyncTask<Location, Void, String> {
 	private Activity mContext;
@@ -55,6 +57,10 @@ public class LocationToAddress extends AsyncTask<Location, Void, String> {
 						return addressText;
 					}
 				}
+				else if (caller.equals("addressLookup")){
+					addresses = geocoder.getFromLocationName(((AddEditPartyActivity) mContext).addressToLookup, 5);
+					return "addressLookup";
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -70,7 +76,11 @@ public class LocationToAddress extends AsyncTask<Location, Void, String> {
 			((SearchForPartyActivity) mContext).setLocationText(getAddressText());
 		} else if (caller.equals("AddressToLocation")) {
 			((SearchForPartyActivity) mContext).checkAddress(addresses);
+		} else if (caller.equals("addressLookup")) {
+			Toast.makeText(mContext, "returning!", Toast.LENGTH_LONG).show();
+			((AddEditPartyActivity) mContext).setLocation(addresses);
 		}
+		
 		super.onPostExecute(result);
 	}
 

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:id="@+id/editprof_profil"
+                android:layout_width="146dp"
+                android:layout_height="98dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_launcher" />
+
+            <Button
+                android:id="@+id/editprof_btn_change_picture"
+                android:layout_width="128dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:text="@string/btn_change_pic" />
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/editprof_et_fname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/Hint_fname"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/editprof_et_lname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/Hint_lname"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/editprof_et_bday"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/Hint_bday"
+            android:inputType="date" />
+
+        <EditText
+            android:id="@+id/editprof_et_street"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/Hint_street"
+            android:inputType="textPostalAddress" />
+
+        <EditText
+            android:id="@+id/editprof_et_zip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/Hint_zip"
+            android:inputType="textPostalAddress" />
+
+        <EditText
+            android:id="@+id/editprof_et_city"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/Hint_city"
+            android:inputType="textPostalAddress" />
+
+        <EditText
+            android:id="@+id/editprof_et_country"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/Hint_country"
+            android:inputType="textPostalAddress" />
+
+        <EditText
+            android:id="@+id/editprof_et_phonenumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/Hint_phone"
+            android:inputType="numberSigned" />
+
+        <EditText
+            android:id="@+id/editprof_et_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/Hint_email"
+            android:inputType="textEmailAddress" />
+
+        <EditText
+            android:id="@+id/editprof_et_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/Hint_desc"
+            android:inputType="textMultiLine" />
+    </LinearLayout>
+
+</ScrollView>

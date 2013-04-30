@@ -62,8 +62,8 @@ public class SqlWrapper {
 					"'"+p.getCity()+"', " +
 					"'"+p.getCountry()+"', " +
 					"'"+p.getDoorCode()+"', " +
-					"'"+p.getStartTime()+"', " +
-					"'"+p.getEndTime()+"', " +
+					"'"+p.getStartDateAndTime()+"', " +
+					"'"+p.getEndDateAndTime()+"', " +
 					""+p.getMinAge()+", " +
 					""+p.getMaxAge()+", " +
 					""+p.getShowPhotos()+", " +
@@ -75,8 +75,44 @@ public class SqlWrapper {
 		new WebserviceCaller(activity, identifier).execute("insert", sqlString);
 	}
 	
+	public static void editParty(FogActivityInterface activity, String identifier, Party p){
+		String sqlString = "UPDATE party SET " +
+					"status_id = " + p.getStatusId() + ", "+
+					"name = '" + p.getName() + "', "+
+					"description = '" + p.getDescription() + "', "+
+					"address = '" + p.getAddress() + "', "+
+					"zip = '" + p.getZip() + "', "+
+					"city = '" + p.getCity() + "', "+
+					"country = '" + p.getCountry() + "', "+
+					"door_code = '" + p.getDoorCode() + "', "+
+					"start_time = '" + p.getStartDateAndTime() + "', "+
+					"end_time = '" + p.getEndDateAndTime() + "', "+
+					"min_age = " + p.getMinAge() + ", "+
+					"max_age = " + p.getMaxAge() + ", "+
+					"show_photos = " + p.getShowPhotos() + ", "+
+					"show_wall = " + p.getShowWall() + ", "+
+					"lat = '" + p.getLat() + "', "+
+					"lon = '" + p.getLon() + "'"+
+				" WHERE id = "+p.getId()+";";
+		//Toast.makeText((Activity) activity, sqlString, Toast.LENGTH_LONG).show();
+		new WebserviceCaller(activity, identifier).execute("update", sqlString);
+	}
+	
 	public static void selectUserByToken(FogActivityInterface activity, String identifier, User u){
-		String sqlString ="SELECT * FROM user WHERE token = '"+u.getToken()+"';";
+		String sqlString = "SELECT * FROM user WHERE token = '"+u.getToken()+"';";
 		new WebserviceCaller(activity, identifier).execute("select", sqlString);
+	}
+	
+	public static void selectUserByEmailAndPassword(FogActivityInterface activity, String identifier, User u){
+		String sqlString = "SELECT * FROM user WHERE email='"+u.getEmail()+"' AND password='"+u.getPassword()+"';";
+		new WebserviceCaller(activity, identifier).execute("select", sqlString);
+	}
+	public static void updateUser(FogActivityInterface activity, String identifier, User u) {
+		String sqlString ="UPDATE user " +
+				"SET email = '" + u.getEmail()+ "', firstname = '"+u.getFirstName()+"', " +
+				"lastname = '"+u.getLastName() +"', description = '" + u.getDescription() + "' , birthdate = '" + u.getBirthdate() + "', " +
+				"address = '" +u.getAddress() + "', zip = '"+u.getZip() +"', city = '" + u.getCity() +"', country = '" +u.getCountry() +"' " +
+				"WHERE user.user_id = "+u.getUserId()+";";
+		new WebserviceCaller(activity, identifier).execute("update", sqlString);
 	}
 }
