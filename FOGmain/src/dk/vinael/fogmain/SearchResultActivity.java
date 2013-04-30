@@ -91,18 +91,13 @@ public class SearchResultActivity extends Activity implements OnClickListener, F
 
 	}
 	public void onMenuClicked(MenuItem item) {
-		switch	(item.getItemId()){	
-		case	R.id.menu_sort_by_age:	
+		if (item.getItemId() == R.id.menu_sort_by_age) {
 			sortByAvgAge(partyList);
-			break;
-		case	R.id.menu_sort_by_name:
+		} else if (item.getItemId() == R.id.menu_sort_by_name) {
 			sortByName(partyList);
-			break;
-		case	R.id.menu_sort_by_distance:
+		} else if (item.getItemId() == R.id.menu_sort_by_distance) {
 			sortByDistanceToLocation(partyList, loc);
-			break;
-		default:
-			break; 
+		} else {
 		}
 			
 	}
