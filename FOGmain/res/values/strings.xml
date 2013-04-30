@@ -4,5 +4,6 @@
     <string name="app_name">FOGmain</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
-
+    
+	<string name="app_id">154034014762879</string>
 </resources>

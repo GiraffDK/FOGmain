@@ -12,6 +12,7 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -76,7 +77,7 @@ public class WebserviceCaller extends AsyncTask<String, Void, String> {
 		        
 		        // Execute HTTP Post Request and return response to "onPostExecute" method
 		        HttpResponse response = httpclient.execute(httppost);
-		        String responseBody = EntityUtils.toString(response.getEntity());
+		        String responseBody = EntityUtils.toString(response.getEntity(), HTTP.UTF_8);
 		        return responseBody;
 		        
 		        
@@ -104,6 +105,8 @@ public class WebserviceCaller extends AsyncTask<String, Void, String> {
 			
 
 			JSONObject jo = jsonArray.getJSONObject(0);
+			//Toast.makeText((Activity) callingActivity, jo.toString(), Toast.LENGTH_LONG).show();
+			
 			if (jo.has("access")){
 				// If username or password is wrong
 				if (jo.getString("access").toString().equals("denied")){

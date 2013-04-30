@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Address"
-                android:inputType="textPostalAddress" >
+                android:inputType="textPostalAddress">
             </EditText>
 
             <EditText
@@ -85,33 +85,64 @@
                 android:ems="10"
                 android:hint="Door Code" />
 
-            <TextView
-                android:id="@+id/tv_start_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="2013-04-30 00:00:00" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
 
-            <Button
-                android:id="@+id/btn_set_start_time"
-                android:layout_width="wrap_content"
+                <TextView
+                android:id="@+id/tv_start_time"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
-                android:text="Set Start Time" 
-                android:onClick="setStartTime" />
-            
-            <TextView
-                android:id="@+id/tv_end_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="2013-05-01 00:00:00" />
-            
-            <Button
-                android:id="@+id/btn_set_end_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Set End Time" 
-                android:onClick="setEndTime"
-                />
-            
+                android:text="Start:" 
+				android:textAppearance="?android:attr/textAppearanceMedium" />
+                
+	            <Button
+	                android:id="@+id/btn_set_start_date"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="Set Start Date" 
+	                android:onClick="selectDate"
+	                />
+	
+	            <Button
+	                android:id="@+id/btn_set_start_time"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="Set Start Time"
+	                android:onClick="selectTime"
+	                 />
+
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+	            
+	            <TextView
+	                android:id="@+id/tv_end_time"
+	                android:layout_width="60dp"
+	                android:layout_height="wrap_content"
+	                android:text="End:" 
+	                android:textAppearance="?android:attr/textAppearanceMedium" 
+	                />
+	            
+	            <Button
+	                android:id="@+id/btn_set_end_date"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="Set End Date" 
+	                android:onClick="selectDate"
+	                />
+	            
+	            <Button
+	                android:id="@+id/btn_set_end_time"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="Set End Time"
+	                android:onClick="selectTime"
+	                 />
+            </LinearLayout>
             <EditText
                 android:id="@+id/et_min_age"
                 android:layout_width="match_parent"
@@ -127,7 +158,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Max. Age (100)"
+                android:hint="Max. Age (60)"
                 android:inputType="number" >
             </EditText>
             
@@ -148,16 +179,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Create Party" 
-                android:onClick="createParty"
+                android:onClick="createEditParty"
                 />
             
             
-            <Button
+            <!-- Button
                 android:id="@+id/btn_view_latest_party"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Latest party"
                 android:onClick="viewParty"
+                 /-->
+
+            <Button
+                android:id="@+id/btn_editParty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Edit party"
+                android:onClick="createEditParty"
                  />
 
         </LinearLayout>

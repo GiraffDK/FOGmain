@@ -1,6 +1,8 @@
 package dk.vinael.domain;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -12,7 +14,7 @@ public class Party implements Serializable {
 	
 	private int id, owner_user_id, status_id; // id's
 	private String name, description, address, zip, city, country, door_code; // party data
-	private String start_time, end_time; // party time
+	private String start_date_time, end_date_time; // party time
 	private int min_age, max_age; // part age
 	private int show_photos, show_wall; // show
 	private double lat, lon; // geolocation
@@ -76,22 +78,22 @@ public class Party implements Serializable {
 		this.door_code = door_code;
 	}
 
-	public String getStartTime() {
-		return start_time;
+	public String getStartDateAndTime() {
+		return start_date_time;
 	}
 
-	public void setStartTime(String start_time) {
-		this.start_time = start_time;
+	public void setStartDateAndTime(String start_date_time) {
+		this.start_date_time = start_date_time;
 	}
 
-	public String getEndTime() {
-		return end_time;
+	public String getEndDateAndTime() {
+		return end_date_time;
 	}
 
-	public void setEndTime(String end_time) {
-		this.end_time = end_time;
+	public void setEndDateAndTime(String end_date_time) {
+		this.end_date_time = end_date_time;
 	}
-
+	
 	public int getMinAge() {
 		return min_age;
 	}
@@ -174,6 +176,22 @@ public class Party implements Serializable {
 	
 	// Methods
 	
+	public String getStartDate(){
+		return DateAndTimeStringHandler.getDateFromDateAndTime(start_date_time);
+	}
+	
+	public String getStartTime(){
+		return DateAndTimeStringHandler.getTimeFromDateAndTime(start_date_time);
+	}
+	
+	public String getEndDate(){
+		return DateAndTimeStringHandler.getDateFromDateAndTime(end_date_time);
+	}
+	
+	public String getEndTime(){
+		return DateAndTimeStringHandler.getTimeFromDateAndTime(end_date_time);
+	}
+	
 	public boolean doShowPhotos(){
 		if (getShowPhotos()==1){
 			return true;
@@ -203,8 +221,8 @@ public class Party implements Serializable {
 		setCity("");
 		setCountry("");
 		setDoorCode("");
-		setStartTime("");
-		setEndTime("");
+		setStartDateAndTime("");
+		setEndDateAndTime("");
 		setMinAge(0);
 		setMaxAge(0);
 		setShowPhotos(0);
@@ -225,8 +243,8 @@ public class Party implements Serializable {
 			setCity(obj.getString("city"));
 			setCountry(obj.getString("country"));
 			setDoorCode(obj.getString("door_code"));
-			setStartTime(obj.getString("start_time"));
-			setEndTime(obj.getString("end_time"));
+			setStartDateAndTime(obj.getString("start_time"));
+			setEndDateAndTime(obj.getString("end_time"));
 			setMinAge(obj.getInt("min_age"));
 			setMaxAge(obj.getInt("max_age"));
 			setShowPhotos(obj.getInt("show_photos"));
@@ -255,8 +273,8 @@ public class Party implements Serializable {
 		setCity(city);
 		setCountry(country);
 		setDoorCode(door_code);
-		setStartTime(start_time);
-		setEndTime(end_time);
+		setStartDateAndTime(start_time);
+		setEndDateAndTime(end_time);
 		setMinAge(min_age);
 		setMaxAge(max_age);
 		setShowPhotos(show_photos);
@@ -274,4 +292,7 @@ public class Party implements Serializable {
 		SqlWrapper.createParty(activity, identifier, this);
 	}
 
+	public void edit(FogActivityInterface activity, String identifier){
+		SqlWrapper.editParty(activity, identifier, this);
+	}
 }

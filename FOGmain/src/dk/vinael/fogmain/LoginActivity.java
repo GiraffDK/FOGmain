@@ -2,6 +2,7 @@ package dk.vinael.fogmain;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import dk.vinael.domain.FOGmain;
 import dk.vinael.domain.User;
@@ -9,11 +10,13 @@ import dk.vinael.interfaces.FogActivityInterface;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 import asynctasks.WebserviceCaller;
 
 public class LoginActivity extends Activity implements FogActivityInterface {
@@ -39,27 +42,42 @@ public class LoginActivity extends Activity implements FogActivityInterface {
 		EditText txt_password = (EditText) findViewById(R.id.txt_password);
 		user.setEmail(txt_email.getText().toString());
 		user.setPassword(txt_password.getText().toString());
-		
-		new WebserviceCaller(this, "getUser").execute("SELECT * FROM user WHERE email = '"+user.getEmail()+"' AND password ='"+user.getPassword()+"';");
+		//Log.i(user.getPassword(), "PASS:");
+		user.selectUserByEmailAndPassword(this, "getUserToken");
 	}
 	
 	@Override
 	public void jsonArrayHandler(JSONArray ja, String identifier) {
-		if (identifier.equals("getUser")){
+		if (identifier.equals("getUserToken")){
 			try {
-				user.setUserByJson(ja.getJSONObject(0));
+				JSONObject jo = ja.getJSONObject(0);
+				if (jo.has("access")){
+					if (jo.getString("access")!="granted" && jo.getString("access")!="denied"){
+						user.setToken(jo.getString("access"));
+						user.selectUserByToken(this, "setUser");
+					}
+				}
 			} catch (JSONException e) {
-				e.printStackTrace();
+				user = null;
+				//e.printStackTrace();
 			}
-			if (user.getToken()!=null){
-				// Should go to MenuActivity
-				Intent intent = new Intent(this, AddEditPartyActivity.class);
-				this.finish();
-				this.startActivity(intent);
-				
+		}
+		else if (identifier.equals("setUser")){
+			try {
+				JSONObject jo = ja.getJSONObject(0);
+				if (jo.has("firstname")){
+					user.setUserByJson(jo);
+					Intent intent = new Intent(this, MenuActivity.class);
+					this.finish();
+					this.startActivity(intent);
+				}
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 	}
+	
 
 	
 }
