@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:text="@string/TextView" />
+        android:text="TextView" />
 
     <Button
         android:id="@+id/btn_add_party"
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:text="@string/AddParty"
+        android:text="Add Party"
         android:onClick="addNewParty"
          />
 
@@ -33,6 +33,6 @@
         android:layout_above="@+id/btn_add_party"
         android:layout_alignRight="@+id/btn_add_party"
         android:onClick="editParty"
-        android:text="@string/EditParty" />
+        android:text="Edit Party" />
 
 </RelativeLayout>

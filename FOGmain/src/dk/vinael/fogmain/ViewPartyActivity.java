@@ -6,7 +6,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 import dk.vinael.domain.FOGmain;
 import dk.vinael.domain.Party;
 import dk.vinael.domain.User;
@@ -30,7 +32,13 @@ public class ViewPartyActivity extends Activity implements FogActivityInterface 
 		
 		TextView tv_data = (TextView) findViewById(R.id.textViewUserdata);
 		if (party!=null){
-			tv_data.setText(party.getName());
+			tv_data.setText(party.getId() + ", " + party.getName() + "\n" + party.getDescription());
+		}
+		
+		//Toast.makeText(this.getBaseContext(), user.getUserId()+" == "+party.getOwnerId(), Toast.LENGTH_LONG).show();
+		if (!(user.getUserId()==party.getOwnerId())){
+			((Button) findViewById(R.id.btn_edit_party)).setEnabled(false);
+			
 		}
 	}
 	

@@ -1,0 +1,83 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".ProfileActivity" >
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        
+        <ImageView
+	        android:id="@+id/profileImages"
+	        android:layout_width="70dp"
+	        android:layout_height="70dp"
+	        android:layout_column="0"
+	        android:layout_row="0"
+	        android:contentDescription="@string/drsPro"
+	        android:src="@drawable/ic_launcher" />
+	
+		<GridLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content" >
+	        
+	         <TextView
+	            android:id="@+id/firstname"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_column="0"
+	            android:layout_row="0"
+	            android:text="@string/firstname"
+	            android:textAppearance="?android:attr/textAppearanceMedium" />
+	
+	        <TextView
+	            android:id="@+id/lastname"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_column="0"
+	            android:layout_row="1"
+	            android:text="@string/lastname"
+	            android:textAppearance="?android:attr/textAppearanceMedium" />
+    
+        </GridLayout>
+    </GridLayout>
+
+    <TextView
+        android:id="@+id/locations"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/locations"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    
+    <TextView
+        android:id="@+id/DynLocations"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/DynLocations" />
+
+    <TextView
+        android:id="@+id/biografi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/biografi"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Button
+        android:id="@+id/btn_back"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:onClick="Back"
+        android:text="@string/back" />
+
+</LinearLayout>

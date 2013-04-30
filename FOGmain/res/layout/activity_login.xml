@@ -17,7 +17,9 @@
         android:layout_alignParentTop="true"
         android:ems="10"
         android:hint="@string/Email"
-        android:inputType="textEmailAddress" >
+        android:inputType="textEmailAddress" 
+        android:text="kevin"
+        >
         <requestFocus />
     </EditText>
     
@@ -29,7 +31,9 @@
         android:layout_below="@+id/txt_email"
         android:ems="10"
         android:hint="@string/Password"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:text="test"
+         />
 
     <Button
         android:id="@+id/btn_login"
@@ -40,5 +44,13 @@
         android:text="@string/Login"
         android:onClick="login"
          />
+    
+    <!-- com.facebook.widget.LoginButton
+        android:id="@+id/authButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btn_login"
+        android:layout_below="@+id/btn_login"
+        /-->
 
 </RelativeLayout>

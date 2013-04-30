@@ -214,4 +214,8 @@ public class User {
 		SqlWrapper.selectUserByToken(a, i, this);
 	}
 	
+	public void selectUserByEmailAndPassword(FogActivityInterface a, String i){
+		SqlWrapper.selectUserByEmailAndPassword(a, i, this);
+	}
+	
 }

@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:text="@string/getParties"
+        android:text="get parties"
         android:onClick="getAllParties"
         android:visibility="invisible"
         />
@@ -44,7 +44,7 @@
         android:layout_above="@+id/progressBar1"
         android:layout_alignLeft="@+id/progressBar1"
         android:layout_marginBottom="14dp"
-        android:text="@string/Loading"
+        android:text="Loading"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
@@ -54,7 +54,7 @@
         android:layout_alignBaseline="@+id/getusers"
         android:layout_alignBottom="@+id/getusers"
         android:layout_centerHorizontal="true"
-        android:text="@string/PleaseWait"
+        android:text="Please wait.."
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>

@@ -107,6 +107,7 @@ public class SqlWrapper {
 		String sqlString = "SELECT * FROM user WHERE email='"+u.getEmail()+"' AND password='"+u.getPassword()+"';";
 		new WebserviceCaller(activity, identifier).execute("select", sqlString);
 	}
+	
 	public static void updateUser(FogActivityInterface activity, String identifier, User u) {
 		String sqlString ="UPDATE user " +
 				"SET email = '" + u.getEmail()+ "', firstname = '"+u.getFirstName()+"', " +

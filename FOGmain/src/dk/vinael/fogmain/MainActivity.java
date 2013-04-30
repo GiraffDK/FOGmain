@@ -34,7 +34,7 @@ public class MainActivity extends Activity implements FogActivityInterface {
 			user = new User();
 			((FOGmain)getApplicationContext()).user = user;
 		}
-		user.setToken("0");
+		
 		user.selectUserByToken(MainActivity.this, "checkAndSetUser");
 		TextView tv_please_wait = (TextView) findViewById(R.id.tv_pleasewait);
 		tv_please_wait.setText("Trying to login.. Hold on!");
