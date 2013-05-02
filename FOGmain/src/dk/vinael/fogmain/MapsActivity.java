@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -109,6 +110,7 @@ public class MapsActivity extends FragmentActivity implements OnMapClickListener
 					i.putExtra("Choosen Location", house);
 					setResult(RESULT_OK, i);
 					finish();
+					MapsActivity.this.finish();
 					break;
 				case DialogInterface.BUTTON_NEGATIVE:
 					mark.remove();
@@ -124,14 +126,11 @@ public class MapsActivity extends FragmentActivity implements OnMapClickListener
 	 * Simple loop that takes each party in the ps list and adds its location as a marker on the map.
 	 */
 	public void addExisting() {
-		for (int i = 0; i < parties.size(); i++) {
-			double lat = parties.get(i).getLat();
-			double lon = parties.get(i).getLon();
-			LatLng latLng = new LatLng(lat, lon);
-			Location temp2 = new Location("");
-			temp2.setLatitude(lat);
-			temp2.setLongitude(lon);
-			map.addMarker(new MarkerOptions().position(latLng).title(parties.get(i).getName()));
+		MarkerOptions mo = new MarkerOptions();
+		for (Party  p : parties) {
+			double lat = p.getLat();
+			double lon = p.getLon();
+			map.addMarker(mo.position(new LatLng(lat, lon)).title(p.getName()));
 		}
 	}
 

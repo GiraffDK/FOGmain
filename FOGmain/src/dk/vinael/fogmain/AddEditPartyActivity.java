@@ -23,7 +23,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-import asynctasks.LocationToAddress;
+import asynctasks.LocationHandler;
 import dk.vinael.domain.DateAndTimeStringHandler;
 import dk.vinael.domain.FOGmain;
 import dk.vinael.domain.Party;
@@ -138,7 +138,9 @@ public class AddEditPartyActivity extends FragmentActivity implements FogActivit
 	
 	public void getAddressGeoCode(){
 		Location loc = new Location(addressToLookup);
-		new LocationToAddress(loc, this, "addressLookup").execute(loc);
+		LocationHandler.convertAddressToLocation(this, addressToLookup, "");
+		//LocationHandler.convertLocationToAddress(this, loc, "addressLookup");
+		//new LocationToAddress(loc, this, "addressLookup").execute(loc);
 		Toast.makeText(this.getBaseContext(), "looking up", Toast.LENGTH_LONG).show();
 	}
 	
@@ -348,6 +350,17 @@ public class AddEditPartyActivity extends FragmentActivity implements FogActivit
 	public void onStatusChanged(String provider, int status, Bundle extras) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void returningAddress(String Address, String identifier) {
+		
+		
+	}
+
+	@Override
+	public void returningLocation(Location location, String identifier) {
+		Toast.makeText(this, location.getLatitude() + " " + location.getLongitude(), Toast.LENGTH_LONG).show();	
 	}
 
 }

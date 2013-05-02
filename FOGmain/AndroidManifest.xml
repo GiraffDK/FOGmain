@@ -58,6 +58,15 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="dk.vinael.fogmain.ViewProfilActivity"
+            android:label="Login" >
+            <intent-filter>
+                <action android:name="android.intent.action.DEFAULT" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name="dk.vinael.fogmain.AddEditPartyActivity"
             android:label="Add Party" >
             <intent-filter>
@@ -125,5 +134,4 @@
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyDtvxFCLvGgsaNoUlju_U2u98CSXoqjE-8" />
     </application>
-
 </manifest>

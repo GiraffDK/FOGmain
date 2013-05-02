@@ -73,11 +73,11 @@
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <Button
-        android:id="@+id/btn_back"
+        android:id="@+id/btn_edit_profile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
-        android:onClick="Back"
-        android:text="@string/back" />
+        android:text="@string/EditProfile"
+        android:onClick="onClick" />
 
 </LinearLayout>

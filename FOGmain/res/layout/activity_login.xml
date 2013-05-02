@@ -17,9 +17,9 @@
         android:layout_alignParentTop="true"
         android:ems="10"
         android:hint="@string/Email"
-        android:inputType="textEmailAddress" 
-        android:text="kevin"
-        >
+        android:inputType="textEmailAddress"
+        android:text="maanefjaes" >
+
         <requestFocus />
     </EditText>
     

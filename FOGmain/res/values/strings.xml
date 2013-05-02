@@ -46,7 +46,7 @@
     
     
     <!-- Profile -->
-    <string name="back">Back</string>
+    <string name="EditProfile">Edit profile</string>
     <string name="drsPro">Profile Image</string>
     <string name="firstname">Første navn</string>
     <string name="lastname">Sidste navn...</string>

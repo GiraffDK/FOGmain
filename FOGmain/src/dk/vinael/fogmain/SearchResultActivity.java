@@ -134,4 +134,14 @@ public class SearchResultActivity extends Activity implements OnClickListener, F
 			adap.notifyDataSetChanged();
 		}
 	}
+	@Override
+	public void returningAddress(String Address, String identifier) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void returningLocation(Location location, String identifier) {
+		// TODO Auto-generated method stub
+		
+	}
 }

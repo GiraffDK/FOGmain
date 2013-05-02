@@ -6,6 +6,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import android.app.Activity;
+
+import android.location.Location;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -63,6 +65,16 @@ public class ShowPartyRequestersActivity extends Activity implements FogActivity
 			}
 		}
 		
+	}
+	@Override
+	public void returningAddress(String Address, String identifier) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void returningLocation(Location location, String identifier) {
+		// TODO Auto-generated method stub
 	}
 
 }

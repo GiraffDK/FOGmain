@@ -6,6 +6,7 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -182,6 +183,7 @@ public class ViewPartyActivity extends Activity implements FogActivityInterface 
 				}
 			}
 			showLayouts();
+
 		}
 		else if (identifier.equals("userRequestParty") || identifier.equals("userCancelRequestParty")){
 			Intent intent = new Intent(this, ViewPartyActivity.class);
@@ -189,6 +191,18 @@ public class ViewPartyActivity extends Activity implements FogActivityInterface 
 			this.finish();
 			this.startActivity(intent);
 		}
+	}
+
+	@Override
+	public void returningAddress(String Address, String identifier) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void returningLocation(Location location, String identifier) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
