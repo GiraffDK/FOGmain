@@ -171,6 +171,7 @@ public class ViewPartyActivity extends Activity implements FogActivityInterface 
 				}
 			}
 			showLayouts();
+
 		}
 		else if (identifier.equals("userRequestParty") || identifier.equals("userCancelRequestParty")){
 			Intent intent = new Intent(this, ViewPartyActivity.class);
