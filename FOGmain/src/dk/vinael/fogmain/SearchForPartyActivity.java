@@ -1,42 +1,46 @@
 package dk.vinael.fogmain;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
+import org.json.JSONArray;
+
+import dk.vinael.interfaces.FogActivityInterface;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Address;
-import android.location.Criteria;
-import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.TextView;
-import asynctasks.LocationToAddress;
+import asynctasks.LocationHandler;
 
-public class SearchForPartyActivity extends Activity implements LocationListener {
+public class SearchForPartyActivity extends Activity implements LocationListener, FogActivityInterface {
 
 	private LocationManager locationManager;
 	private Location loc;
 	private NumberPicker np_radius;
 	private NumberPicker np_age_low;
 	private NumberPicker np_age_max;
-	
+	private Button btn_search;
+
+	@Override
+	protected void onResume() {
+		btn_search.setClickable(true);
+		super.onResume();
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_search_party);
+		btn_search = (Button) findViewById(R.id.btn_search_parties);
 		locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 		locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
 		onLocationChanged(locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER));
@@ -51,23 +55,19 @@ public class SearchForPartyActivity extends Activity implements LocationListener
 		np_age_max = (NumberPicker) findViewById(R.id.np_age_max);
 		np_age_max.setMaxValue(60);
 		np_age_max.setMinValue(18);
-	
+
 	}
 
 	@Override
 	public void onAttachedToWindow() {
 		super.onAttachedToWindow();
-		new LocationToAddress(loc, this, "SearchParty").execute(loc);
-	}
+		LocationHandler.convertLocationToAddress(this, loc, "SetAddressText");
 
-	
-	public void setLocationText(String text) {
-		EditText et = (EditText) findViewById(R.id.et_location);
-		et.setText(text);
 	}
 
 	public void onClick(View view) {
-		new LocationToAddress(null, this, "AddressToLocation").execute();
+		btn_search.setClickable(false);
+		LocationHandler.convertAddressToLocation(this, ((EditText) findViewById(R.id.et_location)).getText().toString(), "CheckAddress");
 	}
 
 	public void selectOnMap(View view) {
@@ -75,35 +75,13 @@ public class SearchForPartyActivity extends Activity implements LocationListener
 		in.putExtra("Location", loc);
 		startActivityForResult(in, 1);
 	}
-	public void checkAddress(List<Address> a) {
-		List<Address> addresses = a;
-		if (addresses.size() > 0) {
-			Address location = addresses.get(0);
-			loc.setLatitude(location.getLatitude());
-			loc.setLongitude(location.getLongitude());
-			
-			// Starting new view.
-			Intent in = new Intent(this, SearchResultActivity.class);
-			in.putExtra("Location", loc);
-			in.putExtra("Radius", np_radius.getValue());
-			in.putExtra("Min_age", np_age_low.getValue());
-			in.putExtra("Max_age", np_age_max.getValue());
-			startActivity(in);
-		} else {
-			AlertDialog.Builder adb = new AlertDialog.Builder(this);
-			adb.setTitle("Google Map");
-			adb.setMessage("Please Provide the Proper Place");
-			adb.setPositiveButton("Close", null);
-			adb.show();
-		}
-	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		if (resultCode != RESULT_CANCELED) {
-			loc.set((Location) data.getExtras().get("newLocation"));
-			new LocationToAddress(loc, this, "SearchParty").execute(loc);
+			loc.set((Location) data.getExtras().get("Choosen Location"));
+			LocationHandler.convertLocationToAddress(this, loc, "SetAddressText");
 		}
 	}
 
@@ -128,5 +106,40 @@ public class SearchForPartyActivity extends Activity implements LocationListener
 	public void onStatusChanged(String provider, int status, Bundle extras) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void jsonArrayHandler(JSONArray ja, String identifier) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void returningAddress(String Address, String identifier) {
+		if (identifier.equals("SetAddressText")) {
+			((EditText) findViewById(R.id.et_location)).setText(Address);	
+		} 
+	}
+
+	@Override
+	public void returningLocation(Location location, String identifier) {
+		if (identifier.equals("CheckAddress")) {
+			if (location != null) {
+				loc = location;
+				// Starting new view.
+				Intent in = new Intent(this, SearchResultActivity.class);
+				in.putExtra("Location", loc);
+				in.putExtra("Radius", np_radius.getValue());
+				in.putExtra("Min_age", np_age_low.getValue());
+				in.putExtra("Max_age", np_age_max.getValue());
+				startActivity(in);
+			} else {
+				AlertDialog.Builder adb = new AlertDialog.Builder(this);
+				adb.setTitle("Google Map");
+				adb.setMessage("Please Provide the Proper Place");
+				adb.setPositiveButton("Close", null);
+				adb.show();
+			}
+		}
 	}
 }

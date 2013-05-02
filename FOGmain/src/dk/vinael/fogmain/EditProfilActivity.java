@@ -9,6 +9,7 @@ import dk.vinael.interfaces.FogActivityInterface;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.location.Location;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -27,6 +28,7 @@ public class EditProfilActivity extends Activity implements FogActivityInterface
 	private String oldText = "";
 	private String newText = "";
 	private User user;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -91,6 +93,7 @@ public class EditProfilActivity extends Activity implements FogActivityInterface
 					SqlWrapper.updateUser(EditProfilActivity.this, "updateUser", user);
 					break;
 				case DialogInterface.BUTTON_NEGATIVE:
+					finish();
 					break;
 				}
 			}
@@ -106,6 +109,16 @@ public class EditProfilActivity extends Activity implements FogActivityInterface
 		} else {
 			Toast.makeText(this, "Couldn't save", Toast.LENGTH_SHORT).show();
 		}
+		
+	}
+	@Override
+	public void returningAddress(String Address, String identifier) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void returningLocation(Location location, String identifier) {
+		// TODO Auto-generated method stub
 		
 	}
 }

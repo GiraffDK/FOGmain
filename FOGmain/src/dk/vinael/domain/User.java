@@ -173,6 +173,7 @@ public class User {
 	// Methods
 	
 	public String toString(){
+		/*
 		return "user_id: " + getUserId() +
 				"\nemail: " + getEmail() +
 				"\nfirstname: " + getFirstName() +
@@ -187,6 +188,9 @@ public class User {
 				"\ncity: " + getCity() +
 				"\ncountry: " + getCountry() +
 				"";
+		*/
+		
+		return getFirstName() + " " + getLastName();
 	}
 	
 	public void setUserByJson(JSONObject jo){

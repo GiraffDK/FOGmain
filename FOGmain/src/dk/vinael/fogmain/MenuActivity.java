@@ -7,6 +7,7 @@ import dk.vinael.domain.User;
 import dk.vinael.interfaces.FogActivityInterface;
 import android.app.Activity;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -41,12 +42,24 @@ public class MenuActivity extends Activity implements FogActivityInterface {
 	}
 	
 	public void gotoProfile(View view){
-		Intent intent = new Intent(this, EditProfilActivity.class);
+		Intent intent = new Intent(this, ViewProfilActivity.class);
 		this.startActivity(intent);
 	}
 	
 	@Override
 	public void jsonArrayHandler(JSONArray ja, String identifier) {
+		
+	}
+
+	@Override
+	public void returningAddress(String Address, String identifier) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void returningLocation(Location location, String identifier) {
+		// TODO Auto-generated method stub
 		
 	}
 

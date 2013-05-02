@@ -116,4 +116,25 @@ public class SqlWrapper {
 				"WHERE user.user_id = "+u.getUserId()+";";
 		new WebserviceCaller(activity, identifier).execute("update", sqlString);
 	}
+	
+	public static void selectUserInParty(FogActivityInterface activity, String identifier, Party p, User u){
+		String sqlString = "SELECT * FROM user_in_party WHERE party_id="+p.getId()+" AND user_id="+u.getUserId()+";";
+		new WebserviceCaller(activity, identifier).execute("select", sqlString);
+	}
+	
+	public static void userRequestParty(FogActivityInterface activity, String identifier, Party p, User u){
+		String sqlString = "INSERT INTO user_in_party VALUES (0, "+u.getUserId()+", "+p.getId()+", 1);";
+		new WebserviceCaller(activity, identifier).execute("insert", sqlString);
+	}
+	
+	public static void userCancelRequestParty(FogActivityInterface activity, String identifier, Party p, User u){
+		String sqlString = "DELETE FROM user_in_party WHERE party_id="+p.getId()+" AND user_id="+u.getUserId()+";";
+		new WebserviceCaller(activity, identifier).execute("delete", sqlString);
+	}
+	
+	public static void getPartyRequesters(FogActivityInterface activity, String identifier, Party p){
+		//String sqlString = "SELECT * FROM user_in_party WHERE party_id="+p.getId()+" AND attending_status_id=1";
+		String sqlString = "SELECT user.* FROM user INNER JOIN user_in_party ON user_in_party.user_id = user.user_id WHERE user_in_party.party_id="+p.getId()+";";
+		new WebserviceCaller(activity, identifier).execute("select", sqlString);
+	}
 }
