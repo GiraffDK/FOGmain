@@ -255,8 +255,8 @@ public class Party implements Serializable {
 			setMaxAge(obj.getInt("max_age"));
 			setShowPhotos(obj.getInt("show_photos"));
 			setShowWall(obj.getInt("show_wall"));
-			setLat(obj.getInt("lat"));
-			setLon(obj.getInt("lon"));
+			setLat(obj.getDouble("lat"));
+			setLon(obj.getDouble("lon"));
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}

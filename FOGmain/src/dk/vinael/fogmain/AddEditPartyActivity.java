@@ -144,15 +144,6 @@ public class AddEditPartyActivity extends FragmentActivity implements FogActivit
 		Toast.makeText(this.getBaseContext(), "looking up", Toast.LENGTH_LONG).show();
 	}
 	
-	public void setLocation(List<Address> addresses){
-		if (addresses.size()>0){
-			Toast.makeText(this.getBaseContext(), addresses.get(0).getLatitude()+" : "+addresses.get(0).getLongitude(), Toast.LENGTH_LONG).show();
-			//Toast.makeText(this.getBaseContext(), ""+addresses.size(), Toast.LENGTH_LONG).show();
-			this.lat = (addresses.get(0).getLatitude());
-			this.lon = (addresses.get(0).getLongitude());
-		}
-	}
-	
 	public void selectTime(View v){
 		DialogFragment newFragment = new TimePickerFragment();
 		if (v == findViewById(R.id.btn_set_start_time)){
@@ -360,7 +351,14 @@ public class AddEditPartyActivity extends FragmentActivity implements FogActivit
 
 	@Override
 	public void returningLocation(Location location, String identifier) {
-		Toast.makeText(this, location.getLatitude() + " " + location.getLongitude(), Toast.LENGTH_LONG).show();	
+		if (location!=null){
+			Toast.makeText(this, location.getLatitude() + " " + location.getLongitude(), Toast.LENGTH_LONG).show();
+			this.lat = (location.getLatitude());
+			this.lon = (location.getLongitude());
+		}
+		else{
+			Toast.makeText(this, "Locations geo shit not found!", Toast.LENGTH_LONG).show();
+		}
 	}
 
 }
