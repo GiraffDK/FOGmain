@@ -39,6 +39,8 @@ public class ViewPartyActivity extends Activity implements FogActivityInterface 
 	private TextView tv_age_level_viewparty;
 	private TextView tv_party_address_viewparty;
 	private TextView tv_doorcode_viewparty;
+	private Button btn_requestcancelunsub_viewparty;
+	private Button btn_editparty_viewparty;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +61,8 @@ public class ViewPartyActivity extends Activity implements FogActivityInterface 
 		tv_age_level_viewparty = ((TextView) findViewById(R.id.tv_age_level_viewparty));
 		tv_party_address_viewparty = ((TextView) findViewById(R.id.tv_party_address_viewparty));
 		tv_doorcode_viewparty = ((TextView) findViewById(R.id.tv_doorcode_viewparty));
+		btn_requestcancelunsub_viewparty = ((Button) findViewById(R.id.btn_requestcancelunsub_viewparty));
+		btn_editparty_viewparty = ((Button) findViewById(R.id.btn_editparty_viewparty));
 		
 		/* Determing user status - start */
 		
@@ -91,11 +95,10 @@ public class ViewPartyActivity extends Activity implements FogActivityInterface 
 		}
 		if (user_status==-1 || user_status==0 || user_status==2){ /* requester || attending guest */
 			// handle request button
-			Button requestbtn = ((Button) findViewById(R.id.btn_requestcancelunsub_viewparty));
 			viewbyrequesterattendee.setVisibility(View.VISIBLE);
 			if (user_status==-1){
-				requestbtn.setText("Request");
-				requestbtn.setOnClickListener(new OnClickListener() {
+				btn_requestcancelunsub_viewparty.setText("Request");
+				btn_requestcancelunsub_viewparty.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
 						party.userRequestParty(fai, "userRequestParty", user);
@@ -103,9 +106,9 @@ public class ViewPartyActivity extends Activity implements FogActivityInterface 
 				});
 			}
 			else if (user_status==0 || user_status==2){
-				if (user_status==0){requestbtn.setText("Cancel request");}
-				else if(user_status==2){requestbtn.setText("Unsubscribe party");}
-				requestbtn.setOnClickListener(new OnClickListener() {
+				if (user_status==0){btn_requestcancelunsub_viewparty.setText("Cancel request");}
+				else if(user_status==2){btn_requestcancelunsub_viewparty.setText("Unsubscribe party");}
+				btn_requestcancelunsub_viewparty.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
 						party.userCancelRequestParty(fai, "userCancelRequestParty", user);
@@ -113,7 +116,7 @@ public class ViewPartyActivity extends Activity implements FogActivityInterface 
 				});
 			}
 			else{
-				requestbtn.setVisibility(View.GONE);
+				btn_requestcancelunsub_viewparty.setVisibility(View.GONE);
 			}
 		}
 		if (user_status>=1){ /* owner || attending guest */
@@ -121,6 +124,15 @@ public class ViewPartyActivity extends Activity implements FogActivityInterface 
 		}
 		if (user_status==1){ /* owner */
 			viewbyowner.setVisibility(View.VISIBLE);
+			btn_editparty_viewparty.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(fai, AddEditPartyActivity.class);
+					intent.putExtra("party", party);
+					//this.finish();
+					fai.startActivity(intent);
+				}
+			});
 		}
 		showPartyData();
 	}
