@@ -75,7 +75,12 @@ public class Party implements Serializable {
 	}
 
 	public void setDoorCode(String door_code) {
-		this.door_code = door_code;
+		if (door_code.length()==0){
+			this.door_code = "none";
+		}
+		else{
+			this.door_code = door_code;
+		}
 	}
 
 	public String getStartDateAndTime() {
@@ -296,4 +301,21 @@ public class Party implements Serializable {
 	public void edit(FogActivityInterface activity, String identifier){
 		SqlWrapper.editParty(activity, identifier, this);
 	}
+	
+	public void selectUserInParty(FogActivityInterface activity, String identifier, User u){
+		SqlWrapper.selectUserInParty(activity, identifier, this, u);
+	}
+	
+	public void userRequestParty(FogActivityInterface activity, String identifier, User u){
+		SqlWrapper.userRequestParty(activity, identifier, this, u);
+	}
+	
+	public void userCancelRequestParty(FogActivityInterface activity, String identifier, User u){
+		SqlWrapper.userCancelRequestParty(activity, identifier, this, u);
+	}
+	
+	public void getPartyRequesters(FogActivityInterface activity, String identifier){
+		SqlWrapper.getPartyRequesters(activity, identifier, this);
+	}
+	
 }

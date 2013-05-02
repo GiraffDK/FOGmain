@@ -78,6 +78,10 @@ public class WebserviceCaller extends AsyncTask<String, Void, String> {
 		        // Execute HTTP Post Request and return response to "onPostExecute" method
 		        HttpResponse response = httpclient.execute(httppost);
 		        String responseBody = EntityUtils.toString(response.getEntity(), HTTP.UTF_8);
+		        
+		        if (responseBody.equals("[]")){
+		        	return null;
+		        }
 		        return responseBody;
 		        
 		        

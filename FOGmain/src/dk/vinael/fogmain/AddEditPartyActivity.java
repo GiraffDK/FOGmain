@@ -105,7 +105,7 @@ public class AddEditPartyActivity extends FragmentActivity implements FogActivit
 		btn_set_end_date.setText(DateAndTimeStringHandler.getCurrentDate());
 		btn_set_end_time.setText(DateAndTimeStringHandler.getCurrentTime());
 		
-		((Button)findViewById(R.id.btn_editParty)).setVisibility(View.INVISIBLE);
+		((Button)findViewById(R.id.btn_editParty)).setVisibility(View.GONE);
 		
 		// Edit party
 		bundle = getIntent().getExtras();
@@ -113,7 +113,7 @@ public class AddEditPartyActivity extends FragmentActivity implements FogActivit
 			party = (Party) bundle.getSerializable("party");
 			if (party!=null){
 				putDataInItems(party);
-				((Button)findViewById(R.id.btn_createParty)).setVisibility(View.INVISIBLE);
+				((Button)findViewById(R.id.btn_createParty)).setVisibility(View.GONE);
 				((Button)findViewById(R.id.btn_editParty)).setVisibility(View.VISIBLE);
 			}
 		}
