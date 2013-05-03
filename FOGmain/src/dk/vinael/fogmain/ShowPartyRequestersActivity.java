@@ -69,7 +69,7 @@ public class ShowPartyRequestersActivity extends Activity implements FogActivity
 				final Activity aFai = (Activity)fai;
 				
 				Toast.makeText(aFai, ""+arg2, Toast.LENGTH_LONG).show();
-				User tmpUser = al_requesters.get(arg2);
+				final User tmpUser = al_requesters.get(arg2);
 				String[] a_choices = {"See profile","Accept", "Deny"};
 				
 				AlertDialog.Builder builder = new AlertDialog.Builder(aFai);
@@ -79,6 +79,12 @@ public class ShowPartyRequestersActivity extends Activity implements FogActivity
 		               public void onClick(DialogInterface dialog, int which) {
 		                   // The 'which' argument contains the index position
 		                   // of the selected item
+		            	   if (which==0){
+		            		Intent intent = new Intent(aFai, ViewProfilActivity.class);
+		           			intent.putExtra("user", tmpUser);
+		           			
+		           			aFai.startActivity(intent);
+		            	   }
 		            	   Toast.makeText(aFai, ""+which, Toast.LENGTH_LONG).show();
 		               };
 				});

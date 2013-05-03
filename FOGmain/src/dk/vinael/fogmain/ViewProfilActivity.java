@@ -20,11 +20,13 @@ public class ViewProfilActivity extends Activity {
 	@Override
 	protected void onResume() {
 		btn_editProfile.setClickable(true);
+		/*
 		try {
 			addInfo(((FOGmain)getApplicationContext()).user);
 		} catch (Exception e) {
 			// Do nothing.
 		}
+		*/
 		super.onResume();
 	}
 	@Override
