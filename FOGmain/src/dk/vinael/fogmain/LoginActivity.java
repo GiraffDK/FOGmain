@@ -65,6 +65,7 @@ public class LoginActivity extends Activity implements FogActivityInterface {
 					Intent intent = new Intent(this, MenuActivity.class);
 					this.finish();
 					this.startActivity(intent);
+					overridePendingTransition(R.anim.activity_slide_in_left, R.anim.activity_slide_out_left);
 				}
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
