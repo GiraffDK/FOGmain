@@ -1,5 +1,6 @@
 package dk.vinael.domain;
 
+import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -11,7 +12,7 @@ import android.widget.Toast;
 
 import dk.vinael.interfaces.FogActivityInterface;
 
-public class User {
+public class User implements Serializable {
 	
 	// User attributes
 	private int userId;

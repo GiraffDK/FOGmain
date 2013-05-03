@@ -43,6 +43,7 @@ public class MenuActivity extends Activity implements FogActivityInterface {
 	
 	public void gotoProfile(View view){
 		Intent intent = new Intent(this, ViewProfilActivity.class);
+		intent.putExtra("user", ((FOGmain)getApplicationContext()).user);
 		this.startActivity(intent);
 	}
 	
