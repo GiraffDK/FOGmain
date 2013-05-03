@@ -83,6 +83,7 @@
     
     <!-- editProfil -->
     <string name="btn_change_pic">Change Profil Picture</string>
+    <string name="btn_save">Save changes</string>
     <string name="Hint_fname">Firstname</string>
     <string name="Hint_lname">Lastname</string>
     <string name="Hint_bday">Birthday</string>

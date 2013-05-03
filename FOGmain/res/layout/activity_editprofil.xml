@@ -109,6 +109,14 @@
             android:ems="10"
             android:hint="@string/Hint_desc"
             android:inputType="textMultiLine" />
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_save"
+            android:onClick="onSaveClick" />
+
     </LinearLayout>
 
 </ScrollView>

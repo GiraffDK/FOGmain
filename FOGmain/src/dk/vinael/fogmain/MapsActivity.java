@@ -49,8 +49,9 @@ public class MapsActivity extends FragmentActivity implements OnMapClickListener
 		map.animateCamera(zoom);
 		map.setOnInfoWindowClickListener(this); 		// Adding listener to the marker info window.
 		
-		addingNewInfoWindow(); 		// Adding new Layout/View for the marker info.
+				
 		checkingCaller(bundle); 	// Checking how we want to use this map.
+		addingNewInfoWindow(); 		// Adding new Layout/View for the marker info.
 
 	}
 	/**
@@ -60,6 +61,7 @@ public class MapsActivity extends FragmentActivity implements OnMapClickListener
 	 */
 	@SuppressWarnings("unchecked")
 	public void checkingCaller(Bundle bundle) {
+		map.clear();
 		if (bundle.size() > 1) 
 		{
 			parties = (ArrayList<Party>) bundle.get("List"); 		// Contains a list over parties that should be added to the map.
@@ -126,11 +128,9 @@ public class MapsActivity extends FragmentActivity implements OnMapClickListener
 	 * Simple loop that takes each party in the ps list and adds its location as a marker on the map.
 	 */
 	public void addExisting() {
-		MarkerOptions mo = new MarkerOptions();
+		
 		for (Party  p : parties) {
-			double lat = p.getLat();
-			double lon = p.getLon();
-			map.addMarker(mo.position(new LatLng(lat, lon)).title(p.getName()));
+			map.addMarker(new MarkerOptions().position(new LatLng(p.getLat(), p.getLon())).title(p.getName()));
 		}
 	}
 
