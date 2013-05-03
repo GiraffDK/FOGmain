@@ -89,7 +89,7 @@ public class ViewPartyActivity extends Activity implements FogActivityInterface 
 	}
 	
 	public void showLayouts(){
-		Toast.makeText(this, "user status: "+user_status, Toast.LENGTH_LONG).show();
+		//Toast.makeText(this, "user status: "+user_status, Toast.LENGTH_LONG).show();
 		if (user_status>=-1){ /* all */
 			// show only layout for all
 			viewbyall.setVisibility(View.VISIBLE);
@@ -158,7 +158,7 @@ public class ViewPartyActivity extends Activity implements FogActivityInterface 
 	@Override
 	public void jsonArrayHandler(JSONArray ja, String identifier) {
 		if (identifier.equals("showPartyInfo")){
-			Toast.makeText(this, "JSONArray: "+ja.toString(), Toast.LENGTH_LONG).show();
+			//Toast.makeText(this, "JSONArray: "+ja.toString(), Toast.LENGTH_LONG).show();
 			if (ja != null){
 				JSONObject jo = null;
 				try {

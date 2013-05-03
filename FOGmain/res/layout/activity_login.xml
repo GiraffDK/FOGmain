@@ -53,4 +53,14 @@
         android:layout_below="@+id/btn_login"
         /-->
 
+    <Button
+        android:id="@+id/btn_createprofile_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btn_login"
+        android:layout_below="@+id/btn_login"
+        android:text="Create profile"
+        android:enabled="false"
+         />
+
 </RelativeLayout>
