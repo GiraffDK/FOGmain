@@ -11,6 +11,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.location.Location;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -71,6 +72,9 @@ public class EditProfilActivity extends Activity implements FogActivityInterface
 		} else {
 			confirmSaveOrCancel();
 		}
+	}
+	public void  onSaveClick(View v) {
+		this.onBackPressed();
 	}
 	public void setValues() {
 		user.setFirstName(fname.getText().toString());

@@ -26,6 +26,20 @@
     <string name="LatestParty">Latest Party</string>
     
     
+    <!-- editProfil -->
+    <string name="btn_change_pic">Change Profil Picture</string>
+    <string name="Hint_fname">Firstname</string>
+    <string name="Hint_lname">Lastname</string>
+    <string name="Hint_bday">Birthday</string>
+    <string name="Hint_street">Street</string>
+    <string name="Hint_zip">Zip</string>
+    <string name="Hint_city">City</string>
+    <string name="Hint_country">Country</string>
+    <string name="Hint_phone">Phone Number</string>
+    <string name="Hint_email">Email</string>
+    <string name="Hint_desc">Description of you</string>
+    
+    
     <!-- Login -->
     <string name="Email">Email</string>
     <string name="Password">Password</string>
@@ -39,10 +53,11 @@
     
     
     <!-- Menu -->
-    <string name="AddParty">Add Party</string>
-    <string name="Search">Search</string>
-    <string name="Parties">Parties</string>
-    <string name="Profile">Profile</string>
+    <string name="tv_username">Username</string>
+    <string name="btn_AddParty">Add Party</string>
+    <string name="btn_Search">Search</string>
+    <string name="btn_Parties">Parties</string>
+    <string name="btn_Profile">Profile</string>
     
     
     <!-- Profile -->
@@ -67,6 +82,9 @@
     <!-- And a search here aswell -->
     
     
+    <!-- ShowPartyRequester -->
+    <string name="tv_show_requesters">Requesters</string>
+    
     <!-- ViewParty -->
     <string name="TextView">TextView</string>
     <!-- And a AddParty here aswell -->
@@ -78,11 +96,11 @@
     
     <!-- infoWindowView -->
     <string name="PartyTitle">11111111111111</string>
-    <string name="GoToParty">Go To Party!</string>    
-    
+    <string name="GoToParty">Go To Party!</string>        
     
     <!-- editProfil -->
     <string name="btn_change_pic">Change Profil Picture</string>
+    <string name="btn_save">Save changes</string>
     <string name="Hint_fname">Firstname</string>
     <string name="Hint_lname">Lastname</string>
     <string name="Hint_bday">Birthday</string>
@@ -93,5 +111,16 @@
     <string name="Hint_phone">Phone Number</string>
     <string name="Hint_email">Email</string>
     <string name="Hint_desc">Description of you</string>
-
+    
+    <!-- row_expand -->
+    <string name="tv_name">Navn</string>
+    <string name="tv_description">Indsæt beskrivelse</string>
+    <string name="tv_distance">Afstand</string>
+    <string name="tv_age">Alder:</string>
+    
+    
+    <!-- row_partyrequester -->
+    
+    
+    
 </resources>
