@@ -15,15 +15,16 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:text="Username" />
+        android:text="@string/tv_username" />
     
     <Button
         android:id="@+id/btn_addparty"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_username_menu"
-        android:text="@string/AddParty" 
+        android:text="@string/btn_AddParty" 
         android:onClick="gotoAddParty"
+        android:drawableLeft="@drawable/ic_add"
         />
 
     <Button
@@ -32,8 +33,9 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/btn_addparty"
         android:layout_below="@+id/btn_addparty"
-        android:text="@string/Search" 
+        android:text="@string/btn_Search" 
         android:onClick="gotoSearch"
+        android:drawableLeft="@drawable/ic_search"
         />
 
     <Button
@@ -42,8 +44,9 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/btn_search"
         android:layout_below="@+id/btn_search"
-        android:text="@string/Parties" 
+        android:text="@string/btn_Parties" 
         android:onClick="gotoParties"
+        android:drawableLeft="@drawable/ic_party"
         />
 
     <Button
@@ -52,8 +55,9 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/btn_parties"
         android:layout_below="@+id/btn_parties"
-        android:text="@string/Profile" 
+        android:text="@string/btn_Profile" 
         android:onClick="gotoProfile"
+        android:drawableLeft="@drawable/ic_settings"
         />
 
 </RelativeLayout>
