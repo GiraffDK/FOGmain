@@ -6,11 +6,20 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 
 import android.location.Location;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import dk.vinael.domain.FOGmain;
 import dk.vinael.domain.Party;
@@ -19,6 +28,7 @@ import dk.vinael.interfaces.FogActivityInterface;
 
 public class ShowPartyRequestersActivity extends Activity implements FogActivityInterface {
 
+	FogActivityInterface fai;
 	private Bundle bundle;
 	private User user;
 	private Party party;
@@ -34,6 +44,7 @@ public class ShowPartyRequestersActivity extends Activity implements FogActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_showpartyrequesters);
 		
+		fai = this;
 		user = ((FOGmain)getApplicationContext()).user;
 		bundle = getIntent().getExtras();
 		al_requesters = new ArrayList<User>();
@@ -45,6 +56,43 @@ public class ShowPartyRequestersActivity extends Activity implements FogActivity
 		else{
 			// EXIT
 		}
+		
+		lv_requesters_showpartyrequesters.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+				
+				// Go to profile
+				// Accept
+				// Deny
+				
+				final Activity aFai = (Activity)fai;
+				
+				Toast.makeText(aFai, ""+arg2, Toast.LENGTH_LONG).show();
+				User tmpUser = al_requesters.get(arg2);
+				String[] a_choices = {"See profile","Accept", "Deny"};
+				
+				AlertDialog.Builder builder = new AlertDialog.Builder(aFai);
+				builder.setTitle("What to do?");
+				
+				builder.setItems(a_choices, new DialogInterface.OnClickListener() {
+		               public void onClick(DialogInterface dialog, int which) {
+		                   // The 'which' argument contains the index position
+		                   // of the selected item
+		            	   Toast.makeText(aFai, ""+which, Toast.LENGTH_LONG).show();
+		               };
+				});
+				
+				builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+			           public void onClick(DialogInterface dialog, int id) {
+			               // User cancelled the dialog
+			           }
+			       });
+				AlertDialog dialog = builder.create();
+				dialog.show();
+				
+			}
+		});
 	}
 	
 	@Override
