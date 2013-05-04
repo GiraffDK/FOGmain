@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <string name="app_name">FOGmain</string>
     <string name="action_settings">Settings</string>
@@ -108,6 +108,8 @@
     
     <!-- row_partyrequester -->
     
-    
-    
+
+	<!-- style_view -->
+	<string name="tv_standard_view">123 - Hello FOG!</string>
+	<string name="btn_standard_button">123 - click me!</string>  
 </resources>
