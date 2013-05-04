@@ -85,19 +85,19 @@ public class ViewPartyActivity extends Activity implements FogActivityInterface 
 			party.selectUserInParty(this, "showPartyInfo", user);
 		}
 		
-		/* Determing uset status - end */
+		/* Determing user status - end */
 	}
 	
 	public void showLayouts(){
 		//Toast.makeText(this, "user status: "+user_status, Toast.LENGTH_LONG).show();
-		if (user_status>=-1){ /* all */
+		if (user_status>=-2){ /* all */
 			// show only layout for all
 			viewbyall.setVisibility(View.VISIBLE);
 		}
-		if (user_status==-1 || user_status==0 || user_status==2){ /* requester || attending guest */
+		if (user_status==-2 || user_status==-1 || user_status==0 || user_status==2){ /* requester || attending guest */
 			// handle request button
 			viewbyrequesterattendee.setVisibility(View.VISIBLE);
-			if (user_status==-1){
+			if (user_status==-2){
 				btn_requestcancelunsub_viewparty.setText("Requested");
 			
 				btn_requestcancelunsub_viewparty.setEnabled(false);
