@@ -18,6 +18,7 @@ public class Party implements Serializable {
 	private int min_age, max_age; // part age
 	private int show_photos, show_wall; // show
 	private double lat, lon; // geolocation
+	private int max_guests;
 
 	
 	// Getters / Setters
@@ -171,9 +172,16 @@ public class Party implements Serializable {
 		this.lon = lon;
 	}
 	
+	public int getMaxGuests() {
+		return max_guests;
+	}
+
+	public void setMaxGuests(int max_guests) {
+		this.max_guests = max_guests;
+	}
 	
 	// Constructor(s)
-	
+
 	public Party() {
 
 	}	
@@ -235,13 +243,14 @@ public class Party implements Serializable {
 		setShowWall(0);
 		setLat(0);
 		setLon(0);
+		setMaxAge(0);
 	}
 	
 	public void setPartyWithJSON(JSONObject obj) {
 		try {
-			setId(obj.getInt("id"));
-			setOwnerId(obj.getInt("owner_user_id"));
-			setStatusId(obj.getInt("status_id"));
+			setId(Integer.parseInt(obj.getString("id")));
+			setOwnerId(Integer.parseInt(obj.getString("owner_user_id")));
+			setStatusId(Integer.parseInt(obj.getString("status_id")));
 			setName(obj.getString("name"));
 			setDescription(obj.getString("description"));
 			setAddress(obj.getString("address"));
@@ -251,12 +260,13 @@ public class Party implements Serializable {
 			setDoorCode(obj.getString("door_code"));
 			setStartDateAndTime(obj.getString("start_time"));
 			setEndDateAndTime(obj.getString("end_time"));
-			setMinAge(obj.getInt("min_age"));
-			setMaxAge(obj.getInt("max_age"));
-			setShowPhotos(obj.getInt("show_photos"));
-			setShowWall(obj.getInt("show_wall"));
+			setMinAge(Integer.parseInt(obj.getString("min_age")));
+			setMaxAge(Integer.parseInt(obj.getString("max_age")));
+			setShowPhotos(Integer.parseInt(obj.getString("show_photos")));
+			setShowWall(Integer.parseInt(obj.getString("show_wall")));
 			setLat(obj.getDouble("lat"));
 			setLon(obj.getDouble("lon"));
+			setMaxGuests(Integer.parseInt(obj.getString("max_guests")));
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -267,7 +277,7 @@ public class Party implements Serializable {
 			int id, int owner_user_id, int status_id, 
 			String name, String description, String address, String zip, String city, String country, String door_code, 
 			String start_time, String end_time, int min_age, int max_age,
-			int show_photos, int show_wall, double lat, double lon){
+			int show_photos, int show_wall, double lat, double lon, int max_guests){
 		
 		setId(id);
 		setOwnerId(owner_user_id);
@@ -287,6 +297,7 @@ public class Party implements Serializable {
 		setShowWall(show_wall);
 		setLat(lat);
 		setLon(lon);
+		setMaxGuests(max_guests);
 	}
 	
 	// Statements
@@ -314,8 +325,24 @@ public class Party implements Serializable {
 		SqlWrapper.userCancelRequestParty(activity, identifier, this, u);
 	}
 	
+	public void userAcceptedToParty(FogActivityInterface activity, String identifier, User u){
+		SqlWrapper.userAcceptedToParty(activity, identifier, this, u);
+	}
+	
+	public void userDeniedToParty(FogActivityInterface activity, String identifier, User u){
+		SqlWrapper.userDeniedToParty(activity, identifier, this, u);
+	}
+	
 	public void getPartyRequesters(FogActivityInterface activity, String identifier){
 		SqlWrapper.getPartyRequesters(activity, identifier, this);
+	}
+	
+	public void getPartyDenied(FogActivityInterface activity, String identifier){
+		SqlWrapper.getPartyDenied(activity, identifier, this);
+	}
+	
+	public void getPartyAttendees(FogActivityInterface activity, String identifier){
+		SqlWrapper.getPartyAttendees(activity, identifier, this);
 	}
 	
 }

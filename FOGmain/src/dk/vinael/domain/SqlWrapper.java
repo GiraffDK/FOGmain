@@ -49,7 +49,8 @@ public class SqlWrapper {
 					"show_photos, " +
 					"show_wall, " + 
 					"lat, " +
-					"lon" +
+					"lon, " +
+					"max_guests" +
 				") VALUES " +
 				"(" +
 					0+", "+
@@ -69,7 +70,8 @@ public class SqlWrapper {
 					""+p.getShowPhotos()+", " +
 					""+p.getShowWall()+", " +
 					"'"+p.getLat()+"', " +
-					"'"+p.getLon()+"'" +
+					"'"+p.getLon()+"', " +
+					""+p.getMaxGuests()+"" +
 							");";
 		//Toast.makeText((Activity) activity, sqlString, Toast.LENGTH_LONG).show();
 		new WebserviceCaller(activity, identifier).execute("insert", sqlString);
@@ -92,7 +94,8 @@ public class SqlWrapper {
 					"show_photos = " + p.getShowPhotos() + ", "+
 					"show_wall = " + p.getShowWall() + ", "+
 					"lat = '" + p.getLat() + "', "+
-					"lon = '" + p.getLon() + "'"+
+					"lon = '" + p.getLon() + "',"+
+					"max_guests = " + p.getMaxGuests() + ""+
 				" WHERE id = "+p.getId()+";";
 		//Toast.makeText((Activity) activity, sqlString, Toast.LENGTH_LONG).show();
 		new WebserviceCaller(activity, identifier).execute("update", sqlString);
@@ -127,14 +130,37 @@ public class SqlWrapper {
 		new WebserviceCaller(activity, identifier).execute("insert", sqlString);
 	}
 	
+	public static void userAcceptedToParty(FogActivityInterface activity, String identifier, Party p, User u){
+		String sqlString = "UPDATE user_in_party SET attending_status_id=2 WHERE party_id="+p.getId()+" AND user_id="+u.getUserId()+";";
+		new WebserviceCaller(activity, identifier).execute("update", sqlString);
+	}
+	
+	public static void userDeniedToParty(FogActivityInterface activity, String identifier, Party p, User u){
+		String sqlString = "UPDATE user_in_party SET attending_status_id=3 WHERE party_id="+p.getId()+" AND user_id="+u.getUserId()+";";
+		new WebserviceCaller(activity, identifier).execute("update", sqlString);
+	}
+	
 	public static void userCancelRequestParty(FogActivityInterface activity, String identifier, Party p, User u){
 		String sqlString = "DELETE FROM user_in_party WHERE party_id="+p.getId()+" AND user_id="+u.getUserId()+";";
 		new WebserviceCaller(activity, identifier).execute("delete", sqlString);
 	}
 	
+	
 	public static void getPartyRequesters(FogActivityInterface activity, String identifier, Party p){
 		//String sqlString = "SELECT * FROM user_in_party WHERE party_id="+p.getId()+" AND attending_status_id=1";
-		String sqlString = "SELECT user.* FROM user INNER JOIN user_in_party ON user_in_party.user_id = user.user_id WHERE user_in_party.party_id="+p.getId()+";";
+		String sqlString = "SELECT user.* FROM user INNER JOIN user_in_party ON user_in_party.user_id = user.user_id WHERE user_in_party.party_id="+p.getId()+" AND user_in_party.attending_status_id=1;";
+		new WebserviceCaller(activity, identifier).execute("select", sqlString);
+	}
+	
+	public static void getPartyDenied(FogActivityInterface activity, String identifier, Party p){
+		//String sqlString = "SELECT * FROM user_in_party WHERE party_id="+p.getId()+" AND attending_status_id=1";
+		String sqlString = "SELECT user.* FROM user INNER JOIN user_in_party ON user_in_party.user_id = user.user_id WHERE user_in_party.party_id="+p.getId()+" AND user_in_party.attending_status_id=3;";
+		new WebserviceCaller(activity, identifier).execute("select", sqlString);
+	}
+	
+	public static void getPartyAttendees(FogActivityInterface activity, String identifier, Party p){
+		//String sqlString = "SELECT * FROM user_in_party WHERE party_id="+p.getId()+" AND attending_status_id=1";
+		String sqlString = "SELECT user.* FROM user INNER JOIN user_in_party ON user_in_party.user_id = user.user_id WHERE user_in_party.party_id="+p.getId()+" AND user_in_party.attending_status_id=2;";
 		new WebserviceCaller(activity, identifier).execute("select", sqlString);
 	}
 }
