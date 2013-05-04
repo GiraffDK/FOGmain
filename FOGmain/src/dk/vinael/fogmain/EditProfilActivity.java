@@ -34,6 +34,7 @@ public class EditProfilActivity extends Activity implements FogActivityInterface
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_editprofil);
+		
 		user = ((FOGmain) getApplicationContext()).user;
 		fname = (EditText) findViewById(R.id.editprof_et_fname);
 		lname = (EditText) findViewById(R.id.editprof_et_lname);

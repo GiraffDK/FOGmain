@@ -37,8 +37,8 @@ public class MenuActivity extends Activity implements FogActivityInterface {
 	}
 	
 	public void gotoParties(View view){
-		//Intent intent = new Intent(this, PartiesActivity.class);
-		//this.startActivity(intent);
+		Intent intent = new Intent(this, PartiesActivity.class);
+		this.startActivity(intent);
 	}
 	
 	public void gotoProfile(View view){

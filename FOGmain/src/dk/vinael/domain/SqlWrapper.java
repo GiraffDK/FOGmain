@@ -28,7 +28,24 @@ public class SqlWrapper {
 		String sqlString = "SELECT * from party WHERE id = "+ party_id + ";";
 		new WebserviceCaller(activity, identifier).execute("select", sqlString);
 	}
-	
+	public static void selectAllPartiesByOwnerUserId(FogActivityInterface activity, String identifier, int owner_user_id) {
+		String sqlString = "SELECT * FROM party WHERE owner_user_id = " + owner_user_id + ";";
+		new WebserviceCaller(activity, identifier).execute("select", sqlString);
+	}
+	public static void selectAllPartiesImAttending(FogActivityInterface activity, String identifier, int owner_user_id) {
+		String sqlString = "SELECT party.* FROM user_in_party " +
+				"INNER JOIN party ON user_in_party.party_id = party.id " +
+				"WHERE user_in_party.user_id = " + owner_user_id +" " +
+				"AND user_in_party.attending_status_id = 2;";
+		new WebserviceCaller(activity, identifier).execute("select", sqlString);
+	}
+	public static void selectAllPartiesIveRequested(FogActivityInterface activity, String identifier, int user_id) {
+		String sqlString = "SELECT party.* FROM user_in_party " +
+				"INNER JOIN party ON user_in_party.party_id = party.id " +
+				"WHERE (user_in_party.attending_status_id = 1 OR user_in_party.attending_status_id = 3) " +
+				"AND user_in_party.user_id = " + user_id +"";
+		new WebserviceCaller(activity, identifier).execute("select", sqlString);
+	}
 	public static void createParty(FogActivityInterface activity, String identifier, Party p){
 		String sqlString = "INSERT INTO party " +
 				"(" +

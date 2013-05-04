@@ -11,7 +11,6 @@ import dk.vinael.interfaces.FogActivityInterface;
 public class Party implements Serializable {
 
 	// Attributes
-	
 	private int id, owner_user_id, status_id; // id's
 	private String name, description, address, zip, city, country, door_code; // party data
 	private String start_date_time, end_date_time; // party time
