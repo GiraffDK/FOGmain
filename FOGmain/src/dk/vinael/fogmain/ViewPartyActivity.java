@@ -42,6 +42,7 @@ public class ViewPartyActivity extends Activity implements FogActivityInterface 
 	private TextView tv_doorcode_viewparty;
 	private Button btn_requestcancelunsub_viewparty;
 	private Button btn_editparty_viewparty;
+	private Button btn_gotoattendingguests_viewparty;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +65,7 @@ public class ViewPartyActivity extends Activity implements FogActivityInterface 
 		tv_doorcode_viewparty = ((TextView) findViewById(R.id.tv_doorcode_viewparty));
 		btn_requestcancelunsub_viewparty = ((Button) findViewById(R.id.btn_requestcancelunsub_viewparty));
 		btn_editparty_viewparty = ((Button) findViewById(R.id.btn_editparty_viewparty));
+		btn_gotoattendingguests_viewparty = ((Button) findViewById(R.id.btn_gotoattendingguests_viewparty));
 		
 		/* Determing user status - start */
 		
@@ -134,6 +136,19 @@ public class ViewPartyActivity extends Activity implements FogActivityInterface 
 		}
 		if (user_status>=1){ /* owner || attending guest */
 			viewbyattendee.setVisibility(View.VISIBLE);
+			
+			btn_gotoattendingguests_viewparty.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(fai, ShowPartyAttendeesActivity.class);
+					intent.putExtra("party", party);
+					//this.finish();
+					fai.startActivity(intent);
+					
+				}
+			});
+			
 		}
 		if (user_status==1){ /* owner */
 			viewbyowner.setVisibility(View.VISIBLE);
