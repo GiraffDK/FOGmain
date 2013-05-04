@@ -5,7 +5,7 @@
 	android:layout_height="match_parent" >
 
     <ScrollView
-        android:id="@+id/AddEditActivityScrollView"
+        android:id="@+id/ShowPartyRequestersActivityScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"

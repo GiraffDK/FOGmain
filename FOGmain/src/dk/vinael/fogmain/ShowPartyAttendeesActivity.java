@@ -29,49 +29,46 @@ import dk.vinael.domain.User;
 import dk.vinael.fogmain.R.id;
 import dk.vinael.interfaces.FogActivityInterface;
 
-public class ShowPartyRequestersActivity extends Activity implements FogActivityInterface {
+public class ShowPartyAttendeesActivity extends Activity implements FogActivityInterface {
 
 	FogActivityInterface fai;
 	private Bundle bundle;
 	private User user;
 	private Party party;
 	
-	private ArrayList<User> al_requesters;
-	private ArrayList<User> al_denied;
+	int user_status = 0;
+	private ArrayList<User> al_attendees;
 	
-	private ListView lv_requesters_showpartyrequesters;
-	private ListView lv_denied_showpartyrequesters;
+	private ListView lv_attendees_showpartyattendees;
+	private ArrayAdapter<User> listAdapterAttendees;
 	
-	private ArrayAdapter<User> listAdapterRequester;
-	private ArrayAdapter<User> listAdapterDenied;
-	
-	private TextView tv_show_requesters_showpartyrequesters;
-	private TextView tv_show_denied_showpartyrequesters;
+	private TextView tv_show_attendees_showpartyattendees;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_showpartyrequesters);
+		setContentView(R.layout.activity_showpartyattendees);
 		
 		fai = this;
 		user = ((FOGmain)getApplicationContext()).user;
 		bundle = getIntent().getExtras();
 		
-		al_requesters = new ArrayList<User>();
-		al_denied = new ArrayList<User>();
+		al_attendees = new ArrayList<User>();
 		
-		lv_requesters_showpartyrequesters = ((ListView)findViewById(R.id.lv_requesters_showpartyrequesters));
-		lv_denied_showpartyrequesters = ((ListView)findViewById(R.id.lv_denied_showpartyrequesters));
+		lv_attendees_showpartyattendees = ((ListView)findViewById(R.id.lv_attendees_showpartyattendees));
 		
-		tv_show_requesters_showpartyrequesters = ((TextView)findViewById(R.id.tv_show_requesters_showpartyrequesters));
-		tv_show_denied_showpartyrequesters = ((TextView)findViewById(R.id.tv_show_denied_showpartyrequesters));
+		tv_show_attendees_showpartyattendees = ((TextView)findViewById(R.id.tv_show_attendees_showpartyattendees));
 		
 		if (bundle!=null){
 			party = (Party) bundle.getSerializable("party");
-			party.getPartyRequesters(this, "getPartyRequesters");
+			party.getPartyAttendees(this, "getPartyAttendees");
 		}
 		else{
 			// EXIT
+		}
+		
+		if (party.getOwnerId()==user.getUserId()){
+			user_status=1;
 		}
 		
 		OnItemClickListener oicl_user_status = new OnItemClickListener() {
@@ -81,24 +78,24 @@ public class ShowPartyRequestersActivity extends Activity implements FogActivity
 			public void onItemClick(AdapterView<?> arg0, View view, int index, long arg3) {
 				
 				// Go to profile
-				// Accept
-				// Deny
+				// Deny (owner only)
 				
 				final Activity aFai = (Activity)fai;
 				//final User tmpUser = new User();
 				
 				//Toast.makeText(aFai, ""+arg2, Toast.LENGTH_LONG).show();
-				if (view.getParent() == findViewById(R.id.lv_requesters_showpartyrequesters)){
-					tmpUser = al_requesters.get(index);
-				}
-				else{
-					tmpUser = al_denied.get(index);
-				}
+				tmpUser = al_attendees.get(index);
 				
-				String[] a_choices = {"See profile","Accept", "Deny"};
+				ArrayList<String> al_choices = new ArrayList<String>();
+				al_choices.add("See profile");
+				if (user_status==1){
+					al_choices.add("Remove from party");
+				}
+				//String[] a_choices = new String[al_choices.size()];
+				String[] a_choices = al_choices.toArray(new String[al_choices.size()]);
 				
 				AlertDialog.Builder builder = new AlertDialog.Builder(aFai);
-				builder.setTitle("What to do with " +tmpUser.getFirstName() + "?");
+				builder.setTitle("I want to..");
 				
 				builder.setItems(a_choices, new DialogInterface.OnClickListener() {
 		               public void onClick(DialogInterface dialog, int which) {
@@ -111,9 +108,6 @@ public class ShowPartyRequestersActivity extends Activity implements FogActivity
 		           			aFai.startActivity(intent);
 		            	   }
 		            	   else if(which==1){
-		            		   party.userAcceptedToParty((FogActivityInterface)aFai, "userAccepted", tmpUser);
-		            	   }
-		            	   else if(which==2){
 		            		   party.userDeniedToParty((FogActivityInterface)aFai, "userDenied", tmpUser);
 		            	   }
 		            	   //Toast.makeText(aFai, ""+which, Toast.LENGTH_LONG).show();
@@ -130,12 +124,11 @@ public class ShowPartyRequestersActivity extends Activity implements FogActivity
 				
 			}
 		};
-		lv_requesters_showpartyrequesters.setOnItemClickListener(oicl_user_status);
-		lv_denied_showpartyrequesters.setOnItemClickListener(oicl_user_status);
+		lv_attendees_showpartyattendees.setOnItemClickListener(oicl_user_status);
 	}
 	
 	private void reloadActivity(){
-		Intent intent = new Intent(this, ShowPartyRequestersActivity.class);
+		Intent intent = new Intent(this, ShowPartyAttendeesActivity.class);
 		intent.putExtra("party", party);
 		this.finish();
 		this.startActivity(intent);
@@ -165,35 +158,19 @@ public class ShowPartyRequestersActivity extends Activity implements FogActivity
 	
 	@Override
 	public void jsonArrayHandler(JSONArray ja, String identifier) {
-		if (identifier.equals("getPartyRequesters")){
+		if (identifier.equals("getPartyAttendees")){
 			//Toast.makeText(this, ""+ja.toString(), Toast.LENGTH_LONG).show();
-			al_requesters.clear();
-			putUsersInArrayList(ja, al_requesters);
+			al_attendees.clear();
+			putUsersInArrayList(ja, al_attendees);
 			
 			//Toast.makeText(this, ""+al_requesters.size(), Toast.LENGTH_LONG).show();
-			if (al_requesters.size()>0){
-				listAdapterRequester = new ArrayAdapter<User>(this, R.layout.listview_row_requester_partyrequester, al_requesters);
-				lv_requesters_showpartyrequesters.setAdapter(listAdapterRequester);
-				int c = al_requesters.size();
-				tv_show_requesters_showpartyrequesters.setText(tv_show_requesters_showpartyrequesters.getText()+ " ("+c+")");
+			if (al_attendees.size()>0){
+				listAdapterAttendees = new ArrayAdapter<User>(this, R.layout.listview_row_requester_partyrequester, al_attendees);
+				lv_attendees_showpartyattendees.setAdapter(listAdapterAttendees);
+				int c = al_attendees.size();
+				tv_show_attendees_showpartyattendees.setText(tv_show_attendees_showpartyattendees.getText()+ " ("+c+")");
 			}
 			party.getPartyDenied(this, "getPartyDenied");
-		}
-		else if (identifier.equals("getPartyDenied")){
-			al_denied.clear();
-			putUsersInArrayList(ja, al_denied);
-			
-			//Toast.makeText(this, ""+al_denied.size(), Toast.LENGTH_LONG).show();
-			if (al_denied.size()>0){
-				listAdapterDenied = new ArrayAdapter<User>(this, R.layout.listview_row_denied_partyrequester, al_denied);
-				lv_denied_showpartyrequesters.setAdapter(listAdapterDenied);
-				int c = al_denied.size();
-				tv_show_denied_showpartyrequesters.setText(tv_show_denied_showpartyrequesters.getText()+ " ("+c+")");
-			}else{lv_denied_showpartyrequesters.setVisibility(View.GONE);}
-		}
-		else if(identifier.equals("userAccepted")){
-			Toast.makeText(this, "User accepted", Toast.LENGTH_LONG).show();
-			reloadActivity();
 		}
 		else if(identifier.equals("userDenied")){
 			Toast.makeText(this, "User denied", Toast.LENGTH_LONG).show();
