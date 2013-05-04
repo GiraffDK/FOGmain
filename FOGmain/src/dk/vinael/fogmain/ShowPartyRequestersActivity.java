@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -140,39 +141,48 @@ public class ShowPartyRequestersActivity extends Activity implements FogActivity
 		this.startActivity(intent);
 	}
 	
-	@Override
-	public void jsonArrayHandler(JSONArray ja, String identifier) {
-		if (identifier.equals("getPartyRequesters")){
-			al_requesters.clear();
-			for (int i = 0; i < ja.length(); i++) {
-				User tmp_requester = new User();
+	private void putUsersInArrayList(JSONArray ja_results, ArrayList al_data){
+		JSONObject result = null;
+		try {
+			 result = ja_results.getJSONObject(0);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		if (!result.has("results")){
+			for (int i = 0; i < ja_results.length(); i++) {
+				User tmp_user = new User();
 				try {
-					tmp_requester.setUserByJson(ja.getJSONObject(i));
-					al_requesters.add(tmp_requester);
+					tmp_user.setUserByJson(ja_results.getJSONObject(i));
+					if (tmp_user.getUserId()!=0){
+						al_data.add(tmp_user);
+					}
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
 			}
+		}
+	}
+	
+	@Override
+	public void jsonArrayHandler(JSONArray ja, String identifier) {
+		if (identifier.equals("getPartyRequesters")){
+			//Toast.makeText(this, ""+ja.toString(), Toast.LENGTH_LONG).show();
+			al_requesters.clear();
+			putUsersInArrayList(ja, al_requesters);
+			
 			//Toast.makeText(this, ""+al_requesters.size(), Toast.LENGTH_LONG).show();
 			if (al_requesters.size()>0){
 				listAdapterRequester = new ArrayAdapter<User>(this, R.layout.listview_row_requester_partyrequester, al_requesters);
 				lv_requesters_showpartyrequesters.setAdapter(listAdapterRequester);
 				int c = al_requesters.size();
 				tv_show_requesters_showpartyrequesters.setText(tv_show_requesters_showpartyrequesters.getText()+ " ("+c+")");
-				party.getPartyDenied(this, "getPartyDenied");
 			}
+			party.getPartyDenied(this, "getPartyDenied");
 		}
 		else if (identifier.equals("getPartyDenied")){
 			al_denied.clear();
-			for (int i = 0; i < ja.length(); i++) {
-				User tmp_denied_user = new User();
-				try {
-					tmp_denied_user.setUserByJson(ja.getJSONObject(i));
-					al_denied.add(tmp_denied_user);
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
-			}
+			putUsersInArrayList(ja, al_denied);
+			
 			//Toast.makeText(this, ""+al_denied.size(), Toast.LENGTH_LONG).show();
 			if (al_denied.size()>0){
 				listAdapterDenied = new ArrayAdapter<User>(this, R.layout.listview_row_denied_partyrequester, al_denied);

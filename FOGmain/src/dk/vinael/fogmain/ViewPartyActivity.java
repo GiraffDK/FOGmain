@@ -109,6 +109,15 @@ public class ViewPartyActivity extends Activity implements FogActivityInterface 
 				});
 				
 			}
+			else if(user_status==-1){
+				btn_requestcancelunsub_viewparty.setText("Request");
+				btn_requestcancelunsub_viewparty.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						party.userRequestParty(fai, "userRequestParty", user);
+					}
+				});
+			}
 			else if (user_status==0 || user_status==2){
 				if (user_status==0){btn_requestcancelunsub_viewparty.setText("Cancel request");}
 				else if(user_status==2){btn_requestcancelunsub_viewparty.setText("Unsubscribe party");}

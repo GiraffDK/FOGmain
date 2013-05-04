@@ -170,6 +170,7 @@ public class User implements Serializable {
 		city="";
 		country="";
 		*/
+		
 	}
 	
 	// Methods
@@ -198,7 +199,7 @@ public class User implements Serializable {
 	public void setUserByJson(JSONObject jo){
 		// set attributes by jo
 		try {
-			setUserId(jo.getInt("user_id"));
+			setUserId(Integer.parseInt(jo.getString("user_id")));
 			setEmail(jo.getString("email"));
 			setFirstName(jo.getString("firstname"));
 			setLastName(jo.getString("lastname"));
