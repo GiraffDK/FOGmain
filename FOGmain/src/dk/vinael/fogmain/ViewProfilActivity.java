@@ -21,7 +21,7 @@ public class ViewProfilActivity extends Activity {
 	protected void onResume() {
 		btn_editProfile.setClickable(true);
 		try {
-			addInfo(((FOGmain)getApplicationContext()).user);
+			if(user != null) addInfo(user);
 		} catch (Exception e) {
 			// Do nothing.
 		}
@@ -48,9 +48,9 @@ public class ViewProfilActivity extends Activity {
 	}
 	public void checkUser(User u) {
 		if (u.equals(((FOGmain)getApplicationContext()).user)) {
-			btn_editProfile.setVisibility(1);
+			btn_editProfile.setVisibility(View.VISIBLE);
 		} else {
-			btn_editProfile.setVisibility(0);
+			btn_editProfile.setVisibility(View.GONE);
 		}
 	}
 	public void onClick(View v) {
