@@ -1,20 +1,16 @@
 package dk.vinael.fogmain;
 
 import java.util.ArrayList;
-import java.util.List;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Intent;
-import android.location.Address;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
-import android.view.Menu;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
 import android.widget.ArrayAdapter;
@@ -60,6 +56,11 @@ public class AddEditPartyActivity extends FragmentActivity implements FogActivit
 	private CheckBox cb_show_photos;
 	private CheckBox cb_show_wall;
 	
+	private EditText et_max_guests_addeditparty; 
+	
+	private Button btn_createParty;
+	private Button btn_editParty;
+	
 	private double lat;
 	private double lon;
 	public String addressToLookup;
@@ -70,22 +71,24 @@ public class AddEditPartyActivity extends FragmentActivity implements FogActivit
 		setContentView(R.layout.activity_addeditparty);
 		
 		// Set Gui items
-		spin_party_status 		= (Spinner) findViewById(R.id.spin_party_status);
-		et_party_name 			= (EditText) findViewById(R.id.et_party_name);
-		et_party_description	= (EditText) findViewById(R.id.et_party_description);
-		et_address				= (EditText) findViewById(R.id.et_address);
-		et_zip					= (EditText) findViewById(R.id.et_zip);
-		et_city					= (EditText) findViewById(R.id.et_city);
-		et_country				= (EditText) findViewById(R.id.et_country);
-		et_door_code			= (EditText) findViewById(R.id.et_door_code);
-		btn_set_start_date		= (Button) findViewById(R.id.btn_set_start_date);
-		btn_set_start_time		= (Button) findViewById(R.id.btn_set_start_time);
-		btn_set_end_date		= (Button) findViewById(R.id.btn_set_end_date);
-		btn_set_end_time		= (Button) findViewById(R.id.btn_set_end_time);
-		et_min_age				= (EditText) findViewById(R.id.et_min_age);
-		et_max_age				= (EditText) findViewById(R.id.et_max_age);
-		cb_show_photos			= (CheckBox) findViewById(R.id.cb_show_photos);
-		cb_show_wall			= (CheckBox) findViewById(R.id.cb_show_wall);
+		spin_party_status 			= (Spinner) findViewById(R.id.spin_party_status);
+		et_party_name 				= (EditText) findViewById(R.id.et_party_name);
+		et_party_description		= (EditText) findViewById(R.id.et_party_description);
+		et_address					= (EditText) findViewById(R.id.et_address);
+		et_zip						= (EditText) findViewById(R.id.et_zip);
+		et_city						= (EditText) findViewById(R.id.et_city);
+		et_country					= (EditText) findViewById(R.id.et_country);
+		et_door_code				= (EditText) findViewById(R.id.et_door_code);
+		btn_set_start_date			= (Button) findViewById(R.id.btn_set_start_date);
+		btn_set_start_time			= (Button) findViewById(R.id.btn_set_start_time);
+		btn_set_end_date			= (Button) findViewById(R.id.btn_set_end_date);
+		btn_set_end_time			= (Button) findViewById(R.id.btn_set_end_time);
+		et_min_age					= (EditText) findViewById(R.id.et_min_age);
+		et_max_age					= (EditText) findViewById(R.id.et_max_age);
+		cb_show_photos				= (CheckBox) findViewById(R.id.cb_show_photos);
+		cb_show_wall				= (CheckBox) findViewById(R.id.cb_show_wall);
+		
+		et_max_guests_addeditparty	= (EditText) findViewById(R.id.et_max_guests_addeditparty);
 		
 		user = ((FOGmain)getApplicationContext()).user;
 		
@@ -104,8 +107,11 @@ public class AddEditPartyActivity extends FragmentActivity implements FogActivit
 		btn_set_start_time.setText(DateAndTimeStringHandler.getCurrentTime());
 		btn_set_end_date.setText(DateAndTimeStringHandler.getCurrentDate());
 		btn_set_end_time.setText(DateAndTimeStringHandler.getCurrentTime());
+		btn_createParty = (Button)findViewById(R.id.btn_createParty);
+		btn_editParty 	= (Button)findViewById(R.id.btn_editParty);
 		
-		((Button)findViewById(R.id.btn_editParty)).setVisibility(View.GONE);
+		
+		btn_editParty.setVisibility(View.GONE);
 		
 		// Edit party
 		bundle = getIntent().getExtras();
@@ -113,8 +119,8 @@ public class AddEditPartyActivity extends FragmentActivity implements FogActivit
 			party = (Party) bundle.getSerializable("party");
 			if (party!=null){
 				putDataInItems(party);
-				((Button)findViewById(R.id.btn_createParty)).setVisibility(View.GONE);
-				((Button)findViewById(R.id.btn_editParty)).setVisibility(View.VISIBLE);
+				btn_createParty.setVisibility(View.GONE);
+				btn_editParty.setVisibility(View.VISIBLE);
 			}
 		}
 		
@@ -137,19 +143,16 @@ public class AddEditPartyActivity extends FragmentActivity implements FogActivit
 	}
 	
 	public void getAddressGeoCode(){
-		Location loc = new Location(addressToLookup);
 		LocationHandler.convertAddressToLocation(this, addressToLookup, "");
-		//LocationHandler.convertLocationToAddress(this, loc, "addressLookup");
-		//new LocationToAddress(loc, this, "addressLookup").execute(loc);
 		Toast.makeText(this.getBaseContext(), "looking up", Toast.LENGTH_LONG).show();
 	}
 	
 	public void selectTime(View v){
 		DialogFragment newFragment = new TimePickerFragment();
-		if (v == findViewById(R.id.btn_set_start_time)){
+		if (v == btn_set_start_time){
 			newFragment.show(getSupportFragmentManager(), "party_start_time_picker");
 		}
-		else if(v == findViewById(R.id.btn_set_end_time)){
+		else if(v == btn_set_end_time){
 			newFragment.show(getSupportFragmentManager(), "party_end_time_picker");
 		}
 	    //Toast.makeText(this.getBaseContext(), newFragment.getTag(), Toast.LENGTH_LONG).show();
@@ -157,10 +160,10 @@ public class AddEditPartyActivity extends FragmentActivity implements FogActivit
 	
 	public void selectDate(View v){
 		DialogFragment newFragment = new DatePickerFragment();
-		if (v == findViewById(R.id.btn_set_start_date)){
+		if (v == btn_set_start_date){
 			newFragment.show(getSupportFragmentManager(), "party_start_date_picker");
 		}
-		else if(v == findViewById(R.id.btn_set_end_date)){
+		else if(v == btn_set_end_date){
 			newFragment.show(getSupportFragmentManager(), "party_end_date_picker");
 		}
 	    //Toast.makeText(this.getBaseContext(), newFragment.getTag(), Toast.LENGTH_LONG).show();
@@ -183,6 +186,7 @@ public class AddEditPartyActivity extends FragmentActivity implements FogActivit
 		et_max_age.setText(String.valueOf(p.getMaxAge()));
 		cb_show_photos.setChecked(p.doShowPhotos());
 		cb_show_wall.setChecked(p.doShowWall());
+		et_max_guests_addeditparty.setText(String.valueOf(p.getMaxGuests()));
 	}
 
 	public void createEditParty(View view){
@@ -195,23 +199,27 @@ public class AddEditPartyActivity extends FragmentActivity implements FogActivit
 		}
 		
 		int owner_user_id 	= user.getUserId();
-		int status_id 		= ((Spinner) findViewById(R.id.spin_party_status)).getSelectedItemPosition();
-		String name			= ((EditText) findViewById(R.id.et_party_name)).getText().toString();
-		String description 	= ((EditText) findViewById(R.id.et_party_description)).getText().toString();
-		String address 		= ((EditText) findViewById(R.id.et_address)).getText().toString();
-		String zip 			= ((EditText) findViewById(R.id.et_zip)).getText().toString();
-		String city 		= ((EditText) findViewById(R.id.et_city)).getText().toString();
-		String country 		= ((EditText) findViewById(R.id.et_country)).getText().toString();
-		String door_code 	= ((EditText) findViewById(R.id.et_door_code)).getText().toString();
+		int status_id 		= spin_party_status.getSelectedItemPosition();
+		String name			= et_party_name.getText().toString();
+		String description 	= et_party_description.getText().toString();
+		String address 		= et_address.getText().toString();
+		String zip 			= et_zip.getText().toString();
+		String city 		= et_city.getText().toString();
+		String country 		= et_country.getText().toString();
+		String door_code 	= et_door_code.getText().toString();
 		
+				
 		String start_date_time 	= DateAndTimeStringHandler.setDateAndTime(btn_set_start_date.getText().toString(), btn_set_start_time.getText().toString());
 		String end_date_time 	= DateAndTimeStringHandler.setDateAndTime(btn_set_end_date.getText().toString(), btn_set_end_time.getText().toString());
 		
+		
 		int min_age = 18;
 		int max_age = 60;
+		int max_guests = 0;
 		try{
-			min_age = Integer.parseInt(((EditText) findViewById(R.id.et_min_age)).getText().toString());
-			max_age = Integer.parseInt(((EditText) findViewById(R.id.et_max_age)).getText().toString());
+			min_age 	= Integer.parseInt(et_min_age.getText().toString());
+			max_age 	= Integer.parseInt(et_max_age.getText().toString());
+			max_guests 	= Integer.parseInt(et_max_guests_addeditparty.getText().toString());
 		}
 		catch(Exception e){
 			
@@ -219,10 +227,10 @@ public class AddEditPartyActivity extends FragmentActivity implements FogActivit
 		
 		int show_photos = 0;
 		int show_wall = 0;
-		if (((CheckBox) findViewById(R.id.cb_show_photos)).isChecked()){
+		if (cb_show_photos.isChecked()){
 			show_photos = 1;
 		}
-		if (((CheckBox) findViewById(R.id.cb_show_wall)).isChecked()){
+		if (cb_show_wall.isChecked()){
 			show_wall = 1;
 		}
 		
@@ -241,7 +249,7 @@ public class AddEditPartyActivity extends FragmentActivity implements FogActivit
 		party.setPartyWithAttributes(party_id, owner_user_id, status_id, 
 				name, description, address, zip, city, country, door_code, 
 				start_date_time, end_date_time, min_age, max_age, 
-				show_photos, show_wall, lat, lon
+				show_photos, show_wall, lat, lon, max_guests
 				);
 		
 		

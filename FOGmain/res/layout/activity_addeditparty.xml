@@ -84,6 +84,15 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/DoorCode" />
+            
+            <EditText
+                android:id="@+id/et_max_guests_addeditparty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Max guests" 
+                android:inputType="number"
+                />
 
             <LinearLayout
                 android:orientation="horizontal"

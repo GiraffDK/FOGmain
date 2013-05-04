@@ -31,7 +31,7 @@ public class ViewPartyActivity extends Activity implements FogActivityInterface 
 	private View viewbyowner;
 	private View viewbyattendee;
 	
-	private int user_status = -1; /* -1 = looker, 0=requester, 1=owner, 2=attending guest */
+	private int user_status = -1; /* -2 = denied, -1 = looker, 0=requester, 1=owner, 2=attending guest */
 	
 	private TextView tv_partyname_viewparty;
 	private TextView tv_description_viewparty;
@@ -85,26 +85,29 @@ public class ViewPartyActivity extends Activity implements FogActivityInterface 
 			party.selectUserInParty(this, "showPartyInfo", user);
 		}
 		
-		/* Determing uset status - end */
+		/* Determing user status - end */
 	}
 	
 	public void showLayouts(){
 		//Toast.makeText(this, "user status: "+user_status, Toast.LENGTH_LONG).show();
-		if (user_status>=-1){ /* all */
+		if (user_status>=-2){ /* all */
 			// show only layout for all
 			viewbyall.setVisibility(View.VISIBLE);
 		}
-		if (user_status==-1 || user_status==0 || user_status==2){ /* requester || attending guest */
+		if (user_status==-2 || user_status==-1 || user_status==0 || user_status==2){ /* requester || attending guest */
 			// handle request button
 			viewbyrequesterattendee.setVisibility(View.VISIBLE);
-			if (user_status==-1){
-				btn_requestcancelunsub_viewparty.setText("Request");
+			if (user_status==-2){
+				btn_requestcancelunsub_viewparty.setText("Requested");
+			
+				btn_requestcancelunsub_viewparty.setEnabled(false);
 				btn_requestcancelunsub_viewparty.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						party.userRequestParty(fai, "userRequestParty", user);
+						//party.userRequestParty(fai, "userRequestParty", user);
 					}
 				});
+				
 			}
 			else if (user_status==0 || user_status==2){
 				if (user_status==0){btn_requestcancelunsub_viewparty.setText("Cancel request");}
@@ -172,7 +175,7 @@ public class ViewPartyActivity extends Activity implements FogActivityInterface 
 								user_status = 2;
 							}
 							else if (jo.getString("attending_status_id").equals("3")){ // Rejected
-								user_status = -1;
+								user_status = -2;
 							}
 						} catch (JSONException e) {
 							e.printStackTrace();

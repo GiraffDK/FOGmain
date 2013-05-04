@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import org.apache.http.entity.SerializableEntity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
