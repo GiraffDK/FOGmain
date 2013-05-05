@@ -122,7 +122,7 @@
     <string name="btn_wall">Wall (x)</string>
     <string name="btn_attending">Attending (x)</string>
     <string name="btn_requests">Requests (x)</string>
-    <string name="btn_edit_party">Edit Party</string>
+    <!-- And a Edit_Party here aswell -->
     <string name="btn_Request_Cancel_Unsubsribe">Request/Cancel/Unsubsribe</string>
     
     

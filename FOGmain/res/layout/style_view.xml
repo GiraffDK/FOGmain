@@ -21,6 +21,7 @@
 	    android:layout_below="@id/tv_standard_view"
 	    android:layout_marginTop="30dp"
 	    android:text="@string/btn_standard_button"
+	    android:background="@color/AntiqueWhite"
 	    />
     
 </RelativeLayout>
