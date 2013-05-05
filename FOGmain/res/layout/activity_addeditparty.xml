@@ -33,7 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="@string/NameOfParty" >
+                android:hint="@string/et_NameOfParty" >
             </EditText>
 
             <EditText
@@ -42,7 +42,7 @@
                 android:layout_height="110dp"
                 android:ems="10"
                 android:gravity="center_vertical|top"
-                android:hint="@string/Description"
+                android:hint="@string/et_Description"
                 android:inputType="textMultiLine" >
 
             </EditText>
@@ -52,7 +52,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="@string/Address"
+                android:hint="@string/et_Address"
                 android:inputType="textPostalAddress">
             </EditText>
 
@@ -61,14 +61,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="@string/Zip" />
+                android:hint="@string/et_Zip" />
 
             <EditText
                 android:id="@+id/et_city"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="@string/City" />
+                android:hint="@string/et_City" />
 
 
             <EditText
@@ -76,21 +76,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="@string/Country" />
+                android:hint="@string/et_Country" />
 
             <EditText
                 android:id="@+id/et_door_code"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="@string/DoorCode" />
+                android:hint="@string/et_DoorCode" />
             
             <EditText
                 android:id="@+id/et_max_guests_addeditparty"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Max guests" 
+                android:hint="@string/et_max_guest" 
                 android:inputType="number"
                 />
 
@@ -103,14 +103,14 @@
                 android:id="@+id/tv_start_time"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
-                android:text="Start:" 
+                android:text="@string/tv_Start" 
 				android:textAppearance="?android:attr/textAppearanceMedium" />
                 
 	            <Button
 	                android:id="@+id/btn_set_start_date"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
-	                android:text="Set Start Date" 
+	                android:text="@string/btn_SetStartDate" 
 	                android:onClick="selectDate"
 	                />
 	
@@ -118,7 +118,7 @@
 	                android:id="@+id/btn_set_start_time"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
-	                android:text="Set Start Time"
+	                android:text="@string/btn_set_start_time"
 	                android:onClick="selectTime"
 	                 />
 
@@ -132,7 +132,7 @@
 	                android:id="@+id/tv_end_time"
 	                android:layout_width="60dp"
 	                android:layout_height="wrap_content"
-	                android:text="End:" 
+	                android:text="@string/tv_end_time" 
 	                android:textAppearance="?android:attr/textAppearanceMedium" 
 	                />
 	            
@@ -140,7 +140,7 @@
 	                android:id="@+id/btn_set_end_date"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
-	                android:text="Set End Date" 
+	                android:text="@string/btn_set_end_date" 
 	                android:onClick="selectDate"
 	                />
 	            
@@ -148,7 +148,7 @@
 	                android:id="@+id/btn_set_end_time"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
-	                android:text="Set End Time"
+	                android:text="@string/btn_set_end_time"
 	                android:onClick="selectTime"
 	                 />
             </LinearLayout>
@@ -157,7 +157,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="@string/MinAge18"
+                android:hint="@string/et_MinAge18"
                 android:inputType="number"
                  >
             </EditText>
@@ -167,7 +167,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Max. Age (60)"
+                android:hint="@string/et_MaxAge100"
                 android:inputType="number" >
             </EditText>
             
@@ -175,19 +175,19 @@
                 android:id="@+id/cb_show_photos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/ShowPhotos" />
+                android:text="@string/cb_ShowPhotos" />
             
             <CheckBox
                 android:id="@+id/cb_show_wall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/ShowWall" />
+                android:text="@string/cb_ShowWall" />
 
             <Button
                 android:id="@+id/btn_createParty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/CreateParty" 
+                android:text="@string/btn_CreateParty" 
                 android:onClick="createEditParty"
                 />
             
@@ -196,7 +196,7 @@
                 android:id="@+id/btn_view_latest_party"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/LatestParty"
+                android:text="@string/btn_LatestParty"
                 android:onClick="viewParty"
                  /-->
 
@@ -204,7 +204,7 @@
                 android:id="@+id/btn_editParty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Edit party"
+                android:text="@string/btn_edit_party"
                 android:onClick="createEditParty"
                  />
 

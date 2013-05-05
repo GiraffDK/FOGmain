@@ -31,14 +31,14 @@
 	                android:id="@+id/tv_partyname_viewparty"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
-	                android:text="Party name"
+	                android:text="@string/tv_party_name"
 	                android:textAppearance="?android:attr/textAppearanceLarge" />
 	
 	            <TextView
 	                android:id="@+id/tv_description_viewparty"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
-	                android:text="Description" 
+	                android:text="@string/tv_party_desrciption" 
 	                android:layout_marginTop="10dp"
 	                />
 	
@@ -60,7 +60,7 @@
 						android:id="@+id/tv_start_viewparty"
 						android:layout_width="100dp"
 						android:layout_height="wrap_content"
-						android:text="Party start:" 
+						android:text="@string/tv_party_start" 
 						
 						/>
 						
@@ -68,7 +68,7 @@
 						android:id="@+id/tv_start_date_time_viewparty"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
-						android:text="2013-05-01 : 20:40:00" 
+						android:text="@string/tv_party_start_time" 
 						
 						/>
 						
@@ -84,7 +84,7 @@
 						android:id="@+id/tv_end_viewparty"
 						android:layout_width="100dp"
 						android:layout_height="wrap_content"
-						android:text="Party end:" 
+						android:text="@string/tv_party_end" 
 						
 						/>
 						
@@ -92,7 +92,7 @@
 						android:id="@+id/tv_end_date_time_viewparty"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
-						android:text="2013-05-02 : 20:40:00" 
+						android:text="@string/tv_party_end_time" 
 						
 						/>
 	                </TableRow>
@@ -113,14 +113,14 @@
 						android:id="@+id/tv_age_viewparty"
 						android:layout_width="100dp"
 						android:layout_height="wrap_content"
-						android:text="Age level: " 
+						android:text="@string/tv_age_level" 
 						/>
 	                    
 	            		<TextView
 						android:id="@+id/tv_age_level_viewparty"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
-						android:text="18-60" 
+						android:text="@string/tv_age_level_view" 
 						/>
 	                </TableRow>
 	            </TableLayout>
@@ -138,7 +138,7 @@
 	                android:id="@+id/tv_party_address_viewparty"
 	                android:layout_width="match_parent"
 	                android:layout_height="wrap_content"
-	                android:text="Address\nZip, City\nCountry"
+	                android:text="@string/tv_Address_Zip_City_Country"
 	                android:background="#d0edf7"
 	                android:padding="5dp"
 	                />
@@ -158,14 +158,14 @@
 						android:id="@+id/tv_doorcode_label_viewparty"
 						android:layout_width="100dp"
 						android:layout_height="wrap_content"
-						android:text="Door code: " 
+						android:text="@string/tv_door_code" 
 						/>
 	                    
 	            		<TextView
 						android:id="@+id/tv_doorcode_viewparty"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
-						android:text="*******" 
+						android:text="@string/tv_door_code_view" 
 						/>
 	                </TableRow>
 	            </TableLayout>
@@ -174,20 +174,20 @@
 	                android:id="@+id/btn_gotophotos_viewparty"
 	                android:layout_width="match_parent"
 	                android:layout_height="wrap_content"
-	                android:text="Photos (x)"
+	                android:text="@string/btn_photo"
 	                android:layout_marginTop="10dp"
 	                />
 	            <Button
 	                android:id="@+id/btn_gotowall_viewparty"
 	                android:layout_width="match_parent"
 	                android:layout_height="wrap_content"
-	                android:text="Wall (x)"
+	                android:text="@string/btn_wall"
 	                />
 	            <Button
 	                android:id="@+id/btn_gotoattendingguests_viewparty"
 	                android:layout_width="match_parent"
 	                android:layout_height="wrap_content"
-	                android:text="Attending (x)"
+	                android:text="@string/btn_attending"
 	                />
 	            
 	        </LinearLayout>
@@ -203,7 +203,7 @@
 	                android:id="@+id/btn_gotorequests_viewparty"
 	                android:layout_width="match_parent"
 	                android:layout_height="wrap_content"
-	                android:text="Requests (x)"
+	                android:text="@string/btn_requests"
 	                android:onClick="seeRequesters"
 	                />
 	            
@@ -211,7 +211,7 @@
 	                android:id="@+id/btn_editparty_viewparty"
 	                android:layout_width="match_parent"
 	                android:layout_height="wrap_content"
-	                android:text="Edit party"
+	                android:text="@string/btn_edit_party"
 	                />
 	        </LinearLayout>
 	        <LinearLayout
@@ -226,7 +226,7 @@
 	                android:id="@+id/btn_requestcancelunsub_viewparty"
 	                android:layout_width="match_parent"
 	                android:layout_height="wrap_content"
-	                android:text="Request/Cancel/Unsubsribe"
+	                android:text="@string/btn_Request_Cancel_Unsubsribe"
 	                />
 	        </LinearLayout>
         </LinearLayout>

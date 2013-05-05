@@ -12,7 +12,7 @@
         android:layout_below="@+id/btn_mark_map"
         android:layout_marginLeft="22dp"
         android:layout_marginTop="27dp"
-        android:text="Radius:" />
+        android:text="@string/tv_Radius" />
 
     <NumberPicker
         android:id="@+id/np_radius"
@@ -40,7 +40,7 @@
         android:layout_alignLeft="@+id/label_radius"
         android:layout_below="@+id/et_location"
         android:onClick="selectOnMap"
-        android:text="Select Location On Map" />
+        android:text="@string/tv_SelectLocationOnMap" />
 
     <TextView
         android:id="@+id/label_location"
@@ -48,7 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/et_location"
         android:layout_alignParentTop="true"
-        android:text="From Location" />
+        android:text="@string/tv_FromLocation" />
 
     <TextView
         android:id="@+id/label_age"
@@ -57,7 +57,7 @@
         android:layout_alignLeft="@+id/label_radius"
         android:layout_below="@+id/np_radius"
         android:layout_marginTop="18dp"
-        android:text="Age:" />
+        android:text="@string/tv_Age" />
 
     <NumberPicker
         android:id="@+id/np_age_low"
@@ -81,6 +81,6 @@
         android:layout_marginBottom="16dp"
         android:layout_toRightOf="@+id/np_age_max"
         android:onClick="onClick"
-        android:text="Search" />
+        android:text="@string/btn_Search" />
 
 </RelativeLayout>

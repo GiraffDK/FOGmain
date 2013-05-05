@@ -7,23 +7,30 @@
     
     
     <!-- AddEditParty -->
-    <string name="NameOfParty">Name of Party</string>
-    <string name="Description">Description</string>
-    <string name="Address">Address</string>
-    <string name="Zip">Zip</string>
-    <string name="City">City</string>
-    <string name="Country">Country</string>
-    <string name="DoorCode">Door Code</string>
-    <string name="TVstartTime">2013–04–30 00:00:00</string>
-    <string name="SetStartTime">Set Start Time</string>
-    <string name="TVendTime">2013–04–30 00:00:00</string>
-    <string name="SetEndTime">Set End Time</string>
-    <string name="MinAge18">Min. Age (18)</string>
-    <string name="MaxAge100">Max. Age (100)</string>
-    <string name="ShowPhotos">Show Photos</string>
-    <string name="ShowWall">Show Wall</string>
-    <string name="CreateParty">Create Party</string>
-    <string name="LatestParty">Latest Party</string>
+    <string name="et_NameOfParty">Name of Party</string>
+    <string name="et_Description">Description</string>
+    <string name="et_Address">Address</string>
+    <string name="et_Zip">Zip</string>
+    <string name="et_City">City</string>
+    <string name="et_Country">Country</string>
+    <string name="et_DoorCode">Door Code</string>
+    <string name="et_max_guest">Max Guest</string>
+    <string name="tv_Start">Start:</string>
+    <string name="btn_SetStartDate">Set Start Date</string>
+    <string name="et_StartTime">2013–04–30 00:00:00</string>
+    <string name="btn_set_start_time">Set Start Time</string>
+    <string name="tv_end_time">End:</string>
+    <string name="btn_set_end_date">Set End Date</string>
+    <string name="et_EndTime">2013–04–30 00:00:00</string>
+    <string name="btn_set_end_time">Set End Time</string>
+	<string name="et_SetEndTime">Set End Time</string>
+	<string name="et_MinAge18">Min Age (18)</string>
+    <string name="et_MaxAge100">Max. Age (60)</string>
+    <string name="cb_ShowPhotos">Show Photos</string>
+    <string name="cb_ShowWall">Show Wall</string>
+    <string name="btn_CreateParty">Create Party</string>
+    <string name="btn_LatestParty">Latest Party</string>
+    <string name="btn_edit_party">Edit Party</string>
     
     
 	<!-- editProfil -->
@@ -40,16 +47,20 @@
     <string name="Hint_email">Email</string>
     <string name="Hint_desc">Description of you</string>
     
+    
     <!-- Login -->
     <string name="Email">Email</string>
+    <string name="et_email">maanefjaes</string>
     <string name="Password">Password</string>
-    <string name="Login">Login</string>
+    <string name="et_password">test</string>
+    <string name="btn_Login">Login</string>
+    <string name="btn_create_profile">Create profile</string>
     
     
     <!-- Main -->
-    <string name="getParties">get parties</string>
-    <string name="Loading">Loading</string>
-    <string name="PleaseWait">Please wait..</string>
+    <string name="btn_getParties">get parties</string>
+    <string name="tv_Loading">Loading</string>
+    <string name="tv_PleaseWait">Please wait..</string>
     
     
     <!-- Menu -->
@@ -59,6 +70,10 @@
     <string name="btn_Parties">Parties</string>
     <string name="btn_Profile">Profile</string>
     
+    
+    <!-- Parties -->
+    <string name="tv_your_parties">Your Parties</string>
+    <string name="tv_attending_parties">Attending Parties</string>
     
     <!-- Profile -->
     <string name="EditProfile">Edit profile</string>
@@ -75,28 +90,51 @@
     
     
     <!-- SearchParty -->
-    <string name="Radius">Radius:</string>
-    <string name="SelectLocationOnMap">Select Location On Map</string>
-    <string name="FromLocation">From Location</string>
-    <string name="Age">Age:</string>
+    <string name="tv_Radius">Radius:</string>
+    <string name="tv_SelectLocationOnMap">Select Location On Map</string>
+    <string name="tv_FromLocation">From Location</string>
+    <string name="tv_Age">Age:</string>
     <!-- And a search here aswell -->
     
     
+    <!-- ShowPartyAttendee -->
+    <string name="tv_attendees">Attendees</string>
+    
+    
     <!-- ShowPartyRequester -->
-    <string name="tv_show_requesters">Requesters</string>
+    <string name="tv_show_requesters">Requests</string>
+    <string name="tv_denied">Denied</string>
+    
     
     <!-- ViewParty -->
-    <string name="TextView">TextView</string>
-    <!-- And a AddParty here aswell -->
-    <string name="EditParty">Edit Party</string>
+    <string name="tv_party_name">Party name</string>
+    <string name="tv_party_desrciption">Description</string>
+    <string name="tv_party_start">Party start:</string>
+    <string name="tv_party_start_time">2013-05-01 : 20:40:00</string>
+    <string name="tv_party_end">Party end:</string>
+    <string name="tv_party_end_time">2013-05-01 : 20:40:00</string>
+    <string name="tv_age_level">Age level:</string>
+    <string name="tv_age_level_view">18 - 60</string>
+    <string name="tv_Address_Zip_City_Country">Address\nZip, City\nCountry</string>
+    <string name="tv_door_code">Door code: </string>
+    <string name="tv_door_code_view">*******</string>
+    <string name="btn_photo">Photos (x)</string>
+    <string name="btn_wall">Wall (x)</string>
+    <string name="btn_attending">Attending (x)</string>
+    <string name="btn_requests">Requests (x)</string>
+    <string name="btn_edit_party">Edit Party</string>
+    <string name="btn_Request_Cancel_Unsubsribe">Request/Cancel/Unsubsribe</string>
     
     
     <!-- frameLayout -->
     
     
     <!-- infoWindowView -->
-    <string name="PartyTitle">11111111111111</string>
-    <string name="GoToParty">Go To Party!</string>        
+    <string name="tv_PartyTitle">11111111111111</string>
+    <string name="btn_GoToParty">Go To Party!</string>        
+    
+    
+    <!-- row_denied -->
     
     
     <!-- row_expand -->
@@ -106,10 +144,16 @@
     <string name="tv_age">Alder:</string>
     
     
-    <!-- row_partyrequester -->
+    <!-- row_requester_party -->
     
 
 	<!-- style_view -->
 	<string name="tv_standard_view">123 - Hello FOG!</string>
 	<string name="btn_standard_button">123 - click me!</string>  
+	
+	
+	<!-- titlebar -->
+	<string name="tv_req_part">Your/Requested Parties</string>
+
+	
 </resources>
