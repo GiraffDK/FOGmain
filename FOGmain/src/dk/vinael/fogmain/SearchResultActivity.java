@@ -7,6 +7,7 @@ import java.util.Comparator;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.location.Location;
@@ -49,6 +50,11 @@ public class SearchResultActivity extends Activity implements OnClickListener, F
 		min_age = bun.getInt("Min_age");
 		max_age = bun.getInt("Max_age");
 		// start_date = bun.getString("Start_date");
+		
+		ActionBar bar = getActionBar();
+		bar.setIcon(R.drawable.ic_search);
+		bar.setTitle("Search Results");
+		
 		getPartiesByRadius();
 
 	}
