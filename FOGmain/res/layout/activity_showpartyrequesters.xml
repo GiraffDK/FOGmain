@@ -25,7 +25,7 @@
 	             android:id="@+id/tv_show_requesters_showpartyrequesters"
 	             android:layout_width="match_parent"
 	             android:layout_height="wrap_content"
-	             android:text="Requests"
+	             android:text="@string/tv_show_requesters"
 	             android:textAppearance="?android:attr/textAppearanceLarge" />
 	
 	         <ListView
@@ -41,7 +41,7 @@
 	             android:id="@+id/tv_show_denied_showpartyrequesters"
 	             android:layout_width="match_parent"
 	             android:layout_height="wrap_content"
-	             android:text="Denied"
+	             android:text="@string/tv_denied"
 	             android:textAppearance="?android:attr/textAppearanceLarge" 
 	             android:layout_marginTop="10dp"
 	             />

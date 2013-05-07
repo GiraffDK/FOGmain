@@ -8,7 +8,7 @@
         android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Name"
+        android:text="@string/tv_name"
         android:textAppearance="?android:attr/textAppearanceMedium" />
     <TextView
         android:id="@+id/tv_description"
@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/tv_name"
-        android:text="indsæt_beskrivelse"
+        android:text="@string/tv_description"
         android:textAppearance="?android:attr/textAppearanceMedium" />
     
     <TextView
@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:text="Afstand"
+        android:text="@string/tv_distance"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/tv_distance"
-        android:text="Alder:"
+        android:text="@string/tv_age"
         android:textAppearance="?android:attr/textAppearanceMedium" />
  
 </RelativeLayout>

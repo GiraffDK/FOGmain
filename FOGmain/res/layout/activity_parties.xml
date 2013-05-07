@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#0f0d0d"
-            android:text="Your Parties"
+            android:text="@string/tv_your_parties"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="#ffffff" />
 
@@ -44,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#0f0d0d"
-            android:text="Attending Parties"
+            android:text="@string/tv_attending_parties"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="#ffffff" />
 
@@ -55,7 +55,5 @@
             android:background="#d1d1d1" >
 
         </ListView>
-
     </LinearLayout>
-
 </RelativeLayout>
