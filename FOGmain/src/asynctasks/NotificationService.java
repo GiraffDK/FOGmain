@@ -1,17 +1,21 @@
 package asynctasks;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import dk.vinael.domain.DateAndTimeStringHandler;
+import dk.vinael.domain.DateAndTimeStringHandler.RETURN_TYPE;
 import dk.vinael.domain.FOGmain;
 import dk.vinael.domain.Party;
 import dk.vinael.domain.User;
 import dk.vinael.interfaces.FogServiceInterface;
 import android.app.Service;
 import android.content.Intent;
+import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
@@ -22,30 +26,70 @@ public class NotificationService extends Service implements FogServiceInterface 
 	private ArrayList<Party> al_attending_parties; /* check if status has changed, alert when it's time to party */
 	private User user;
 	
+	Runnable r;
+	
+	private Handler handler;
 	
 	@Override
 	public void onCreate() {
-		Toast.makeText(this, "Notification Service has been started!", Toast.LENGTH_LONG).show();
 		user = ((FOGmain)getApplicationContext()).user;
-		if (user!=null){
+		handler = new Handler();
+		r = new Runnable()
+		{
+		    public void run() 
+		    {
+		    	checkForChanges();
+		        handler.postDelayed(this, 10000);
+		    }
+		};
+		handler.postDelayed(r, 10000);
+	}
+	
+	
+	public void startKevService(){
+		user = ((FOGmain)getApplicationContext()).user;
+		if (user.getToken()!=null){
 			al_requested_parties = new ArrayList<Party>();
 			al_attending_parties = new ArrayList<Party>();
+			
 			addToRequestedParties(user);
 			addToAttendingParties(user);
+		}
+		else{
+			al_requested_parties=null;
+			al_attending_parties=null;
+			this.stopSelf();
+		}
+	}
+	
+	public void checkForChanges(){
+		if (user.getToken()!=null){
+			//Toast.makeText(this, ""+al_requested_parties.size()+", "+al_attending_parties.size(), Toast.LENGTH_LONG).show();
+			if (al_requested_parties==null || al_attending_parties==null){
+				startKevService();
+			}else{
+				Toast.makeText(this, ""+al_requested_parties.size()+", "+al_attending_parties.size(), Toast.LENGTH_LONG).show();
+				if (al_requested_parties.size()>0){checkRequestedParties();}
+				if (al_attending_parties.size()>0){checkAttendingParties();}
+				/*
+				if (al_requested_parties.size()==0 && al_requested_parties.size()==0){
+					startKevService();
+				}
+				else{
+					
+				}
+				*/
+			}
+		}
+		else{
+			this.stopSelf();
 		}
 	}
 	
 	@Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 		Log.i("LocalService", "Received start id " + startId + ": " + intent);
-		Toast.makeText(this, ""+al_requested_parties.size()+", "+al_attending_parties.size(), Toast.LENGTH_LONG).show();
-		
-		if (user!=null){
-			return START_STICKY;
-		}
-		else{
-			return START_NOT_STICKY;
-		}
+		return START_STICKY;
     }
 
 	@Override
@@ -80,6 +124,15 @@ public class NotificationService extends Service implements FogServiceInterface 
 		}
 	}
 	
+	public void checkAttendingParties(){ // check if party has been cancelled or it's time to party
+		if (al_attending_parties!=null){
+			for (Party p : al_attending_parties){
+				String sqlString = "SELECT party.start_time, party.status_id, user_in_party.start_time_notified, user_in_party.attending_status_id, user_in_party.party_id FROM user_in_party INNER JOIN party ON user_in_party.party_id = party.id WHERE user_in_party.user_id="+user.getUserId()+";";
+				new ServiceHandler(user, "attendingParty", this).execute("select", sqlString);
+			}
+		}
+	}
+	
 	@Override
 	public void jsonArrayHandler(JSONArray ja, String identifier) {	
 		//Toast.makeText(this, "result: "+ja.toString(), Toast.LENGTH_LONG).show();
@@ -87,96 +140,116 @@ public class NotificationService extends Service implements FogServiceInterface 
 			JSONObject jo = null;
 			try {
 				jo = ja.getJSONObject(0);
-				//Toast.makeText(this, jo.getString("access"), Toast.LENGTH_LONG).show();
-				if (jo!=null && !jo.getString("access").equals("denied")){
-					if (!jo.has("access") || !jo.has("results")){
+				// Toast.makeText(this, jo.getString("access")+", "+jo.getString("results"), Toast.LENGTH_LONG).show();
+				// Toast.makeText(this, identifier + " " + jo.has("results") + "", Toast.LENGTH_LONG).show();
+				if (jo!=null){
+					if (!jo.has("access")){
+						Toast.makeText(this, identifier, Toast.LENGTH_LONG).show();
 						if (identifier.equals("requestedParties")){
-							for (int i=0; i<ja.length();i++){
-								Party tempParty = new Party();
-								tempParty.setPartyWithJSON(ja.getJSONObject(i));
-								if (tempParty.getId()>0){
-									al_requested_parties.add(tempParty);
+							if(!jo.has("results")){
+								for (int i=0; i<ja.length();i++){
+									Party tempParty = new Party();
+									tempParty.setPartyWithJSON(ja.getJSONObject(i));
+									if (tempParty.getId()>0){
+										al_requested_parties.add(tempParty);
+									}
 								}
 							}
 						}
 						else if (identifier.equals("attendingParties")){
-							for (int i=0; i<ja.length();i++){
-								Party tempParty = new Party();
-								tempParty.setPartyWithJSON(ja.getJSONObject(i));
-								if (tempParty.getId()>0){
-									al_attending_parties.add(tempParty);
+							if(!jo.has("results")){
+								for (int i=0; i<ja.length();i++){
+									Party tempParty = new Party();
+									tempParty.setPartyWithJSON(ja.getJSONObject(i));
+									if (tempParty.getId()>0){
+										al_attending_parties.add(tempParty);
+									}
 								}
 							}
 						}
 						else if(identifier.equals("requestedParty")){
-							int attending_status=Integer.parseInt(jo.getString("attending_status_id"));
-							int party_id=Integer.parseInt(jo.getString("party_id"));
-							
-							if (attending_status==2){
-								for (Party p : al_requested_parties){
-									if (p.getId()==party_id){
-										al_attending_parties.add(p);
-										al_requested_parties.remove(p);
-										showRequestBeenAcceptedNotification(p);
+							if(jo.has("results")){
+								startKevService();
+							}
+							else{
+								int attending_status=Integer.parseInt(jo.getString("attending_status_id"));
+								int party_id=Integer.parseInt(jo.getString("party_id"));
+								
+								if (attending_status==2){ // user accepted to party
+									for (Party p : al_requested_parties){
+										if (p.getId()==party_id){
+											al_attending_parties.add(p);
+											al_requested_parties.remove(p);
+											showNotification("accepted", p);
+										}
+									}
+								}
+							}
+						}
+						else if(identifier.equals("attendingParty")){
+							if(jo.has("results")){
+								startKevService();
+							}
+							else{
+								String start_date_time = jo.getString("start_time");
+								int party_status = Integer.parseInt(jo.getString("status_id"));
+								int attending_status=Integer.parseInt(jo.getString("attending_status_id"));
+								int party_id=Integer.parseInt(jo.getString("party_id"));
+								int party_start_time_notified = Integer.parseInt(jo.getString("start_time_notified"));
+								
+								Toast.makeText(this, "party_start_time_notified: "+party_start_time_notified, Toast.LENGTH_LONG).show();
+								
+								if (party_status==0){ // party has been cancelled
+									for (Party p : al_attending_parties){
+										if (p.getId()==party_id){
+											showNotification("party_cancelled", p);
+										}
+									}
+								}
+								else{
+									if (attending_status==1 || attending_status==3){ // user been declined from party
+										showNotification("declined", new Party());
+										for (Party p : al_attending_parties){
+											if (p.getId()==party_id){
+												al_requested_parties.add(p);
+												al_attending_parties.remove(p);
+												showNotification("declined", p);
+											}
+										}
+									}
+									else{
+										if (party_start_time_notified==0){
+											for (Party p : al_attending_parties){
+												if (p.getId()==party_id){
+													Calendar party_c = Calendar.getInstance();
+													Calendar now_c = Calendar.getInstance();
+													party_c.setTime(DateAndTimeStringHandler.getDateStringAsCalendar(start_date_time).getTime());
+													now_c.setTime(DateAndTimeStringHandler.getDateStringAsCalendar(DateAndTimeStringHandler.getCurrentDateAndTime()).getTime());
+													
+													double diff = DateAndTimeStringHandler.dateDiffInMinutes(party_c, now_c, RETURN_TYPE.MINUTES);
+													if (diff<60){
+														showNotification("partytime: "+diff, p);
+													}
+													Toast.makeText(this, "minutes: "+diff+"", Toast.LENGTH_LONG).show();
+												}
+											}
+										}
 									}
 								}
 							}
 						}
 					}
 				}
-				else{
-					this.stopSelf();
-				}
 			} catch (JSONException e) {
-				e.printStackTrace();
+				this.stopSelf();
+				//e.printStackTrace();
 			}
 		}
 	}
 
-	/*
-	@Override
-	public void jsonArrayHandler(JSONArray ja, String identifier) {
-		JSONObject jo;
-		try {
-			jo = ja.getJSONObject(0);
-			if (jo.has("results") || jo.has("access")){
-				// No results
-			}
-			else{
-				if (identifier.equals("requestedParties")){
-					for (int i=0; i>ja.length(); i++){
-						Party tempParty = new Party();
-						tempParty.setPartyWithJSON(ja.getJSONObject(i));
-						al_requested_parties.add(tempParty);
-					}
-				}
-				else if(identifier.equals("attendingParties")){
-					for (int i=0; i>ja.length(); i++){
-						Party tempParty = new Party();
-						tempParty.setPartyWithJSON(ja.getJSONObject(i));
-						al_attending_parties.add(tempParty);
-					}
-				}
-				
-			}
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	
-	
-	
-	
-	public void checkAttendingParties(){
-		if (al_attending_parties!=null){
-			
-		}
-	}
-	*/
-	public void showRequestBeenAcceptedNotification(Party p){
+	public void showNotification(String identifier, Party p){
 		
-		Toast.makeText(this, "You have been accepted to party: "+p.getName(), Toast.LENGTH_LONG).show();
+		Toast.makeText(this, identifier, Toast.LENGTH_LONG).show();
 		/*
 		// Prepare intent which is triggered if the
 		// notification is selected

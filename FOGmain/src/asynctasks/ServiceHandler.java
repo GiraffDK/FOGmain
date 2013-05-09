@@ -30,7 +30,8 @@ public class ServiceHandler extends AsyncTask<String, Void, String>{
 	
 	// Create a new HttpClient and Post Header
     private HttpClient httpclient = new DefaultHttpClient();
-    private HttpPost httppost = new HttpPost("http://bluerocketmedia.dk/fog/index.php");
+    //private HttpPost httppost = new HttpPost("http://bluerocketmedia.dk/fog/index.php");
+    private HttpPost httppost = new HttpPost("http://supportmand.dk:81/index.php");
 	
     public ServiceHandler(User u, String i, Service s){
     	this.user = u;

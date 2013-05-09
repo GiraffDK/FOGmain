@@ -38,7 +38,8 @@ public class WebserviceCaller extends AsyncTask<String, Void, String> {
 	
 	// Create a new HttpClient and Post Header
     private HttpClient httpclient = new DefaultHttpClient();
-    private HttpPost httppost = new HttpPost("http://bluerocketmedia.dk/fog/index.php");
+    //private HttpPost httppost = new HttpPost("http://bluerocketmedia.dk/fog/index.php");
+    private HttpPost httppost = new HttpPost("http://supportmand.dk:81/index.php");
 	
     // Constructor (setting calling activity and user)
     public WebserviceCaller(FogActivityInterface callingActivity, String identifier){

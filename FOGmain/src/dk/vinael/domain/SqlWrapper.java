@@ -143,7 +143,7 @@ public class SqlWrapper {
 	}
 	
 	public static void userRequestParty(FogActivityInterface activity, String identifier, Party p, User u){
-		String sqlString = "INSERT INTO user_in_party VALUES (0, "+u.getUserId()+", "+p.getId()+", 1);";
+		String sqlString = "INSERT INTO user_in_party VALUES (0, "+u.getUserId()+", "+p.getId()+", 1, 0);";
 		new WebserviceCaller(activity, identifier).execute("insert", sqlString);
 	}
 	

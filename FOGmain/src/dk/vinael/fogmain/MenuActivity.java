@@ -13,12 +13,10 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
-import android.provider.CalendarContract.CalendarAlerts;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 import asynctasks.NotificationService;
 
 public class MenuActivity extends Activity implements FogActivityInterface {
@@ -72,13 +70,16 @@ public class MenuActivity extends Activity implements FogActivityInterface {
 		this.startActivity(intent);
 		*/
 		
+		
 		/* Starting service */
+		/*
 		Calendar calendar = Calendar.getInstance();
         Intent intent = new Intent(this, NotificationService.class);
         PendingIntent pintent = PendingIntent.getService(this, 0, intent, 0);
         AlarmManager alarm = (AlarmManager)getSystemService(this.ALARM_SERVICE);
         alarm.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 10*1000, pintent);
-		
+		*/
+		startService(new Intent(this, NotificationService.class));
 	}
 	
 	@Override
