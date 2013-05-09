@@ -6,6 +6,8 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -42,11 +44,23 @@ public class ViewProfilActivity extends Activity {
 		ActionBar bar = getActionBar();
 		bar.setIcon(R.drawable.ic_settings);
 		bar.setTitle("View Profile");
+		bar.setHomeButtonEnabled(true);
 		
 		Bundle bundle = getIntent().getExtras();
 		user = (User) bundle.get("user");
 		checkUser(user);
 		addInfo(user);
+	}
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.menu_to_main_menu, menu);
+		return true;
+	}
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		((FOGmain) getApplicationContext()).onOptionsItemSelected(item,this);
+		return true;
 	}
 
 	private void addInfo(User u) {

@@ -20,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import design.RowAdapter;
+import dk.vinael.domain.FOGmain;
 import dk.vinael.domain.Party;
 import dk.vinael.domain.PartySortingComparator;
 import dk.vinael.domain.SqlWrapper;
@@ -64,11 +65,16 @@ public class SearchResultActivity extends Activity implements OnClickListener, F
 		getMenuInflater().inflate(R.menu.menu_sort, menu);
 		return true;
 	}
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		((FOGmain) getApplicationContext()).onOptionsItemSelected(item,this);
+		return true;
+	}
 
 	public void getPartiesByRadius() {
 		Double loclat = loc.getLatitude();
 		Double loclon = loc.getLongitude();
-		SqlWrapper.selectParties(this, "getParties", loclat, loclon, radius, min_age, max_age);
+		new Party().selectParties(this, "getParties", loclat, loclon, radius, min_age, max_age, ((FOGmain) getApplicationContext()).user.getUserId());
 	}
 
 	@Override
@@ -104,6 +110,7 @@ public class SearchResultActivity extends Activity implements OnClickListener, F
 		} else if (item.getItemId() == R.id.menu_sort_by_distance) {
 			sortByDistanceToLocation(partyList, loc);
 		} else {
+			
 		}
 			
 	}

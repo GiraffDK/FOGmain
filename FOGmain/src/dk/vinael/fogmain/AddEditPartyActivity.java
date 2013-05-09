@@ -5,12 +5,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
 import android.widget.ArrayAdapter;
@@ -114,6 +117,7 @@ public class AddEditPartyActivity extends FragmentActivity implements FogActivit
 		btn_editParty.setVisibility(View.GONE);
 		
 		// Edit party
+		ActionBar bar = getActionBar();
 		bundle = getIntent().getExtras();
 		if (bundle!=null){
 			party = (Party) bundle.getSerializable("party");
@@ -121,6 +125,9 @@ public class AddEditPartyActivity extends FragmentActivity implements FogActivit
 				putDataInItems(party);
 				btn_createParty.setVisibility(View.GONE);
 				btn_editParty.setVisibility(View.VISIBLE);
+				bar.setTitle("Edit Party");
+			} else {
+				bar.setTitle("Create New Party");
 			}
 		}
 		
@@ -139,7 +146,22 @@ public class AddEditPartyActivity extends FragmentActivity implements FogActivit
 		et_zip.setOnFocusChangeListener(ofl);
 		et_city.setOnFocusChangeListener(ofl);
 		et_country.setOnFocusChangeListener(ofl);
+		
+		
+		bar.setIcon(R.drawable.ic_a_stiff_drink);
+		bar.setHomeButtonEnabled(true);
 
+	}
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.menu_to_main_menu, menu);
+		return true;
+	}
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		((FOGmain) getApplicationContext()).onOptionsItemSelected(item,this);
+		return true;
 	}
 	
 	public void getAddressGeoCode(){

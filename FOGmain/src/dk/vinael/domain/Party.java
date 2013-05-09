@@ -271,7 +271,9 @@ public class Party implements Serializable {
 		}
 
 	}
-	
+	public void getPartiesUserAttended(FogActivityInterface activity, String identifier, int month, int year) {
+		SqlWrapper.selectPartiesUserAttended(activity, identifier, month, year);
+	}
 	public void setPartyWithAttributes(
 			int id, int owner_user_id, int status_id, 
 			String name, String description, String address, String zip, String city, String country, String door_code, 
@@ -297,6 +299,10 @@ public class Party implements Serializable {
 		setLat(lat);
 		setLon(lon);
 		setMaxGuests(max_guests);
+	}
+	public void selectParties(FogActivityInterface activity, String identifier, double lat, double lon, double radius, 
+			int min_age, int max_age, int userID) {
+		SqlWrapper.selectParties(activity, identifier, lat, lon, radius, min_age, max_age, userID);
 	}
 	
 	// Statements

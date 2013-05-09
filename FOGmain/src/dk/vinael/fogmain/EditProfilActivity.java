@@ -9,6 +9,7 @@ import dk.vinael.domain.FOGmain;
 import dk.vinael.domain.SqlWrapper;
 import dk.vinael.domain.User;
 import dk.vinael.interfaces.FogActivityInterface;
+import fragments.DatePickerFragment;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -19,16 +20,20 @@ import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-public class EditProfilActivity extends Activity implements FogActivityInterface {
+public class EditProfilActivity extends FragmentActivity implements FogActivityInterface {
 	private EditText fname;
 	private EditText lname;
-	private EditText bday;
+	private Button bday;
 	private EditText street;
 	private EditText zip;
 	private EditText city;
@@ -48,7 +53,7 @@ public class EditProfilActivity extends Activity implements FogActivityInterface
 		user = ((FOGmain) getApplicationContext()).user;
 		fname = (EditText) findViewById(R.id.editprof_et_fname);
 		lname = (EditText) findViewById(R.id.editprof_et_lname);
-		bday = (EditText) findViewById(R.id.editprof_et_bday);
+		bday = (Button) findViewById(R.id.editprof_btn_birth);
 		street = (EditText) findViewById(R.id.editprof_et_street);
 		zip = (EditText) findViewById(R.id.editprof_et_zip);
 		city = (EditText) findViewById(R.id.editprof_et_city);
@@ -65,19 +70,26 @@ public class EditProfilActivity extends Activity implements FogActivityInterface
 		oldText = takeText();
 
 	}
+	public void selectDate(View v) {
+		DialogFragment newFragment = new DatePickerFragment();
+		if (v.getId() == R.id.editprof_btn_birth){
+			newFragment.show(getSupportFragmentManager(), "birthday");
+		}
+	}
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.menu_to_main_menu, menu);
+		return true;
+	}
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		if (item.getItemId() == android.R.id.home) {
-			Intent intent = new Intent(this, MenuActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-            return true;
-		}
-		return super.onOptionsItemSelected(item);
+		((FOGmain) getApplicationContext()).onOptionsItemSelected(item,this);
+		return true;
 	}
 
 	public String takeText() {
-		return "" + fname.getText() + lname.getText() + bday.getText() + street.getText() + zip.getText() + country.getText() + phoneNr.getText() + email.getText() + desc.getText();
+		return "" + fname.getText() + lname.getText()  + street.getText() + zip.getText() + country.getText() + phoneNr.getText() + email.getText() + desc.getText();
 	}
 	public void checkData(EditText et, String str) {
 		if (!(str.equals("null"))) {
@@ -132,7 +144,7 @@ public class EditProfilActivity extends Activity implements FogActivityInterface
 	public void setValues(User user) {
 		checkData(fname, user.getFirstName());
 		checkData(lname,user.getLastName());
-		checkData(bday, user.getBirthdate());
+		if (!(user.getBirthdate().equals("null"))) bday.setText(user.getBirthdate());
 		checkData(street, user.getAddress());
 		checkData(zip,user.getZip());
 		checkData(city, user.getCity());
