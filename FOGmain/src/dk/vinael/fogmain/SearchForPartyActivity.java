@@ -1,15 +1,13 @@
 package dk.vinael.fogmain;
 
-import java.util.List;
-
 import org.json.JSONArray;
 
 import dk.vinael.interfaces.FogActivityInterface;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.location.Address;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -18,7 +16,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.NumberPicker;
-import android.widget.TextView;
 import asynctasks.LocationHandler;
 
 public class SearchForPartyActivity extends Activity implements LocationListener, FogActivityInterface {
@@ -55,6 +52,10 @@ public class SearchForPartyActivity extends Activity implements LocationListener
 		np_age_max = (NumberPicker) findViewById(R.id.np_age_max);
 		np_age_max.setMaxValue(60);
 		np_age_max.setMinValue(18);
+		
+		ActionBar bar = getActionBar();
+		bar.setIcon(R.drawable.ic_search);
+		bar.setTitle("Search For Party");
 
 	}
 

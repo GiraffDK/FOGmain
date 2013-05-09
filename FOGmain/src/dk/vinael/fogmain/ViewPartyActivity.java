@@ -1,27 +1,39 @@
 package dk.vinael.fogmain;
 
+import java.util.Calendar;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.CalendarContract;
+import android.provider.CalendarContract.Events;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import dk.vinael.domain.DateAndTimeStringHandler;
 import dk.vinael.domain.FOGmain;
 import dk.vinael.domain.Party;
 import dk.vinael.domain.User;
 import dk.vinael.interfaces.FogActivityInterface;
 
-public class ViewPartyActivity extends Activity implements FogActivityInterface {
+public class ViewPartyActivity extends Activity implements FogActivityInterface, LocationListener {
 
 	private ViewPartyActivity fai = this;
 	
+	private Location loc;
+	private LocationManager locationManager;
 	private User user;
 	private Party party;
 	private Bundle bundle;
@@ -43,6 +55,7 @@ public class ViewPartyActivity extends Activity implements FogActivityInterface 
 	private Button btn_requestcancelunsub_viewparty;
 	private Button btn_editparty_viewparty;
 	private Button btn_gotoattendingguests_viewparty;
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +92,10 @@ public class ViewPartyActivity extends Activity implements FogActivityInterface 
 		viewbyattendee.setVisibility(View.GONE);
 		viewbyowner.setVisibility(View.GONE);
 		
+		ActionBar bar = getActionBar();
+		bar.setIcon(R.drawable.ic_a_stiff_drink);
+		bar.setTitle("View Party");
+		
 		if (user.getUserId() == party.getOwnerId()){
 			user_status=1;
 			showLayouts();
@@ -86,6 +103,9 @@ public class ViewPartyActivity extends Activity implements FogActivityInterface 
 		else{
 			party.selectUserInParty(this, "showPartyInfo", user);
 		}
+		locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+		locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
+		onLocationChanged(locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER));
 		
 		/* Determing user status - end */
 	}
@@ -219,6 +239,41 @@ public class ViewPartyActivity extends Activity implements FogActivityInterface 
 			this.startActivity(intent);
 		}
 	}
+	public void showDirections(View v) {
+		String sAddr = ""+loc.getLatitude() + "," +loc.getLongitude();
+		String dAddr = tv_party_address_viewparty.getText().toString();
+		String url = "http://maps.google.com/maps?saddr=" + sAddr + "&daddr=" +  dAddr;
+		Intent intent = new Intent(android.content.Intent.ACTION_VIEW,  Uri.parse(url));
+		startActivity(intent);
+	}
+	public void makeAppointment(View v) {
+		Calendar beginTime = Calendar.getInstance();
+		String startDate = party.getStartDateAndTime();
+		String endDate = party.getEndDateAndTime();
+		beginTime.set(
+				DateAndTimeStringHandler.getYearFromDateAndTime(startDate), 
+				DateAndTimeStringHandler.getMonthFromDateAndTime(startDate),
+				DateAndTimeStringHandler.getDayOfMonthFromDateAndTime(startDate),
+				DateAndTimeStringHandler.getHourFromDateAndTime(startDate),
+				DateAndTimeStringHandler.getMinuttesFromDateAndTime(startDate));
+		Calendar endTime = Calendar.getInstance();
+		endTime.set(
+				DateAndTimeStringHandler.getYearFromDateAndTime(endDate), 
+				DateAndTimeStringHandler.getMonthFromDateAndTime(endDate),
+				DateAndTimeStringHandler.getDayOfMonthFromDateAndTime(endDate),
+				DateAndTimeStringHandler.getHourFromDateAndTime(endDate),
+				DateAndTimeStringHandler.getMinuttesFromDateAndTime(endDate));
+		Intent intent = new Intent(Intent.ACTION_INSERT)
+		        .setData(Events.CONTENT_URI)
+		        .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.getTimeInMillis())
+		        .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime.getTimeInMillis())
+		        .putExtra(Events.TITLE, party.getName())
+		        .putExtra(Events.DESCRIPTION, "Group class")
+		        .putExtra(Events.EVENT_LOCATION, party.getAddress() + "\n" + party.getZip() + ", " + party.getCity())
+		        .putExtra(Events.AVAILABILITY, Events.AVAILABILITY_BUSY)
+		        .putExtra(Intent.EXTRA_EMAIL, "");
+		startActivity(intent);
+	}
 
 	@Override
 	public void returningAddress(String Address, String identifier) {
@@ -230,6 +285,28 @@ public class ViewPartyActivity extends Activity implements FogActivityInterface 
 	public void returningLocation(Location location, String identifier) {
 		// TODO Auto-generated method stub
 		
+	}
+	@Override
+	public void onLocationChanged(Location location) {
+		loc = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+	}
+
+	@Override
+	public void onProviderDisabled(String provider) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onProviderEnabled(String provider) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onStatusChanged(String provider, int status, Bundle extras) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

@@ -17,6 +17,7 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -36,7 +37,7 @@ public class PartiesActivity extends Activity implements FogActivityInterface {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_parties);
 		ActionBar bar = getActionBar();
-		bar.setIcon(R.drawable.ic_party);
+		bar.setIcon(R.drawable.ic_a_stiff_drink);
 		bar.setTitle("Your/Requested Parties");
 
 		user = ((FOGmain) getApplicationContext()).user;
@@ -55,6 +56,16 @@ public class PartiesActivity extends Activity implements FogActivityInterface {
 		att_parties = (ListView) findViewById(R.id.parties_lv_attending);
 	}
 
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId() == android.R.id.home) {
+			Intent intent = new Intent(this, MenuItem.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.

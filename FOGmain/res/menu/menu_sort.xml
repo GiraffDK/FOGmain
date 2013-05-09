@@ -9,13 +9,13 @@
     <item
         android:id="@+id/menu_sort_by_age"
         android:onClick="onMenuClicked"
-        android:orderInCategory="100"
+        android:orderInCategory="200"
         android:showAsAction="never"
         android:title="Sort by avg. age"/>
     <item
         android:id="@+id/menu_sort_by_distance"
         android:onClick="onMenuClicked"
-        android:orderInCategory="100"
+        android:orderInCategory="300"
         android:showAsAction="never"
         android:title="Sort by distance to you"/>
 

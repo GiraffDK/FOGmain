@@ -2,6 +2,7 @@ package dk.vinael.fogmain;
 
 import dk.vinael.domain.FOGmain;
 import dk.vinael.domain.User;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -38,6 +39,10 @@ public class ViewProfilActivity extends Activity {
 		et_lastname = (TextView) findViewById(R.id.profil_tv_lastname);
 		et_description = (TextView) findViewById(R.id.profil_tv_description);
 
+		ActionBar bar = getActionBar();
+		bar.setIcon(R.drawable.ic_settings);
+		bar.setTitle("View Profile");
+		
 		Bundle bundle = getIntent().getExtras();
 		user = (User) bundle.get("user");
 		checkUser(user);

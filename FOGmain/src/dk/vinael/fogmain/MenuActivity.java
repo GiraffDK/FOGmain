@@ -14,6 +14,8 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.provider.CalendarContract.CalendarAlerts;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +33,21 @@ public class MenuActivity extends Activity implements FogActivityInterface {
 		user = ((FOGmain)getApplicationContext()).user;
 		((TextView)findViewById(R.id.tv_username_menu)).setText("Logged in as: " + user.getFirstName() + " " + user.getLastName());
 
+	}
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.menu_main, menu);
+		return true;
+	}
+	public void onLogOut(MenuItem item) {
+		if (item.getItemId() == R.id.menu_log_out) {
+			((FOGmain)getApplicationContext()).user = null;
+			Intent intent = new Intent(this, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
+		}
 	}
 	
 	public void gotoAddParty(View view){
