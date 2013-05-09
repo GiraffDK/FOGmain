@@ -225,4 +225,19 @@ public class User implements Serializable {
 		SqlWrapper.selectUserByEmailAndPassword(a, i, this);
 	}
 	
+	public void selectAllPartiesByOwnerUserId(FogActivityInterface activity, String identifier){
+		SqlWrapper.selectAllPartiesByOwnerUserId(activity, identifier, this);
+	}
+	
+	public void selectAllPartiesImAttending(FogActivityInterface activity, String identifier) {
+		SqlWrapper.selectAllPartiesImAttending(activity, identifier, this);
+	}
+	
+	public void selectAllPartiesIveRequested(FogActivityInterface activity, String identifier) {
+		SqlWrapper.selectAllPartiesIveRequested(activity, identifier, this);
+	}
+	
+	public void getUserInPartyStatusByParty(FogActivityInterface activity, String identifier, Party party){
+		SqlWrapper.getUserInPartyStatusByParty(activity, identifier, party, this);
+	}
 }

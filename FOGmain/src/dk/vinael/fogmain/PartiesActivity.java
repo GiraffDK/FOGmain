@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import dk.vinael.domain.FOGmain;
 import dk.vinael.domain.Party;
 import dk.vinael.domain.SqlWrapper;
+import dk.vinael.domain.User;
 import dk.vinael.interfaces.FogActivityInterface;
 import android.app.ActionBar;
 import android.app.Activity;
@@ -23,6 +24,8 @@ import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class PartiesActivity extends Activity implements FogActivityInterface {
+	
+	private User user;
 	private ListView owner_parties;
 	private ListView att_parties;
 	final ArrayList<Party> reqAttList = new ArrayList<Party>();
@@ -36,11 +39,18 @@ public class PartiesActivity extends Activity implements FogActivityInterface {
 		bar.setIcon(R.drawable.ic_party);
 		bar.setTitle("Your/Requested Parties");
 
+		user = ((FOGmain) getApplicationContext()).user;
+		
 		// Calls
+		user.selectAllPartiesByOwnerUserId(this, "owner_parties");
+		user.selectAllPartiesImAttending(this, "attending_parties");
+		user.selectAllPartiesIveRequested(this, "requested_parties");
+		/*
 		SqlWrapper.selectAllPartiesByOwnerUserId(this, "owner_parties", ((FOGmain) getApplicationContext()).user.getUserId());
 		SqlWrapper.selectAllPartiesImAttending(this, "attending_parties", ((FOGmain) getApplicationContext()).user.getUserId());
 		SqlWrapper.selectAllPartiesIveRequested(this, "requested_parties", ((FOGmain) getApplicationContext()).user.getUserId());
-
+		*/
+		
 		owner_parties = (ListView) findViewById(R.id.parties_lv_owner);
 		att_parties = (ListView) findViewById(R.id.parties_lv_attending);
 	}
