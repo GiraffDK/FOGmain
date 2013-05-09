@@ -45,6 +45,8 @@ public class DatePickerFragment extends DialogFragment implements OnDateSetListe
 		}
 		else if (this.getTag().equals("party_end_date_picker")){
 			((Button) a.findViewById(R.id.btn_set_end_date)).setText(year + "-" + m + "-" + d);
+		} else if (this.getTag().equals("birthday")) {
+			((Button) a.findViewById(R.id.editprof_btn_birth)).setText(year + "-" + m + "-" + d);
 		}
 		
 	}

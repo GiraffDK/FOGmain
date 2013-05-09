@@ -9,7 +9,7 @@ public class SqlWrapper {
 	
 	/* Select Parties (SearchResultPartyActivity) */
 	public static void selectParties(FogActivityInterface activity, String identifier, double lat, double lon, double radius, 
-			int min_age, int max_age){
+			int min_age, int max_age, int userID){
 		
 		String sqlString = "SELECT * FROM party WHERE lat > '"+(lat - radius)+"' AND " +
 					"lat < '"+(lat + radius)+"' AND " +
@@ -18,8 +18,17 @@ public class SqlWrapper {
 					"min_age >= "+min_age+" AND " +
 					"max_age <= "+max_age+" AND " +
 					"end_time >= NOW() AND " +
+					"owner_user_id != " +userID + " AND " +
 					"status_id = 1;";
 		
+		new WebserviceCaller(activity, identifier).execute("select", sqlString);
+	}
+	public static void selectPartiesUserAttended(FogActivityInterface activity, String identifier, int month, int year) {
+		String sqlString = "SELECT party.* FROM user_in_party " +
+				"INNER JOIN party ON user_in_party.party_id = party.id WHERE user_in_party.user_id = 3 AND " +
+				"(SELECT RIGHT(LEFT(DATE_FORMAT(party.end_time, '%Y-%m-%d'), 7), 2)) = " + month + " AND " +
+				"(SELECT LEFT(DATE_FORMAT(party.end_time, '%Y-%m-%d'), 4)) = " + year + " " +
+				"AND NOW() > party.start_time;";
 		new WebserviceCaller(activity, identifier).execute("select", sqlString);
 	}
 	
@@ -120,6 +129,10 @@ public class SqlWrapper {
 	
 	public static void selectUserByToken(FogActivityInterface activity, String identifier, User u){
 		String sqlString = "SELECT * FROM user WHERE token = '"+u.getToken()+"';";
+		new WebserviceCaller(activity, identifier).execute("select", sqlString);
+	}
+	public static void selectUserById(FogActivityInterface activity, String identifier, User u){
+		String sqlString = "SELECT * FROM user WHERE user_id = '"+u.getUserId()+"';";
 		new WebserviceCaller(activity, identifier).execute("select", sqlString);
 	}
 	

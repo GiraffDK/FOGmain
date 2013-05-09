@@ -224,5 +224,8 @@ public class User implements Serializable {
 	public void selectUserByEmailAndPassword(FogActivityInterface a, String i){
 		SqlWrapper.selectUserByEmailAndPassword(a, i, this);
 	}
+	public void selectUserByUserID(FogActivityInterface a, String i){
+		SqlWrapper.selectUserById(a, i, this);
+	}
 	
 }

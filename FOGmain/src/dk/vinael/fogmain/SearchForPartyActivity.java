@@ -2,6 +2,7 @@ package dk.vinael.fogmain;
 
 import org.json.JSONArray;
 
+import dk.vinael.domain.FOGmain;
 import dk.vinael.interfaces.FogActivityInterface;
 import android.app.ActionBar;
 import android.app.Activity;
@@ -12,6 +13,8 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -58,7 +61,17 @@ public class SearchForPartyActivity extends Activity implements LocationListener
 		bar.setTitle("Search For Party");
 
 	}
-
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.menu_to_main_menu, menu);
+		return true;
+	}
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		((FOGmain) getApplicationContext()).onOptionsItemSelected(item,this);
+		return true;
+	}
 	@Override
 	public void onAttachedToWindow() {
 		super.onAttachedToWindow();

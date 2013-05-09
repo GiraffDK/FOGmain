@@ -17,6 +17,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.provider.CalendarContract.Events;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -35,6 +37,7 @@ public class ViewPartyActivity extends Activity implements FogActivityInterface,
 	private Location loc;
 	private LocationManager locationManager;
 	private User user;
+	private User OwnerUser = new User();
 	private Party party;
 	private Bundle bundle;
 	
@@ -44,7 +47,7 @@ public class ViewPartyActivity extends Activity implements FogActivityInterface,
 	private View viewbyattendee;
 	
 	private int user_status = -1; /* -2 = denied, -1 = looker, 0=requester, 1=owner, 2=attending guest */
-	
+	private TextView viewparty_tv_ownertext;
 	private TextView tv_partyname_viewparty;
 	private TextView tv_description_viewparty;
 	private TextView tv_start_date_time_viewparty;
@@ -66,9 +69,11 @@ public class ViewPartyActivity extends Activity implements FogActivityInterface,
 		
 		user = ((FOGmain)getApplicationContext()).user;
 		party = (Party) bundle.getSerializable("party");
-		
+		OwnerUser.setUserId(party.getOwnerId());
+		OwnerUser.selectUserByUserID(this, "owner_user");
 		
 		/* Set elements */
+		viewparty_tv_ownertext = (TextView) findViewById(R.id.viewparty_tv_ownertext);
 		tv_partyname_viewparty = ((TextView) findViewById(R.id.tv_partyname_viewparty));
 		tv_description_viewparty = ((TextView) findViewById(R.id.tv_description_viewparty));
 		tv_start_date_time_viewparty = ((TextView) findViewById(R.id.tv_start_date_time_viewparty));
@@ -95,6 +100,7 @@ public class ViewPartyActivity extends Activity implements FogActivityInterface,
 		ActionBar bar = getActionBar();
 		bar.setIcon(R.drawable.ic_a_stiff_drink);
 		bar.setTitle("View Party");
+		bar.setHomeButtonEnabled(true);
 		
 		if (user.getUserId() == party.getOwnerId()){
 			user_status=1;
@@ -184,6 +190,17 @@ public class ViewPartyActivity extends Activity implements FogActivityInterface,
 		}
 		showPartyData();
 	}
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.menu_to_main_menu, menu);
+		return true;
+	}
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		((FOGmain) getApplicationContext()).onOptionsItemSelected(item,this);
+		return true;
+	}
 	
 	public void showPartyData(){
 		tv_partyname_viewparty.setText(party.getName());
@@ -231,6 +248,14 @@ public class ViewPartyActivity extends Activity implements FogActivityInterface,
 			}
 			showLayouts();
 
+		} else if (identifier.equals("owner_user")) {
+			try {
+				OwnerUser.setUserByJson(ja.getJSONObject(0));
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			viewparty_tv_ownertext.setText(OwnerUser.getFirstName() + "(" + OwnerUser.getFbUserId()+ ")");
 		}
 		else if (identifier.equals("userRequestParty") || identifier.equals("userCancelRequestParty")){
 			Intent intent = new Intent(this, ViewPartyActivity.class);
@@ -256,6 +281,11 @@ public class ViewPartyActivity extends Activity implements FogActivityInterface,
 				DateAndTimeStringHandler.getDayOfMonthFromDateAndTime(startDate),
 				DateAndTimeStringHandler.getHourFromDateAndTime(startDate),
 				DateAndTimeStringHandler.getMinuttesFromDateAndTime(startDate));
+		Toast.makeText(this, ""+DateAndTimeStringHandler.getYearFromDateAndTime(startDate) + "-" +
+				DateAndTimeStringHandler.getMonthFromDateAndTime(startDate) + "-" +
+				DateAndTimeStringHandler.getDayOfMonthFromDateAndTime(startDate) + " @ " + 
+				DateAndTimeStringHandler.getHourFromDateAndTime(startDate) + " : " +
+				DateAndTimeStringHandler.getMinuttesFromDateAndTime(startDate), Toast.LENGTH_LONG).show();
 		Calendar endTime = Calendar.getInstance();
 		endTime.set(
 				DateAndTimeStringHandler.getYearFromDateAndTime(endDate), 

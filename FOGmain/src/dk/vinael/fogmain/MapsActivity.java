@@ -2,6 +2,7 @@ package dk.vinael.fogmain;
 
 import java.util.ArrayList;
 
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,6 +10,8 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +27,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import dk.vinael.domain.FOGmain;
 import dk.vinael.domain.Party;
 
 public class MapsActivity extends FragmentActivity implements OnMapClickListener, LocationListener, OnInfoWindowClickListener {
@@ -52,6 +56,11 @@ public class MapsActivity extends FragmentActivity implements OnMapClickListener
 				
 		checkingCaller(bundle); 	// Checking how we want to use this map.
 		addingNewInfoWindow(); 		// Adding new Layout/View for the marker info.
+		
+		ActionBar bar = getActionBar();
+		bar.setIcon(R.drawable.maps_direction);
+		bar.setTitle("Google Maps");
+		bar.setHomeButtonEnabled(true);
 
 	}
 	/**
@@ -71,6 +80,17 @@ public class MapsActivity extends FragmentActivity implements OnMapClickListener
 		{
 			map.setOnMapClickListener(this); 		// Doesn't contain a list and therefore the map is used for finding a location etc.
 		}
+	}
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.menu_to_main_menu, menu);
+		return true;
+	}
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		((FOGmain) getApplicationContext()).onOptionsItemSelected(item,this);
+		return true;
 	}
 	/**
 	 * This method is used to change the info window of a marker when you click it.

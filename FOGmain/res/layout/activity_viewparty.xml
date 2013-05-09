@@ -33,6 +33,12 @@
 	                android:layout_height="wrap_content"
 	                android:text="Party name"
 	                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+	            <TextView
+	                android:id="@+id/viewparty_tv_ownertext"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="Owner" />
 	
 	            <TextView
 	                android:id="@+id/tv_description_viewparty"

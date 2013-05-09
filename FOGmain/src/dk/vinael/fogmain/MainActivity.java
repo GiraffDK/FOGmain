@@ -12,6 +12,7 @@ import android.os.Handler;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,6 +58,7 @@ public class MainActivity extends Activity implements FogActivityInterface {
 		}, 1000);
 		*/
 	}
+
 
 	@Override
 	public void jsonArrayHandler(JSONArray ja, String identifier) {

@@ -3,6 +3,7 @@ package design;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -56,13 +57,25 @@ public class RowAdapter extends BaseAdapter {
 
 		Party p = data.get(position);
 		name.setText(p.getName());
-		description.setText(p.getDescription());
+		
+		// Only allows one line description in the listview.
+		Scanner input = new Scanner(p.getDescription());
+		if (input.hasNextLine()) {
+			String temp = input.nextLine();
+			if (p.getDescription().length() > 99) {
+				description.setText(temp.substring(0, 100) + "...");
+			} else {
+				description.setText(temp);
+			}
+		}
+		
 		age.setText("Age: " +p.getMinAge() + "-" + p.getMaxAge());
 		Location temp = new Location("Temp");
 		temp.setLatitude(p.getLat());
 		temp.setLongitude(p.getLon());
 		Float dis = center.distanceTo(temp);
-		distance.setText("~ (" + (dis/1000) + " km)");
+		DecimalFormat df = new DecimalFormat("#.##");
+		distance.setText("~ (" + df.format(dis/1000) + " km)");
 		
 		return v;
 	}

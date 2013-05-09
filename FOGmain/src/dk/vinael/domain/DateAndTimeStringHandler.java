@@ -41,19 +41,19 @@ public class DateAndTimeStringHandler {
 		return ""+h+":"+m+":00";
 	}
 	public static int getYearFromDateAndTime(String dateAndTime) {
-		return Integer.parseInt(dateAndTime.substring(0, dateAndTime.indexOf("-")-1));
+		return Integer.parseInt(dateAndTime.substring(0, dateAndTime.indexOf("-")));
 	}
 	public static int getMonthFromDateAndTime(String dateAndTime) {
-		return Integer.parseInt(dateAndTime.substring(dateAndTime.indexOf("-")+1, dateAndTime.lastIndexOf("-")-1));
+		return Integer.parseInt(dateAndTime.substring(dateAndTime.indexOf("-")+2, dateAndTime.lastIndexOf("-")));
 	}
 	public static int getDayOfMonthFromDateAndTime(String dateAndTime) {
-		return Integer.parseInt(dateAndTime.substring(dateAndTime.lastIndexOf("-")+1, dateAndTime.indexOf(" ")-1));
+		return Integer.parseInt(dateAndTime.substring(dateAndTime.lastIndexOf("-")+1, dateAndTime.indexOf(" ")));
 	}
 	public static int getHourFromDateAndTime(String dateAndTime) {
-		return Integer.parseInt(dateAndTime.substring(dateAndTime.indexOf(" ")+1, dateAndTime.indexOf(":")-1));
+		return Integer.parseInt(dateAndTime.substring(dateAndTime.indexOf(" ")+1, dateAndTime.indexOf(":")));
 	}
 	public static int getMinuttesFromDateAndTime(String dateAndTime) {
-		return Integer.parseInt(dateAndTime.substring(dateAndTime.indexOf(":")+1, dateAndTime.lastIndexOf(":")-1));
+		return Integer.parseInt(dateAndTime.substring(dateAndTime.indexOf(":")+1, dateAndTime.lastIndexOf(":")));
 	}
 	
 	public static String getTimeFromDateAndTime(String dateAndTime){
