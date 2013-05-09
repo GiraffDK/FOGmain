@@ -8,6 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,11 +19,15 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.NumberPicker;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 import design.ExpandableGroup;
+import design.RowAdapter;
 import dk.vinael.domain.FOGmain;
 import dk.vinael.domain.Party;
 import dk.vinael.domain.SqlWrapper;
@@ -245,9 +250,24 @@ public class PartiesActivity extends FragmentActivity implements FogActivityInte
 					temp.setPartyWithJSON(ja.getJSONObject(i));
 					oldParties.add(temp);
 				}
+				
+//				adap = new RowAdapter(this, array, loc);
+//					ListView lv = (ListView) findViewById(R.id.list_search_result);
+//					lv.setAdapter(adap);
+//					lv.setOnItemClickListener(new OnItemClickListener() {
+//					@Override
+//					public void onItemClick(AdapterView<?> l, View v, int position, long id) {
+//						Intent intent = new Intent(SearchResultActivity.this, ViewPartyActivity.class);
+//						intent.putExtra("party", array.get(position));
+//						SearchResultActivity.this.startActivity(intent);
+//					}
+//				});
+				
+				//lv.setTextFilterEnabled(true);
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
+			
 		}
 	}
 	public void partiesAttended() {
