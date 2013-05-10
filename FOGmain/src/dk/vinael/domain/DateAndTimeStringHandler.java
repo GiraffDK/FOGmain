@@ -4,8 +4,44 @@ import java.util.Calendar;
 
 public class DateAndTimeStringHandler {
 	
+	public enum RETURN_TYPE {
+		DAYS, HOURS, MINUTES
+	}
+	
 	public static String getCurrentDateAndTime(){
 		return (DateAndTimeStringHandler.getCurrentDate() + " " + DateAndTimeStringHandler.getCurrentTime());
+	}
+	
+	public static Calendar getDateStringAsCalendar(String dateAndTime){
+		Calendar c = Calendar.getInstance();
+		int year = DateAndTimeStringHandler.getYearFromDateAndTime(dateAndTime);
+		int month = DateAndTimeStringHandler.getMonthFromDateAndTime(dateAndTime);
+		int day = DateAndTimeStringHandler.getMonthFromDateAndTime(dateAndTime);
+		int hourOfDay = DateAndTimeStringHandler.getHourFromDateAndTime(dateAndTime);
+		int minute = DateAndTimeStringHandler.getMinuttesFromDateAndTime(dateAndTime);
+		c.set(year, month, day, hourOfDay, minute);
+		return c;
+	}
+	
+	public static int dateDiffInMinutes(Calendar a, Calendar b, RETURN_TYPE n){
+		int days, hours, minutes;
+		long difference = (long)(a.getTimeInMillis() - b.getTimeInMillis());
+		
+		days = (int) (difference / (1000*60*60*24));  
+		hours = (int) ((difference - (1000*60*60*24*days)) / (1000*60*60)); 
+		minutes = (int) (difference - (1000*60*60*24*days) - (1000*60*60*hours)) / (1000*60);
+		
+		switch (n){
+		case DAYS:
+			return days;
+		case HOURS:
+			return hours;
+		case MINUTES:
+			return minutes;
+		default:
+			return hours;
+		}
+		
 	}
 	
 	public static String getCurrentDate(){

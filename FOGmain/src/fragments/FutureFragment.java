@@ -62,4 +62,5 @@ public class FutureFragment extends Fragment {
 			ExpAdapter.notifyDataSetChanged();
 		}
 	}
+
 }

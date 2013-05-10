@@ -306,7 +306,7 @@ public class Party implements Serializable {
 	}
 	
 	// Statements
-	public void getPartyById(FogActivityInterface activity, String identifier,int party_id){
+	public void getPartyById(FogActivityInterface activity, String identifier, int party_id){
 		SqlWrapper.selectParty(activity, identifier, party_id);
 	}
 	
