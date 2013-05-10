@@ -1,15 +1,11 @@
 package dk.vinael.fogmain;
 
-import java.util.Calendar;
-
 import org.json.JSONArray;
 
 import dk.vinael.domain.FOGmain;
 import dk.vinael.domain.User;
 import dk.vinael.interfaces.FogActivityInterface;
 import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
@@ -31,6 +27,11 @@ public class MenuActivity extends Activity implements FogActivityInterface {
 		user = ((FOGmain)getApplicationContext()).user;
 		((TextView)findViewById(R.id.tv_username_menu)).setText("Logged in as: " + user.getFirstName() + " " + user.getLastName());
 
+		// Service start
+		Intent serviceintent = new Intent(this, NotificationService.class);
+		serviceintent.putExtra("user", ((FOGmain)getApplicationContext()).user); 
+		startService(serviceintent);
+		
 	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -40,7 +41,8 @@ public class MenuActivity extends Activity implements FogActivityInterface {
 	}
 	public void onLogOut(MenuItem item) {
 		if (item.getItemId() == R.id.menu_log_out) {
-			((FOGmain)getApplicationContext()).user = null;
+			((FOGmain)getApplicationContext()).user.resetUserToken(this, "logout");
+			((FOGmain)getApplicationContext()).user = new User();
 			Intent intent = new Intent(this, LoginActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
@@ -64,22 +66,9 @@ public class MenuActivity extends Activity implements FogActivityInterface {
 	}
 	
 	public void gotoProfile(View view){
-		/*
 		Intent intent = new Intent(this, ViewProfilActivity.class);
 		intent.putExtra("user", ((FOGmain)getApplicationContext()).user);
 		this.startActivity(intent);
-		*/
-		
-		
-		/* Starting service */
-		/*
-		Calendar calendar = Calendar.getInstance();
-        Intent intent = new Intent(this, NotificationService.class);
-        PendingIntent pintent = PendingIntent.getService(this, 0, intent, 0);
-        AlarmManager alarm = (AlarmManager)getSystemService(this.ALARM_SERVICE);
-        alarm.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 10*1000, pintent);
-		*/
-		startService(new Intent(this, NotificationService.class));
 	}
 	
 	@Override

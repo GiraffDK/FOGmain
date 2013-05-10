@@ -154,23 +154,20 @@ public class User implements Serializable {
 	}
 	
 	// Constructor
-	public User(){
-		/*
+	public void reset(){
 		userId=0;
-		email="";
-		firstName="";
-		lastName="";
-		description="";
-		fbUserId="";
-		token="";
-		password="";
-		birthdate="";
-		address="";
-		zip="";
-		city="";
-		country="";
-		*/
-		
+		email=null;
+		firstName=null;
+		lastName=null;
+		description=null;
+		fbUserId=null;
+		token=null;
+		password=null;
+		birthdate=null;
+		address=null;
+		zip=null;
+		city=null;
+		country=null;		
 	}
 	
 	// Methods
@@ -242,5 +239,9 @@ public class User implements Serializable {
 	
 	public void getUserInPartyStatusByParty(FogActivityInterface activity, String identifier, Party party){
 		SqlWrapper.getUserInPartyStatusByParty(activity, identifier, party, this);
+	}
+	
+	public void resetUserToken(FogActivityInterface activity, String identifier){
+		SqlWrapper.resetUserToken(activity, identifier, this);
 	}
 }

@@ -5,7 +5,7 @@ import java.util.Calendar;
 public class DateAndTimeStringHandler {
 	
 	public enum RETURN_TYPE {
-		DAYS, HOURS, MINUTES
+		DAYS, HOURS, MINUTES, SECONDS
 	}
 	
 	public static String getCurrentDateAndTime(){
@@ -15,22 +15,23 @@ public class DateAndTimeStringHandler {
 	public static Calendar getDateStringAsCalendar(String dateAndTime){
 		Calendar c = Calendar.getInstance();
 		int year = DateAndTimeStringHandler.getYearFromDateAndTime(dateAndTime);
-		int month = DateAndTimeStringHandler.getMonthFromDateAndTime(dateAndTime);
-		int day = DateAndTimeStringHandler.getMonthFromDateAndTime(dateAndTime);
+		int month = DateAndTimeStringHandler.getMonthFromDateAndTime(dateAndTime)-1;
+		int day = DateAndTimeStringHandler.getDayOfMonthFromDateAndTime(dateAndTime);
 		int hourOfDay = DateAndTimeStringHandler.getHourFromDateAndTime(dateAndTime);
 		int minute = DateAndTimeStringHandler.getMinuttesFromDateAndTime(dateAndTime);
 		c.set(year, month, day, hourOfDay, minute);
 		return c;
 	}
 	
-	public static int dateDiffInMinutes(Calendar a, Calendar b, RETURN_TYPE n){
-		int days, hours, minutes;
+	public static int dateDifference(Calendar a, Calendar b, RETURN_TYPE n){
+		int days, hours, minutes, seconds;
 		long difference = (long)(a.getTimeInMillis() - b.getTimeInMillis());
 		
-		days = (int) (difference / (1000*60*60*24));  
-		hours = (int) ((difference - (1000*60*60*24*days)) / (1000*60*60)); 
-		minutes = (int) (difference - (1000*60*60*24*days) - (1000*60*60*hours)) / (1000*60);
-		
+		seconds = (int) (difference/1000);
+		minutes = (int) (difference/(1000*60));
+		hours 	= (int) (difference/(1000*60*60));
+		days 	= (int) (difference/(1000*60*60*24));
+		 
 		switch (n){
 		case DAYS:
 			return days;
@@ -38,6 +39,8 @@ public class DateAndTimeStringHandler {
 			return hours;
 		case MINUTES:
 			return minutes;
+		case SECONDS:
+			return seconds;
 		default:
 			return hours;
 		}
