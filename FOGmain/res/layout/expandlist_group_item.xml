@@ -9,7 +9,6 @@
         android:id="@+id/tvGroup"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginRight="15dp"
         android:background="@color/Black"
         android:textColor="@color/White"
         android:textSize="26dip" />

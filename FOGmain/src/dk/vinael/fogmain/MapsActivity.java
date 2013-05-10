@@ -43,7 +43,11 @@ public class MapsActivity extends FragmentActivity implements OnMapClickListener
 
 		Bundle bundle = getIntent().getExtras(); 		// Getting Data From Bundle
 		loc = new Location("Your Location");
-		loc.set((Location) bundle.get("Location"));
+		 try {
+			 loc.set((Location) bundle.get("Location"));
+		 } catch (Exception e) {
+			 
+		 }
 
 		// Standard Google Maps Setup.
 		map = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();

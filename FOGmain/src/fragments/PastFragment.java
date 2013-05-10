@@ -28,14 +28,19 @@ public class PastFragment extends Fragment {
 		return view;
 	}
 	@Override
-	public void onAttach(Activity activity) {
-		month = (NumberPicker) a.findViewById(R.id.np_month);
-		year = (NumberPicker) a.findViewById(R.id.np_year);
-		month.setMaxValue(12);
-		month.setMinValue(1);
-		year.setMaxValue(Calendar.getInstance().get(Calendar.YEAR));
-		year.setMinValue(2012);
-		super.onAttach(activity);
+	public void onActivityCreated(Bundle savedInstanceState) {
+		try {
+			month = (NumberPicker) a.findViewById(R.id.np_month);
+			year = (NumberPicker) a.findViewById(R.id.np_year);
+			month.setMaxValue(12);
+			month.setMinValue(1);
+			year.setMaxValue(Calendar.getInstance().get(Calendar.YEAR));
+			year.setMinValue(2012);
+		} catch (Exception e ){
+			
+		}
+
+		super.onActivityCreated(savedInstanceState);
 	}
 	public void setA(Activity a) {
 		this.a = a;
