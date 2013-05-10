@@ -219,9 +219,11 @@ public class ViewPartyActivity extends Activity implements FogActivityInterface,
 		
 
 		// if notification wants to open Google Map:
-		if (action.equals("map")){
-			ImageView v = (ImageView) findViewById(R.id.iv_showdirections_viewparty);
-			showDirections(v);
+		if (action!=null){
+			if (action.equals("map")){
+				ImageView v = (ImageView) findViewById(R.id.iv_showdirections_viewparty);
+				showDirections(v);
+			}
 		}
 		
 	}
