@@ -21,16 +21,28 @@ public class FutureFragment extends Fragment {
 	private Activity a;
 	private ExpandListAdapter ExpAdapter;
 	private ExpandableListView ExpandList;
-	private ArrayList<ExpandableGroup> own_att_req = new ArrayList<ExpandableGroup>();
+	private ArrayList<ExpandableGroup> own_att_req;
 	
+	public FutureFragment() {
+		own_att_req = new ArrayList<ExpandableGroup>();
+	}
 	public void setActivity(Activity a) {
 		this.a = a;
 	}
 	@Override
+	public void onStart() {
+		try {
+			ExpandList = (ExpandableListView) a.findViewById(R.id.expandableListView1); 
+			ExpAdapter = new ExpandListAdapter(a, own_att_req, ExpandList);
+			ExpandList.setAdapter(ExpAdapter);
+		} catch (Exception e) {
+			
+		}
+		super.onStart();
+	}
+	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		ExpandList = (ExpandableListView) a.findViewById(R.id.expandableListView1); 
-		ExpAdapter = new ExpandListAdapter(a, own_att_req, ExpandList);
-		ExpandList.setAdapter(ExpAdapter);
+		onStart();
 		super.onActivityCreated(savedInstanceState);
 	}
 
@@ -45,8 +57,10 @@ public class FutureFragment extends Fragment {
 		own_att_req.clear();
 	}
 	public void addToList(ExpandableGroup group) {
-		own_att_req.add(group);
-		ExpAdapter.notifyDataSetChanged();
+		if (!(own_att_req.contains(group))) {
+			own_att_req.add(group);
+			ExpAdapter.notifyDataSetChanged();
+		}
 	}
 
 }

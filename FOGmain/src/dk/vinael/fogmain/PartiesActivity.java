@@ -1,5 +1,6 @@
 package dk.vinael.fogmain;
 
+import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -20,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.NumberPicker;
@@ -27,7 +29,6 @@ import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import design.ExpandableGroup;
-import design.RowAdapter;
 import dk.vinael.domain.FOGmain;
 import dk.vinael.domain.Party;
 import dk.vinael.domain.SqlWrapper;
@@ -47,20 +48,36 @@ public class PartiesActivity extends FragmentActivity implements FogActivityInte
 
 	private FutureFragment fragment1;
 	private PastFragment fragment2;
-	private ArrayList<Party> oldParties;
+	private ArrayList<Party> oldParties = new ArrayList<Party>();
+	private ArrayAdapter<Party> arrayAdapter;
+	
+	private ExpandableGroup own = new ExpandableGroup();
+	private ArrayList<Party> ownerList = new ArrayList<Party>();
+	private ExpandableGroup att = new ExpandableGroup();
+	private ArrayList<Party> attList = new ArrayList<Party>();			
+	private ExpandableGroup req = new ExpandableGroup();
+	private ArrayList<Party> reqList = new ArrayList<Party>();
 	
 	@Override
+	protected void onResume() {
+		super.onResume();
+	}
+	@Override
+	protected void onStart() {
+		// TODO Auto-generated method stub
+		super.onStart();
+	}
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_parties);
-		oldParties = new ArrayList<Party>();
-		
+		initializaAll();
+	}
+	public void initializaAll() {
 		fragment1 = new FutureFragment();
 		fragment1.setActivity(this);
 		fragment2 = new PastFragment();
 		fragment2.setA(this);
-
 
 		mTabHost = (TabHost) findViewById(android.R.id.tabhost);
 		mTabHost.setOnTabChangedListener(listener);
@@ -77,24 +94,28 @@ public class PartiesActivity extends FragmentActivity implements FogActivityInte
 	 * Initialize the tabs and set views and identifiers for the tabs
 	 */
 	public void partiesAttended(View v) {
-		//new Party().getPartiesUserAttended(this, "past_parties", ((NumberPicker)findViewById(R.id.np_month)).getValue(), ((NumberPicker)findViewById(R.id.np_year)).getValue());
+
+		int month = ((NumberPicker) findViewById(R.id.np_month)).getValue();
+		int year = ((NumberPicker) findViewById(R.id.np_year)).getValue();
+		new Party().getPartiesUserAttended(this, "past_parties", month, year);
+		((TextView)findViewById(R.id.fragment_tv_label_month_year)).setText("You've selected : " + new DateFormatSymbols().getMonths()[month-1] + " - " + year);	
+		new Party().getPartiesUserAttended(this, "past_parties", ((NumberPicker)findViewById(R.id.np_month)).getValue(), ((NumberPicker)findViewById(R.id.np_year)).getValue());
+
 	}
+
 	public void getData() {
 		User user = ((FOGmain) getApplicationContext()).user;
 
 		// Calls
+		fragment1.clearList();
+		ownerList.clear();
+		attList.clear();
+		reqList.clear();
 		user.selectAllPartiesByOwnerUserId(this, "owner_parties");
 		user.selectAllPartiesImAttending(this, "attending_parties");
-		user.selectAllPartiesIveRequested(this, "requested_parties");
-		/*
-		SqlWrapper.selectAllPartiesByOwnerUserId(this, "owner_parties", ((FOGmain) getApplicationContext()).user.getUserId());
-		SqlWrapper.selectAllPartiesImAttending(this, "attending_parties", ((FOGmain) getApplicationContext()).user.getUserId());
-		SqlWrapper.selectAllPartiesIveRequested(this, "requested_parties", ((FOGmain) getApplicationContext()).user.getUserId());
-
-		*/
-		
-		
+		user.selectAllPartiesIveRequested(this, "requested_parties");		
 	}
+
 	public void initializeTab() {
 
 		TabHost.TabSpec spec = mTabHost.newTabSpec(TAB_A);
@@ -185,9 +206,6 @@ public class PartiesActivity extends FragmentActivity implements FogActivityInte
 	@Override
 	public void jsonArrayHandler(JSONArray ja, String identifier) {
 		if (identifier.equals("owner_parties")) {
-			ExpandableGroup own = new ExpandableGroup();
-			
-			ArrayList<Party> ownerList = new ArrayList<Party>();
 			try {
 				for (int i = 0; i < ja.length(); i++) {
 					Party temp = new Party();
@@ -201,9 +219,8 @@ public class PartiesActivity extends FragmentActivity implements FogActivityInte
 			own.setNameOfGroup("Your parties! (" + ownerList.size() + ")");
 			fragment1.addToList(own);
 		} else if (identifier.equals("attending_parties")) {
-			ExpandableGroup att = new ExpandableGroup();
-			ArrayList<Party> attList = new ArrayList<Party>();
-			
+
+
 			JSONObject checker = null;
 			try {
 				checker = ja.getJSONObject(0);
@@ -222,8 +239,7 @@ public class PartiesActivity extends FragmentActivity implements FogActivityInte
 			att.setNameOfGroup("Attending Parties! (" + attList.size() + ")");
 			fragment1.addToList(att);
 		} else if (identifier.equals("requested_parties")) {
-			ExpandableGroup req = new ExpandableGroup();
-			ArrayList<Party> reqList = new ArrayList<Party>();
+
 			JSONObject checker = null;
 			try {
 				checker = ja.getJSONObject(0);
@@ -241,33 +257,44 @@ public class PartiesActivity extends FragmentActivity implements FogActivityInte
 			req.setParties(reqList);
 			fragment1.addToList(req);
 		} else if (identifier.equals("past_parties")) {
+			oldParties.clear();
+			if (arrayAdapter != null) arrayAdapter.clear();
+			JSONObject checker = null;
 			try {
-				for (int i = 0; i < ja.length(); i++) {
-					Party temp = new Party();
-					temp.setPartyWithJSON(ja.getJSONObject(i));
-					oldParties.add(temp);
+				checker = ja.getJSONObject(0);
+				if (!checker.has("results")) {
+
+					for (int i = 0; i < ja.length(); i++) {
+						Party temp = new Party();
+						temp.setPartyWithJSON(ja.getJSONObject(i));
+						oldParties.add(temp);
+					}
+					ListView lv = (ListView) findViewById(R.id.fragment_lv_pastparties);
+					lv.setOnItemClickListener(new OnItemClickListener() {
+						@Override
+						public void onItemClick(AdapterView<?> l, View v, int position, long id) {
+							Intent intent = new Intent(PartiesActivity.this, ViewPartyActivity.class);
+							intent.putExtra("party", oldParties.get(position));
+							PartiesActivity.this.startActivity(intent);
+						}
+					});
+					arrayAdapter = new ArrayAdapter<Party>(this, android.R.layout.simple_list_item_1, oldParties);
+
+					lv.setAdapter(arrayAdapter);
+					lv.setTextFilterEnabled(true);
 				}
-				
-//				adap = new RowAdapter(this, array, loc);
-//					ListView lv = (ListView) findViewById(R.id.list_search_result);
-//					lv.setAdapter(adap);
-//					lv.setOnItemClickListener(new OnItemClickListener() {
-//					@Override
-//					public void onItemClick(AdapterView<?> l, View v, int position, long id) {
-//						Intent intent = new Intent(SearchResultActivity.this, ViewPartyActivity.class);
-//						intent.putExtra("party", array.get(position));
-//						SearchResultActivity.this.startActivity(intent);
-//					}
-//				});
-				
-				//lv.setTextFilterEnabled(true);
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
-			
+
 		}
 	}
-	public void partiesAttended() {
-		
+	public void seeInMap(View v) {
+		if (oldParties.size() != 0) { 
+			Intent in = new Intent(this, MapsActivity.class);
+			in.putExtra("Location", "");
+			in.putExtra("List", oldParties);
+			startActivity(in);
+		}
 	}
 }

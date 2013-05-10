@@ -59,10 +59,17 @@
             android:id="@+id/button2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="See attended parties on map" />
+            android:text="See attended parties on map"
+            android:onClick="seeInMap" />
+
+        <TextView
+            android:id="@+id/fragment_tv_label_month_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="" />
 
         <ListView
-            android:id="@+id/listView1"
+            android:id="@+id/fragment_lv_pastparties"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"

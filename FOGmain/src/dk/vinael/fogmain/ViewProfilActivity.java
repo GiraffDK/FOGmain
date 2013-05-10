@@ -48,8 +48,13 @@ public class ViewProfilActivity extends Activity {
 		
 		Bundle bundle = getIntent().getExtras();
 		user = (User) bundle.get("user");
-		checkUser(user);
+
+	}
+	@Override
+	public void onAttachedToWindow() {
+		//checkUser(user);
 		addInfo(user);
+		super.onAttachedToWindow();
 	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
