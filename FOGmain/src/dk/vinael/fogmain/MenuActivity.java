@@ -1,11 +1,17 @@
 package dk.vinael.fogmain;
 
+import java.util.Calendar;
+
 import org.json.JSONArray;
 
 import dk.vinael.domain.FOGmain;
 import dk.vinael.domain.User;
 import dk.vinael.interfaces.FogActivityInterface;
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
@@ -29,8 +35,9 @@ public class MenuActivity extends Activity implements FogActivityInterface {
 		((TextView)findViewById(R.id.tv_username_menu)).setText("Logged in as: " + user.getFirstName() + " " + user.getLastName());
 
 		// Service start
+		
 		Intent serviceintent = new Intent(this, NotificationService.class);
-		serviceintent.putExtra("user", ((FOGmain)getApplicationContext()).user); 
+		serviceintent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
 		startService(serviceintent);
 		
 	}

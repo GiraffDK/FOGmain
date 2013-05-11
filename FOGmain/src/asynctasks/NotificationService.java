@@ -19,14 +19,18 @@ import dk.vinael.interfaces.FogServiceInterface;
 import android.R;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationCompat.Builder;
+import android.util.Log;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.PowerManager;
 
 public class NotificationService extends Service implements FogServiceInterface {
 
@@ -39,10 +43,19 @@ public class NotificationService extends Service implements FogServiceInterface 
 	
 	private NotificationManager notificationManager;
 	
-	private final static int INTERVAL = 1000 * 60 * 5; // 5 min.
+	private final static int INTERVAL = (60*1000)*10; // 10 min
+	
+	private PowerManager pm;
+	private PowerManager.WakeLock wl;
 	
 	@Override
 	public void onCreate() {
+		
+		user = ((FOGmain)getApplicationContext()).user;
+		
+		pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+		wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "NotificationService");
+		wl.acquire();
 		
 		handler = new Handler();
 		r = new Runnable()
@@ -50,12 +63,10 @@ public class NotificationService extends Service implements FogServiceInterface 
 		    public void run() 
 		    {
 		    	checkForChanges();
-		        handler.postDelayed(this, INTERVAL); // 10 min.
-		        //handler.postDelayed(r, 5000);
+		        handler.postDelayed(this, INTERVAL);
 		    }
 		};
-		handler.postDelayed(r, INTERVAL); // 10 min.
-		//handler.postDelayed(r, 5000);
+		handler.postDelayed(r, INTERVAL);
 	}
 	
 	@Override
@@ -64,14 +75,13 @@ public class NotificationService extends Service implements FogServiceInterface 
 		if (notificationManager!=null){
 			notificationManager.cancelAll();
 		}
+		wl.release();
 		super.onDestroy();
 	}
 	
 	@Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 		//Log.i("LocalService", "Received start id " + startId + ": " + intent);
-		Bundle bundle = intent.getExtras();
-		user = (User) bundle.getSerializable("user");
 		
 		return START_STICKY;
     }
@@ -94,6 +104,9 @@ public class NotificationService extends Service implements FogServiceInterface 
 	}
 	
 	public void checkForChanges(){
+		if (user!=null){
+			Log.i("NotificationService", "checkForChanges(), " + user.getFirstName());
+		}
 		if (((FOGmain)this.getApplicationContext()).isNetworkConnected()==true){
 			//Toast.makeText(this, user.getFirstName(), Toast.LENGTH_LONG).show();
 			if (user.getToken()!=null){
@@ -317,7 +330,7 @@ public class NotificationService extends Service implements FogServiceInterface 
 				.setSmallIcon(icon)
 				.setContentIntent(p_view_party_activity)
 				.addAction(0, "View party", p_view_party_activity)
-				.addAction(0, "Get directions", p_show_directions_activity);
+				.addAction(0, "Directions", p_show_directions_activity);
 		}
 		if (identifier.equals("party_cancelled")){
 			notificationbuilder
@@ -342,13 +355,20 @@ public class NotificationService extends Service implements FogServiceInterface 
 				.setSmallIcon(icon)
 				.setContentIntent(p_view_party_activity)
 				.addAction(0, "View party", p_view_party_activity)
-				.addAction(0, "Get directions", p_show_directions_activity);
+				.addAction(0, "Directions", p_show_directions_activity);
 		}
 
 			
-		Notification n = notificationbuilder.build();	
+		Notification n = notificationbuilder.build();
+		
+		long[] vibrate = {0,100,200,300};
+        n.vibrate = vibrate;
+		
+		n.ledARGB = Color.BLUE;
+		n.ledOnMS = 300; 
+		n.ledOffMS = 1000;
 		notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-		n.flags |= Notification.FLAG_AUTO_CANCEL;
+		n.flags |= Notification.FLAG_AUTO_CANCEL + Notification.FLAG_SHOW_LIGHTS;
 		notificationManager.notify(0, n);
 		
 	}
