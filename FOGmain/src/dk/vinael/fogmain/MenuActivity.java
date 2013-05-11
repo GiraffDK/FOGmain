@@ -10,6 +10,8 @@ import dk.vinael.interfaces.FogActivityInterface;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
@@ -29,8 +31,15 @@ public class MenuActivity extends Activity implements FogActivityInterface {
 		setContentView(R.layout.activity_menu);
 		
 		user = ((FOGmain)getApplicationContext()).user;
-		//((TextView)findViewById(R.id.tv_username_menu)).setText("Logged in as: " + user.getFirstName() + " " + user.getLastName());
+		
+		((TextView)findViewById(R.id.tv_username_menu)).setText("Logged in as: " + user.getFirstName() + " " + user.getLastName());
 
+		// Service start
+		
+		Intent serviceintent = new Intent(this, NotificationService.class);
+		serviceintent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+		startService(serviceintent);
+		
 	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -40,7 +49,8 @@ public class MenuActivity extends Activity implements FogActivityInterface {
 	}
 	public void onLogOut(MenuItem item) {
 		if (item.getItemId() == R.id.menu_log_out) {
-			((FOGmain)getApplicationContext()).user = null;
+			((FOGmain)getApplicationContext()).user.resetUserToken(this, "logout");
+			((FOGmain)getApplicationContext()).user = new User();
 			Intent intent = new Intent(this, LoginActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
@@ -64,13 +74,10 @@ public class MenuActivity extends Activity implements FogActivityInterface {
 	}
 	
 	public void gotoProfile(View view){
-		
 		Intent intent = new Intent(this, ViewProfilActivity.class);
 		intent.putExtra("user", ((FOGmain)getApplicationContext()).user);
 		this.startActivity(intent);
-		
-		
-		
+
 		/* Starting service */
 		/*
 		Calendar calendar = Calendar.getInstance();
@@ -80,6 +87,7 @@ public class MenuActivity extends Activity implements FogActivityInterface {
         alarm.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 10*1000, pintent);
 		*/
 		//startService(new Intent(this, NotificationService.class));
+
 	}
 	
 	@Override

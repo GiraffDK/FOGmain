@@ -5,10 +5,13 @@ import java.util.List;
 import java.util.Locale;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.AsyncTask;
+import dk.vinael.domain.FOGmain;
+import dk.vinael.fogmain.NoInternetActivity;
 import dk.vinael.interfaces.FogActivityInterface;
 
 public abstract class LocationHandler {
@@ -46,48 +49,61 @@ public abstract class LocationHandler {
 		}
 		@Override
 		protected String doInBackground(Type... params) {
-			Geocoder geocoder = new Geocoder(((Activity)callingAcitivity).getBaseContext(), Locale.getDefault());
-			addresses = new ArrayList<Address>();
-			type = params[0];
-			
-			if (Geocoder.isPresent()) {
-				try {
-					if (type == Type.ADDRESSTOLOCATION) {
-						addresses = geocoder.getFromLocationName(addressText, 5);
-						return "AddressToLocation";
-						
-					} else if (type == Type.LOCATIONTOADDRESS) {
-						addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-						if (addresses != null && addresses.size() > 0) {
-							Address address = addresses.get(0);
-							addressText = String.format("%s, %s, %s", address.getMaxAddressLineIndex() > 0 ? address.getAddressLine(0) : "", address.getLocality(), address.getCountryName());
-							return addressText;
-						}
-					}
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+			if (((FOGmain)((Activity)callingAcitivity).getApplicationContext()).isNetworkConnected()==false){
+				return "no_connection";
 			}
-			return null;
+			else{
+				Geocoder geocoder = new Geocoder(((Activity)callingAcitivity).getBaseContext(), Locale.getDefault());
+				addresses = new ArrayList<Address>();
+				type = params[0];
+				
+				if (Geocoder.isPresent()) {
+					try {
+						if (type == Type.ADDRESSTOLOCATION) {
+							addresses = geocoder.getFromLocationName(addressText, 5);
+							return "AddressToLocation";
+							
+						} else if (type == Type.LOCATIONTOADDRESS) {
+							addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+							if (addresses != null && addresses.size() > 0) {
+								Address address = addresses.get(0);
+								addressText = String.format("%s, %s, %s", address.getMaxAddressLineIndex() > 0 ? address.getAddressLine(0) : "", address.getLocality(), address.getCountryName());
+								return addressText;
+							}
+						}
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+				return null;
+			}
 		}
 
 		@Override
 		protected void onPostExecute(String result) {
-			if (type == Type.LOCATIONTOADDRESS) {
-				callingAcitivity.returningAddress(addressText, identifier);
-			} else if (type == Type.ADDRESSTOLOCATION) {
-				Location temp = new Location("");
-				if (addresses.size() > 0) {
-					Address location = addresses.get(0);
-					temp.setLatitude(location.getLatitude());
-					temp.setLongitude(location.getLongitude());
-					callingAcitivity.returningLocation(temp, identifier);
-				} else {
-					callingAcitivity.returningLocation(null, identifier);
-				}
-				
+			if (result.equals("no_connection")){
+				Intent intent = new Intent((Activity) callingAcitivity, NoInternetActivity.class);
+				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				((Activity) callingAcitivity).startActivity(intent);
+				((Activity) callingAcitivity).finish();
 			}
-			super.onPostExecute(result);
+			else{
+				if (type == Type.LOCATIONTOADDRESS) {
+					callingAcitivity.returningAddress(addressText, identifier);
+				} else if (type == Type.ADDRESSTOLOCATION) {
+					Location temp = new Location("");
+					if (addresses.size() > 0) {
+						Address location = addresses.get(0);
+						temp.setLatitude(location.getLatitude());
+						temp.setLongitude(location.getLongitude());
+						callingAcitivity.returningLocation(temp, identifier);
+					} else {
+						callingAcitivity.returningLocation(null, identifier);
+					}
+					
+				}
+				super.onPostExecute(result);
+			}
 		}
 	}
 

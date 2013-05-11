@@ -171,14 +171,11 @@ public class PartiesActivity extends FragmentActivity implements FogActivityInte
 	 * returns the tab view i.e. the tab icon and text
 	 */
 	private View createTabView(final String text, final int id) {
-		/*
 		View view = LayoutInflater.from(this).inflate(R.layout.tabs_icon, null);
 		ImageView imageView = (ImageView) view.findViewById(R.id.tab_icon);
 		imageView.setImageDrawable(getResources().getDrawable(id));
 		((TextView) view.findViewById(R.id.tab_text)).setText(text);
 		return view;
-		*/
-		return null;
 	}
 
 	@Override

@@ -15,8 +15,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import dk.vinael.domain.FOGmain;
 import dk.vinael.domain.User;
 import dk.vinael.interfaces.FogServiceInterface;
+import android.app.Activity;
 import android.app.Service;
 import android.os.AsyncTask;
 
@@ -41,40 +43,47 @@ public class ServiceHandler extends AsyncTask<String, Void, String>{
     
 	@Override
 	protected String doInBackground(String... sql) {
-		
-		if (user==null || identifier==null || service==null){
-			return "[{\"access\":\"denied\"}]";
+		if (((FOGmain)((Service)service).getApplicationContext()).isNetworkConnected()==false){
+			return "no_connection";
 		}
 		else{
-			if (user.getToken()!=null){
-				nameValuePairs = new ArrayList<NameValuePair>();
-		        nameValuePairs.add(new BasicNameValuePair("token", user.getToken()));
-		        nameValuePairs.add(new BasicNameValuePair("mode", sql[0]));
-		        nameValuePairs.add(new BasicNameValuePair("query", sql[1]));
-		        
-		        try {
-					httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-					HttpResponse response = httpclient.execute(httppost);
-			        String responseBody = EntityUtils.toString(response.getEntity(), HTTP.UTF_8);
-			        return responseBody;
-			        
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+			if (user==null || identifier==null || service==null){
+				return "[{\"access\":\"denied\"}]";
 			}
-			return "[{\"access\":\"denied\"}]";
+			else{
+				if (user.getToken()!=null){
+					nameValuePairs = new ArrayList<NameValuePair>();
+			        nameValuePairs.add(new BasicNameValuePair("token", user.getToken()));
+			        nameValuePairs.add(new BasicNameValuePair("mode", sql[0]));
+			        nameValuePairs.add(new BasicNameValuePair("query", sql[1]));
+			        
+			        try {
+						httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+						HttpResponse response = httpclient.execute(httppost);
+				        String responseBody = EntityUtils.toString(response.getEntity(), HTTP.UTF_8);
+				        return responseBody;
+				        
+					} catch (Exception e) {
+						return "no_connection";
+						//e.printStackTrace();
+					}
+				}
+				return "[{\"access\":\"denied\"}]";
+			}
 		}
 	}
 	
 	
 	@Override
     protected void onPostExecute(String result) {
-		JSONArray jsonArray;
-		try {
-			jsonArray = new JSONArray(result);
-			((FogServiceInterface)service).jsonArrayHandler(jsonArray, identifier);
-		} catch (JSONException e) {
-			e.printStackTrace();
+		if (!result.equals("no_connection")){
+			JSONArray jsonArray;
+			try {
+				jsonArray = new JSONArray(result);
+				((FogServiceInterface)service).jsonArrayHandler(jsonArray, identifier);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 }

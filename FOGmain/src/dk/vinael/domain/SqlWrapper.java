@@ -199,4 +199,9 @@ public class SqlWrapper {
 		new WebserviceCaller(activity, identifier).execute("select", sqlString);
 	}
 	
+	public static void resetUserToken(FogActivityInterface activity, String identifier, User user){
+		String sqlString = "UPDATE user SET token=NULL WHERE user.user_id ="+user.getUserId()+";";
+		new WebserviceCaller(activity, identifier).execute("update", sqlString);
+	}
+	
 }
