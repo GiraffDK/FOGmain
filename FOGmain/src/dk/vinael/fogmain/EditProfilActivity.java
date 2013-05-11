@@ -2,6 +2,7 @@ package dk.vinael.fogmain;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Calendar;
 
 import org.json.JSONArray;
 
@@ -17,6 +18,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
@@ -29,6 +31,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+import asynctasks.LocationHandler;
 
 public class EditProfilActivity extends FragmentActivity implements FogActivityInterface {
 	private EditText fname;
@@ -51,6 +54,7 @@ public class EditProfilActivity extends FragmentActivity implements FogActivityI
 		setContentView(R.layout.activity_editprofil);
 
 		user = ((FOGmain) getApplicationContext()).user;
+
 		fname = (EditText) findViewById(R.id.editprof_et_fname);
 		lname = (EditText) findViewById(R.id.editprof_et_lname);
 		bday = (Button) findViewById(R.id.editprof_btn_birth);
@@ -70,32 +74,113 @@ public class EditProfilActivity extends FragmentActivity implements FogActivityI
 		oldText = takeText();
 
 	}
+
+	public void makeToast(EditText e, String msg) {
+		Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+		e.setTextColor(Color.RED);
+	}
+
+	public boolean checkLength(EditText e, String msg) {
+		if (e.getText().length() < 1) {
+			makeToast(e, msg);
+			return true;
+		}
+		return false;
+	}
+
+	public boolean validateInput() {
+		boolean valid = true;
+		String[] cal_data = bday.getText().toString().split("-");
+		Calendar c_now = Calendar.getInstance();
+		Calendar c_select = Calendar.getInstance();
+		c_now.set(c_now.get(Calendar.YEAR) - 18, c_now.get(Calendar.MONTH), c_now.get(Calendar.DAY_OF_MONTH));
+		c_select.set(Integer.parseInt(cal_data[0]), Integer.parseInt(cal_data[1]), Integer.parseInt(cal_data[2]));
+
+		if (fname.getText().toString().matches(".*\\d.*")) {
+			makeToast(fname, fname.getHint() + " error: Contains a number");
+			valid = false;
+		} else if (checkLength(fname, "To short name")) {
+			valid = false;
+		} else if (lname.getText().toString().matches(".*\\d.*")) {
+			makeToast(lname, lname.getHint() + " error: Contains a number");
+			valid = false;
+		} else if (checkLength(lname, "To short name")) {
+			valid = false;
+		} else if (checkLength(street, "Street name is to short")) {
+			valid = false;
+		} else if (checkLength(zip, "To short zip")) {
+			valid = false;
+		} else if (city.getText().toString().matches(".*\\d.*")) {
+			makeToast(city, city.getHint() + " error: Contains a number");
+			valid = false;
+		} else if (checkLength(city, "City name to short")) {
+			valid = false;
+		} else if (country.getText().toString().matches(".*\\d.*")) {
+			makeToast(country, country.getHint() + " error: Contains a number");
+			valid = false;
+		} else if (checkLength(country, "Country name to short")) {
+			valid = false;
+		} else if (!(email.getText().toString().contains("@") && email.getText().toString().contains("."))) {
+			makeToast(email, email.getHint() + " error: Your email contains errors!");
+			valid = false;
+		} else if (c_select.after(c_now)) {
+			Toast.makeText(this, "Your birthday isn't valid", Toast.LENGTH_LONG).show();
+			valid = false;
+		}
+		if (valid) {
+			try {
+
+				Integer.parseInt(zip.getText().toString());
+
+			} catch (Exception e) {
+				makeToast(zip, zip.getHint() + "Syntax is incorrect");
+				valid = false;
+
+			}
+		}
+		if (valid) {
+			try {
+				Integer.parseInt(phoneNr.getText().toString());
+			} catch (Exception e) {
+				makeToast(phoneNr, phoneNr.getHint() + "Syntax is incorrect");
+				valid = false;
+
+			}
+		}
+		makeToast(fname, ""+valid);
+		return valid;
+	}
+
 	public void selectDate(View v) {
 		DialogFragment newFragment = new DatePickerFragment();
-		if (v.getId() == R.id.editprof_btn_birth){
+		if (v.getId() == R.id.editprof_btn_birth) {
 			newFragment.show(getSupportFragmentManager(), "birthday");
 		}
 	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.menu_to_main_menu, menu);
 		return true;
 	}
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		((FOGmain) getApplicationContext()).onOptionsItemSelected(item,this);
+		((FOGmain) getApplicationContext()).onOptionsItemSelected(item, this);
 		return true;
 	}
 
 	public String takeText() {
-		return "" + fname.getText() + lname.getText()  + street.getText() + zip.getText() + country.getText() + phoneNr.getText() + email.getText() + desc.getText();
+		return "" + fname.getText() + lname.getText() + street.getText() + zip.getText() + country.getText() + phoneNr.getText() + email.getText() + desc.getText();
 	}
+
 	public void checkData(EditText et, String str) {
 		if (!(str.equals("null"))) {
 			et.setText(str);
-		} 
+		}
 	}
+
 	public void changePicture(View v) {
 		Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
 		photoPickerIntent.setType("image/*");
@@ -140,18 +225,31 @@ public class EditProfilActivity extends FragmentActivity implements FogActivityI
 	public void onSaveClick(View v) {
 		this.onBackPressed();
 	}
-
+	public void addDataToUser() {
+		user.setFirstName(fname.getText().toString());
+		user.setLastName(lname.getText().toString());
+		user.setBirthdate(bday.getText().toString());
+		user.setAddress(street.getText().toString());
+		user.setZip(zip.getText().toString());
+		user.setCity(city.getText().toString());
+		user.setCountry(country.getText().toString());
+		user.setEmail(email.getText().toString());
+		user.setPhoneNr(phoneNr.getText().toString());
+		user.setDescription(desc.getText().toString());
+		
+	}
 	public void setValues(User user) {
 		checkData(fname, user.getFirstName());
-		checkData(lname,user.getLastName());
-		if (!(user.getBirthdate().equals("null"))) bday.setText(user.getBirthdate());
+		checkData(lname, user.getLastName());
+		if (!(user.getBirthdate().equals("null")))
+			bday.setText(user.getBirthdate());
 		checkData(street, user.getAddress());
-		checkData(zip,user.getZip());
+		checkData(zip, user.getZip());
 		checkData(city, user.getCity());
-		checkData(country,user.getCountry());
-		//checkData(phoneNr.setText("88888888");
-		checkData(email,user.getEmail());
-		checkData(desc,user.getDescription());
+		checkData(country, user.getCountry());
+		checkData(phoneNr, user.getPhoneNr());
+		checkData(email, user.getEmail());
+		checkData(desc, user.getDescription());
 	}
 
 	public void confirmSaveOrCancel() {
@@ -160,8 +258,10 @@ public class EditProfilActivity extends FragmentActivity implements FogActivityI
 			public void onClick(DialogInterface dialog, int which) {
 				switch (which) {
 				case DialogInterface.BUTTON_POSITIVE:
-					setValues(user);
-					SqlWrapper.updateUser(EditProfilActivity.this, "updateUser", user);
+					if (validateInput()) {
+						addDataToUser();
+						LocationHandler.convertAddressToLocation(EditProfilActivity.this, street.getText().toString() +  ", " + city.getText().toString() + ", " + country.getText().toString(), "CheckAddress");
+					}
 					break;
 				case DialogInterface.BUTTON_NEGATIVE:
 					finish();
@@ -189,10 +289,16 @@ public class EditProfilActivity extends FragmentActivity implements FogActivityI
 		// TODO Auto-generated method stub
 
 	}
-
 	@Override
 	public void returningLocation(Location location, String identifier) {
-		// TODO Auto-generated method stub
+		Toast.makeText(this, "returned", Toast.LENGTH_LONG).show();
+		
+			if (location != null) {
+				SqlWrapper.updateUser(EditProfilActivity.this, "updateUser", user);
+			} else {
+				Toast.makeText(this, "Address Couldn't be validated, check your input", Toast.LENGTH_LONG).show();
+			}
+		
 
 	}
 }

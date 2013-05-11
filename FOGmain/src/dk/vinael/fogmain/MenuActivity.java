@@ -64,11 +64,11 @@ public class MenuActivity extends Activity implements FogActivityInterface {
 	}
 	
 	public void gotoProfile(View view){
-		/*
+		
 		Intent intent = new Intent(this, ViewProfilActivity.class);
 		intent.putExtra("user", ((FOGmain)getApplicationContext()).user);
 		this.startActivity(intent);
-		*/
+		
 		
 		
 		/* Starting service */
@@ -79,7 +79,7 @@ public class MenuActivity extends Activity implements FogActivityInterface {
         AlarmManager alarm = (AlarmManager)getSystemService(this.ALARM_SERVICE);
         alarm.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 10*1000, pintent);
 		*/
-		startService(new Intent(this, NotificationService.class));
+		//startService(new Intent(this, NotificationService.class));
 	}
 	
 	@Override

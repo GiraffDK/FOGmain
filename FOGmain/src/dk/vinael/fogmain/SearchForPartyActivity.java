@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.NumberPicker;
+import android.widget.NumberPicker.OnValueChangeListener;
 import asynctasks.LocationHandler;
 
 public class SearchForPartyActivity extends Activity implements LocationListener, FogActivityInterface {
@@ -50,11 +51,31 @@ public class SearchForPartyActivity extends Activity implements LocationListener
 		np_radius.setMaxValue(2000);
 		np_radius.setMinValue(1);
 		np_age_low = (NumberPicker) findViewById(R.id.np_age_low);
-		np_age_low.setMaxValue(60);
+		np_age_low.setMaxValue(59);
 		np_age_low.setMinValue(18);
+		np_age_low.setOnValueChangedListener(new OnValueChangeListener() {
+			
+			@Override
+			public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+				if (np_age_low.getValue() > np_age_max.getValue()) {
+					np_age_max.setValue(np_age_low.getValue()+1);
+				}
+				
+			}
+		});
 		np_age_max = (NumberPicker) findViewById(R.id.np_age_max);
 		np_age_max.setMaxValue(60);
-		np_age_max.setMinValue(18);
+		np_age_max.setMinValue(19);
+		np_age_max.setOnValueChangedListener(new OnValueChangeListener() {
+			
+			@Override
+			public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+				if (np_age_low.getValue() >= np_age_max.getValue()) {
+					np_age_max.setValue(np_age_low.getValue()+1);
+				}
+				
+			}
+		});
 		
 		ActionBar bar = getActionBar();
 		bar.setIcon(R.drawable.ic_search);

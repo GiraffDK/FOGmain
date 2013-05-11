@@ -29,6 +29,7 @@ public class User implements Serializable {
 	private String zip;
 	private String city;
 	private String country;
+	private String phoneNr;
 	
 	// Getters and setters
 
@@ -111,6 +112,13 @@ public class User implements Serializable {
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		}
+	}
+	public String getPhoneNr() {
+		return phoneNr;
+	}
+
+	public void setPhoneNr(String phoneNr) {
+		this.phoneNr = phoneNr;
 	}
 
 	public String getBirthdate() {
@@ -212,6 +220,7 @@ public class User implements Serializable {
 			setZip(jo.getString("zip"));
 			setCity(jo.getString("city"));
 			setCountry(jo.getString("country"));
+			setPhoneNr(jo.getString("phone_nr"));
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}

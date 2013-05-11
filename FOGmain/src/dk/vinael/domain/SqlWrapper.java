@@ -145,7 +145,7 @@ public class SqlWrapper {
 		String sqlString ="UPDATE user " +
 				"SET email = '" + u.getEmail()+ "', firstname = '"+u.getFirstName()+"', " +
 				"lastname = '"+u.getLastName() +"', description = '" + u.getDescription() + "' , birthdate = '" + u.getBirthdate() + "', " +
-				"address = '" +u.getAddress() + "', zip = '"+u.getZip() +"', city = '" + u.getCity() +"', country = '" +u.getCountry() +"' " +
+				"address = '" +u.getAddress() + "', zip = '"+u.getZip() +"', city = '" + u.getCity() +"', country = '" +u.getCountry() +"', phone_nr = '" + u.getPhoneNr() +"' "+
 				"WHERE user.user_id = "+u.getUserId()+";";
 		new WebserviceCaller(activity, identifier).execute("update", sqlString);
 	}
