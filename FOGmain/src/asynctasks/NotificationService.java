@@ -39,6 +39,8 @@ public class NotificationService extends Service implements FogServiceInterface 
 	
 	private NotificationManager notificationManager;
 	
+	private final static int INTERVAL = 1000 * 60 * 5; // 5 min.
+	
 	@Override
 	public void onCreate() {
 		
@@ -48,11 +50,11 @@ public class NotificationService extends Service implements FogServiceInterface 
 		    public void run() 
 		    {
 		    	checkForChanges();
-		        //handler.postDelayed(this, 10*60000); // 10 min.
+		        handler.postDelayed(this, INTERVAL); // 10 min.
 		        //handler.postDelayed(r, 5000);
 		    }
 		};
-		//handler.postDelayed(r, 10*60000); // 10 min.
+		handler.postDelayed(r, INTERVAL); // 10 min.
 		//handler.postDelayed(r, 5000);
 	}
 	
