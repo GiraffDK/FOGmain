@@ -29,6 +29,7 @@ public class User implements Serializable {
 	private String zip;
 	private String city;
 	private String country;
+	private String profilPic;
 	
 	// Getters and setters
 
@@ -153,6 +154,14 @@ public class User implements Serializable {
 		this.country = country;
 	}
 	
+	public String getProfilPic() {
+		return profilPic;
+	}
+
+	public void setProfilPic(String profilPic) {
+		this.profilPic = profilPic;
+	}
+	
 	// Constructor
 	public User(){
 		/*
@@ -212,6 +221,7 @@ public class User implements Serializable {
 			setZip(jo.getString("zip"));
 			setCity(jo.getString("city"));
 			setCountry(jo.getString("country"));
+			setProfilPic(jo.getString("profilpic"));
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -243,4 +253,5 @@ public class User implements Serializable {
 	public void getUserInPartyStatusByParty(FogActivityInterface activity, String identifier, Party party){
 		SqlWrapper.getUserInPartyStatusByParty(activity, identifier, party, this);
 	}
+
 }
