@@ -7,9 +7,12 @@ import dk.vinael.domain.FOGmain;
 import dk.vinael.domain.User;
 import dk.vinael.interfaces.FogActivityInterface;
 import android.location.Location;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -58,7 +61,6 @@ public class MainActivity extends Activity implements FogActivityInterface {
 		}, 1000);
 		*/
 	}
-
 
 	@Override
 	public void jsonArrayHandler(JSONArray ja, String identifier) {

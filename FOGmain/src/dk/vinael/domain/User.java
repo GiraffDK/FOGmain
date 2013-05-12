@@ -30,6 +30,7 @@ public class User implements Serializable {
 	private String city;
 	private String country;
 	private String profilPic;
+	private String phoneNr;
 	
 	// Getters and setters
 
@@ -113,6 +114,13 @@ public class User implements Serializable {
 			e.printStackTrace();
 		}
 	}
+	public String getPhoneNr() {
+		return phoneNr;
+	}
+
+	public void setPhoneNr(String phoneNr) {
+		this.phoneNr = phoneNr;
+	}
 
 	public String getBirthdate() {
 		return birthdate;
@@ -163,23 +171,20 @@ public class User implements Serializable {
 	}
 	
 	// Constructor
-	public User(){
-		/*
+	public void reset(){
 		userId=0;
-		email="";
-		firstName="";
-		lastName="";
-		description="";
-		fbUserId="";
-		token="";
-		password="";
-		birthdate="";
-		address="";
-		zip="";
-		city="";
-		country="";
-		*/
-		
+		email=null;
+		firstName=null;
+		lastName=null;
+		description=null;
+		fbUserId=null;
+		token=null;
+		password=null;
+		birthdate=null;
+		address=null;
+		zip=null;
+		city=null;
+		country=null;		
 	}
 	
 	// Methods
@@ -222,6 +227,7 @@ public class User implements Serializable {
 			setCity(jo.getString("city"));
 			setCountry(jo.getString("country"));
 			setProfilPic(jo.getString("profilpic"));
+			setPhoneNr(jo.getString("phone_nr"));
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -254,4 +260,7 @@ public class User implements Serializable {
 		SqlWrapper.getUserInPartyStatusByParty(activity, identifier, party, this);
 	}
 
+	public void resetUserToken(FogActivityInterface activity, String identifier){
+		SqlWrapper.resetUserToken(activity, identifier, this);
+	}
 }

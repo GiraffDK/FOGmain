@@ -145,7 +145,7 @@ public class SqlWrapper {
 		String sqlString ="UPDATE user " +
 				"SET email = '" + u.getEmail()+ "', firstname = '"+u.getFirstName()+"', " +
 				"lastname = '"+u.getLastName() +"', description = '" + u.getDescription() + "' , birthdate = '" + u.getBirthdate() + "', " +
-				"address = '" +u.getAddress() + "', zip = '"+u.getZip() +"', city = '" + u.getCity() +"', country = '" +u.getCountry() +"' " +
+				"address = '" +u.getAddress() + "', zip = '"+u.getZip() +"', city = '" + u.getCity() +"', country = '" +u.getCountry() +"', phone_nr = '" + u.getPhoneNr() +"' "+
 				"WHERE user.user_id = "+u.getUserId()+";";
 		new WebserviceCaller(activity, identifier).execute("update", sqlString);
 	}
@@ -197,6 +197,11 @@ public class SqlWrapper {
 	public static void getUserInPartyStatusByParty(FogActivityInterface activity, String identifier, Party p, User u){
 		String sqlString = "SELECT user_in_party.attending_status_id, user_in_party.party_id FROM user_in_party WHERE user_in_party.party_id="+p.getId()+" AND user_in_party.user_id="+u.getUserId()+";";
 		new WebserviceCaller(activity, identifier).execute("select", sqlString);
+	}
+	
+	public static void resetUserToken(FogActivityInterface activity, String identifier, User user){
+		String sqlString = "UPDATE user SET token=NULL WHERE user.user_id ="+user.getUserId()+";";
+		new WebserviceCaller(activity, identifier).execute("update", sqlString);
 	}
 	
 }

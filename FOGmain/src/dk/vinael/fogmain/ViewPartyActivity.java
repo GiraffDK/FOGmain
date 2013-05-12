@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
@@ -22,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import dk.vinael.domain.DateAndTimeStringHandler;
@@ -59,6 +61,7 @@ public class ViewPartyActivity extends Activity implements FogActivityInterface,
 	private Button btn_editparty_viewparty;
 	private Button btn_gotoattendingguests_viewparty;
 	
+	private String action;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +70,11 @@ public class ViewPartyActivity extends Activity implements FogActivityInterface,
 		
 		bundle = getIntent().getExtras();
 		
+		action = getIntent().getAction();
+		
 		user = ((FOGmain)getApplicationContext()).user;
 		party = (Party) bundle.getSerializable("party");
+		
 		OwnerUser.setUserId(party.getOwnerId());
 		OwnerUser.selectUserByUserID(this, "owner_user");
 		
@@ -210,6 +216,16 @@ public class ViewPartyActivity extends Activity implements FogActivityInterface,
 		tv_age_level_viewparty.setText(party.getMinAge() + " - " + party.getMaxAge());
 		tv_party_address_viewparty.setText(party.getAddress() + "\n" + party.getZip() + ", " + party.getCity() + "\n" + party.getCountry());
 		tv_doorcode_viewparty.setText(party.getDoorCode());
+		
+
+		// if notification wants to open Google Map:
+		if (action!=null){
+			if (action.equals("map")){
+				ImageView v = (ImageView) findViewById(R.id.iv_showdirections_viewparty);
+				showDirections(v);
+			}
+		}
+		
 	}
 	
 	public void seeRequesters(View v){
@@ -338,5 +354,4 @@ public class ViewPartyActivity extends Activity implements FogActivityInterface,
 		// TODO Auto-generated method stub
 
 	}
-
 }

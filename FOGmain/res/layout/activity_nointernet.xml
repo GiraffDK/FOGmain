@@ -1,0 +1,39 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nointernet_activity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".NoInternetActivity" >
+
+    <TextView
+        android:id="@+id/tv_connectionproblems_nointernet_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:text="Connection problems.."
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+     <TextView
+         android:id="@+id/tv_pleasewait"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_below="@+id/tv_connectionproblems_nointernet_activity"
+         android:layout_centerHorizontal="true"
+         android:text="Please check your internet connection"
+         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+     <Button
+         android:id="@+id/btn_try_again_nointernet_activity"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_centerHorizontal="true"
+         android:layout_centerVertical="true"
+         android:onClick="goToLogin"
+         android:text="Try again" />
+
+</RelativeLayout>

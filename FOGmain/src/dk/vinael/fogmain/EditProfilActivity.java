@@ -53,6 +53,7 @@ public class EditProfilActivity extends FragmentActivity implements FogActivityI
 
 		user = ((FOGmain) getApplicationContext()).user;
 		im_profile = (ImageView) findViewById(R.id.editprof_iv_profil);
+		
 		fname = (EditText) findViewById(R.id.editprof_et_fname);
 		lname = (EditText) findViewById(R.id.editprof_et_lname);
 		bday = (Button) findViewById(R.id.editprof_btn_birth);

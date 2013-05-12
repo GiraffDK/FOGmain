@@ -19,6 +19,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.Toast;
 import design.RowAdapter;
 import dk.vinael.domain.FOGmain;
 import dk.vinael.domain.Party;
@@ -74,6 +75,7 @@ public class SearchResultActivity extends Activity implements OnClickListener, F
 	public void getPartiesByRadius() {
 		Double loclat = loc.getLatitude();
 		Double loclon = loc.getLongitude();
+		Toast.makeText(this, ""+loclat + " " + loclon + " " + radius + " " + min_age + " " + max_age + " " +((FOGmain) getApplicationContext()).user.getUserId(), Toast.LENGTH_LONG).show();
 		new Party().selectParties(this, "getParties", loclat, loclon, radius, min_age, max_age, ((FOGmain) getApplicationContext()).user.getUserId());
 	}
 
