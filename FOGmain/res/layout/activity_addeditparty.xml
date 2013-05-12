@@ -1,214 +1,346 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddEditPartyActivity" >
+    tools:context=".AddEditPartyActivity" 
+    android:orientation="vertical">
 
-    <ScrollView
-        android:id="@+id/AddEditActivityScrollView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true" 
-		android:paddingBottom="@dimen/activity_vertical_margin"
-		android:paddingLeft="@dimen/activity_horizontal_margin"
-		android:paddingRight="@dimen/activity_horizontal_margin"
-		android:paddingTop="@dimen/activity_vertical_margin"
-        >
-
-        <LinearLayout
+        <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical" >
+            android:layout_height="wrap_content" >
 
-            <Spinner
-                android:id="@+id/spin_party_status"
+            <TableRow
+                android:id="@+id/tableRow1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
-            </Spinner>
+                android:layout_height="wrap_content" >
 
-            <EditText
-                android:id="@+id/et_party_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/et_NameOfParty" >
-            </EditText>
+                <Spinner
+                    android:id="@+id/spin_party_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+                </Spinner>
+            </TableRow>
 
-            <EditText
-                android:id="@+id/et_party_description"
-                android:layout_width="match_parent"
-                android:layout_height="110dp"
-                android:ems="10"
-                android:gravity="center_vertical|top"
-                android:hint="@string/et_Description"
-                android:inputType="textMultiLine" >
-
-            </EditText>
-
-            <EditText
-                android:id="@+id/et_address"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/et_Address"
-                android:inputType="textPostalAddress">
-            </EditText>
-
-            <EditText
-                android:id="@+id/et_zip"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/et_Zip" />
-
-            <EditText
-                android:id="@+id/et_city"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/et_City" />
-
-
-            <EditText
-                android:id="@+id/et_country"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/et_Country" />
-
-            <EditText
-                android:id="@+id/et_door_code"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/et_DoorCode" />
-            
-            <EditText
-                android:id="@+id/et_max_guests_addeditparty"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/et_max_guest" 
-                android:inputType="number"
-                />
-
-            <LinearLayout
-                android:orientation="horizontal"
+            <TableRow
+                android:id="@+id/tableRow2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
 
                 <TextView
-                android:id="@+id/tv_start_time"
-                android:layout_width="60dp"
-                android:layout_height="wrap_content"
-                android:text="@string/tv_Start" 
-				android:textAppearance="?android:attr/textAppearanceMedium" />
-                
+                    android:id="@+id/tv_party_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/et_NameOfParty"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textIsSelectable="false" >
+                </TextView>
+
+                <EditText
+                    android:id="@+id/et_party_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/et_NameOfParty" >
+                </EditText>
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/tv_party_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/et_Description"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textIsSelectable="false" >
+                </TextView>
+
+                <EditText
+                    android:id="@+id/et_party_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="110dp"
+                    android:ems="10"
+                    android:gravity="center_vertical|top"
+                    android:hint="@string/et_Description"
+                    android:inputType="textMultiLine" >
+                </EditText>
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/tv_adress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Hint_street"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textIsSelectable="false" >
+                </TextView>
+
+                <EditText
+                    android:id="@+id/et_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/et_Address"
+                    android:inputType="textPostalAddress" >
+                </EditText>
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/tv_city"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Hint_city"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textIsSelectable="false" >
+                </TextView>
+
+                <EditText
+                    android:id="@+id/et_city"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/et_City" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/tv_country"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Hint_country"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textIsSelectable="false" >
+                </TextView>
+
+                <EditText
+                    android:id="@+id/et_country"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/et_Country" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/tv_door_code"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/et_DoorCode"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textIsSelectable="false" >
+                </TextView>
+
+                <EditText
+                    android:id="@+id/et_door_code"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/et_DoorCode" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/tv_max_guest_addeditparty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/et_max_guest"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textIsSelectable="false" >
+                </TextView>
+
+                <EditText
+                    android:id="@+id/et_max_guests_addeditparty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/et_max_guest"
+                    android:inputType="number" />
+            </TableRow>
+            
+            <TableRow
+	            android:id="@+id/tableRow9"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content" >
+
+	            <TextView
+	                android:id="@+id/tv_start_time"
+	                android:layout_width="60dp"
+	                android:layout_height="wrap_content"
+	                android:text="@string/tv_Start"
+	                android:textAppearance="?android:attr/textAppearanceMedium" />
+	        </TableRow>
+
+	        <TableRow
+	            android:id="@+id/tableRow10"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content" >
+	
 	            <Button
 	                android:id="@+id/btn_set_start_date"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
-	                android:text="@string/btn_SetStartDate" 
 	                android:onClick="selectDate"
-	                />
+	                android:text="@string/btn_SetStartDate" />
 	
 	            <Button
 	                android:id="@+id/btn_set_start_time"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
-	                android:text="@string/btn_set_start_time"
 	                android:onClick="selectTime"
-	                 />
+	                android:text="@string/btn_set_start_time" />
+	        </TableRow>
 
-            </LinearLayout>
-            <LinearLayout
-                android:orientation="horizontal"
+            <TableRow
+                android:id="@+id/tableRow11"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
-	            
-	            <TextView
-	                android:id="@+id/tv_end_time"
-	                android:layout_width="60dp"
-	                android:layout_height="wrap_content"
-	                android:text="@string/tv_end_time" 
-	                android:textAppearance="?android:attr/textAppearanceMedium" 
-	                />
-	            
-	            <Button
-	                android:id="@+id/btn_set_end_date"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:text="@string/btn_set_end_date" 
-	                android:onClick="selectDate"
-	                />
-	            
-	            <Button
-	                android:id="@+id/btn_set_end_time"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:text="@string/btn_set_end_time"
-	                android:onClick="selectTime"
-	                 />
-            </LinearLayout>
-            <EditText
-                android:id="@+id/et_min_age"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/et_MinAge18"
-                android:inputType="number"
-                 >
-            </EditText>
 
-            <EditText
-                android:id="@+id/et_max_age"
+                <TextView
+                    android:id="@+id/tv_end_time"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tv_end_time"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+			</TableRow>
+                
+            <TableRow
+                android:id="@+id/tableRow12"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/et_MaxAge100"
-                android:inputType="number" >
-            </EditText>
-            
-            <CheckBox
-                android:id="@+id/cb_show_photos"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/cb_ShowPhotos" />
-            
-            <CheckBox
-                android:id="@+id/cb_show_wall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/cb_ShowWall" />
+                android:layout_height="wrap_content" >
+                
+                <Button
+                    android:id="@+id/btn_set_end_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="selectDate"
+                    android:text="@string/btn_set_end_date" />
 
-            <Button
-                android:id="@+id/btn_createParty"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/btn_CreateParty" 
-                android:onClick="createEditParty"
-                />
-            
-            
-            <!-- Button
+                <Button
+                    android:id="@+id/btn_set_end_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="selectTime"
+                    android:text="@string/btn_set_end_time" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow13"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/tv_min_age"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/et_MinAge18"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textIsSelectable="false" >
+                </TextView>
+
+                <EditText
+                    android:id="@+id/et_min_age"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/et_MinAge18"
+                    android:inputType="number" >
+                </EditText>
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/tv_max_age"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/et_MaxAge100"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textIsSelectable="false" >
+                </TextView>
+
+                <EditText
+                    android:id="@+id/et_max_age"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/et_MaxAge100"
+                    android:inputType="number" >
+                </EditText>
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow15"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <CheckBox
+                    android:id="@+id/cb_show_photos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cb_ShowPhotos" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <CheckBox
+                    android:id="@+id/cb_show_wall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cb_ShowWall" />
+            </TableRow>
+        </TableLayout>
+
+        <!--
+                 Button
                 android:id="@+id/btn_view_latest_party"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/btn_LatestParty"
                 android:onClick="viewParty"
-                 /-->
+        -->
 
-            <Button
-                android:id="@+id/btn_editParty"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/btn_edit_party"
-                android:onClick="createEditParty"
-                 />
+        <Button
+            android:id="@+id/btn_createParty01"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="createEditParty"
+            android:text="@string/btn_CreateParty" />
 
-        </LinearLayout>
-    </ScrollView>
-
-</RelativeLayout>
+        <Button
+            android:id="@+id/btn_editParty01"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="createEditParty"
+            android:text="@string/btn_edit_party" />
+    </LinearLayout>
