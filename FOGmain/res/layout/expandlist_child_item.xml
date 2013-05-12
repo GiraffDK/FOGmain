@@ -11,6 +11,7 @@
         android:layout_height="match_parent"
         android:textColor="@color/Black"
         android:clickable="true"
-        android:textSize="26dip" />
+        android:padding="2dp"
+        style="@style/mediumTextSize" />
 
 </LinearLayout>

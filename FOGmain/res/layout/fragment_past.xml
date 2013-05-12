@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/Black"
+    android:background="#b01319"
     android:orientation="vertical" >
 
     <TextView
@@ -11,11 +11,16 @@
         android:layout_height="wrap_content"
         android:text="Month and year:"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/White" />
+        android:textColor="#ffffff"
+        android:background="#b01319"
+        android:padding="5dp"
+        android:textSize="22sp"
+         />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="fill_horizontal"
         android:background="@color/LightGrey" >
 
         <TextView
@@ -45,7 +50,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:background="@color/Beige"
+        android:background="#ffffff"
         android:orientation="vertical" >
 
         <Button
@@ -53,28 +58,37 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Search!"
-            android:onClick="partiesAttended" />
+            android:onClick="partiesAttended"
+            android:background="@drawable/standardbutton"
+            style="@style/standardbutton"
+             />
 
         <Button
             android:id="@+id/button2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="See attended parties on map"
-            android:onClick="seeInMap" />
+            android:onClick="seeInMap"
+            android:background="@drawable/standardbutton"
+            style="@style/standardbutton"
+             />
 
         <TextView
             android:id="@+id/fragment_tv_label_month_year"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="" />
+            android:text=""
+            style="@style/mediumTextSize"
+            android:padding="5dp"
+             />
 
         <ListView
             android:id="@+id/fragment_lv_pastparties"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:layout_marginBottom="10dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp" >
+            android:listSelector="@drawable/standardlistview"
+            >
         </ListView>
     </LinearLayout>
 

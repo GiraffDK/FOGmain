@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <string name="app_name">FOGmain</string>
+    <string name="app_name">PartyNow</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     
@@ -50,7 +50,7 @@
     
     <!-- Login -->
     <string name="Email">Email</string>
-    <string name="et_email">maanefjaes</string>
+    <string name="et_email">kevin@0303.dk</string>
     <string name="Password">Password</string>
     <string name="et_password">test</string>
     <string name="btn_Login">Login</string>

@@ -78,8 +78,8 @@ public class SearchForPartyActivity extends Activity implements LocationListener
 		});
 		
 		ActionBar bar = getActionBar();
-		bar.setIcon(R.drawable.ic_search);
-		bar.setTitle("Search For Party");
+		//bar.setIcon(R.drawable.ic_search);
+		//bar.setTitle("Search For Party");
 
 	}
 	@Override

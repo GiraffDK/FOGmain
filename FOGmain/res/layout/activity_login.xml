@@ -1,4 +1,4 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -6,15 +6,23 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".LoginActivity" 
+    tools:context=".LoginActivity"
+    android:orientation="vertical"
     >
+
+    <TextView
+        android:id="@+id/tv_pleaselogin_loginactivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hi there, please login.." 
+        style="@style/mediumTextSize"
+        />
 
     <EditText
         android:id="@+id/txt_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
+        android:layout_marginTop="10dp"
         android:ems="10"
         android:hint="@string/Email"
         android:inputType="textEmailAddress"
@@ -27,8 +35,6 @@
         android:id="@+id/txt_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/txt_email"
-        android:layout_below="@+id/txt_email"
         android:ems="10"
         android:hint="@string/Password"
         android:inputType="textPassword"
@@ -39,10 +45,10 @@
         android:id="@+id/btn_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/txt_password"
-        android:layout_below="@+id/txt_password"
         android:text="@string/btn_Login"
         android:onClick="login"
+        android:background="@drawable/standardbutton"
+        style="@style/standardbutton"
          />
     
     <!-- com.facebook.widget.LoginButton
@@ -57,10 +63,10 @@
         android:id="@+id/btn_createprofile_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/btn_login"
-        android:layout_below="@+id/btn_login"
         android:text="@string/btn_create_profile"
         android:enabled="false"
+        android:background="@drawable/disabledbutton"
+        style="@style/disabledbutton"
          />
 
-</RelativeLayout>
+</LinearLayout>

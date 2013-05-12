@@ -147,8 +147,9 @@ public class AddEditPartyActivity extends FragmentActivity implements FogActivit
 		et_city.setOnFocusChangeListener(ofl);
 		et_country.setOnFocusChangeListener(ofl);
 		
-		
-		bar.setIcon(R.drawable.ic_a_stiff_drink);
+		if (party!=null){
+			bar.setIcon(R.drawable.pencil);
+		}
 		bar.setHomeButtonEnabled(true);
 
 	}

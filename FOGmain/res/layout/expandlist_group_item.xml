@@ -9,8 +9,10 @@
         android:id="@+id/tvGroup"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/Black"
-        android:textColor="@color/White"
-        android:textSize="26dip" />
+        android:background="#b01319"
+        android:textColor="#ffffff"
+        android:textSize="22sp" 
+        android:padding="5dp"
+        />
 
 </LinearLayout>

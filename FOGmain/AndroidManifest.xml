@@ -30,60 +30,64 @@
     <application
         android:name="dk.vinael.domain.FOGmain"
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/megaphone"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
             android:name="dk.vinael.fogmain.MainActivity"
-            android:label="Loading" >
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name="dk.vinael.fogmain.MenuActivity"
-            android:label="Menu" >
+            android:label="Menu" 
+            android:icon="@drawable/home"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.DEFAULT" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name="dk.vinael.fogmain.LoginActivity"
-            android:label="Login" >
+            android:label="Login" 
+            android:icon="@drawable/lock"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.DEFAULT" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name="dk.vinael.fogmain.ViewProfilActivity"
-            android:label="Login" >
+            android:label="Profile"
+            android:icon="@drawable/id_card"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.DEFAULT" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name="dk.vinael.fogmain.AddEditPartyActivity"
-            android:label="Add Party" >
+            android:label="Add Party" 
+            android:icon="@drawable/add"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.DEFAULT" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name="dk.vinael.fogmain.PartiesActivity"
-            android:label="Add Party" >
+            android:label="Parties" 
+            android:icon="@drawable/map_pin"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.DEFAULT" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -92,7 +96,6 @@
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.DEFAULT" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -107,10 +110,11 @@
         </activity>
         <activity
             android:name="dk.vinael.fogmain.SearchForPartyActivity"
-            android:label="@string/app_name" >
+            android:label="Search For Party" 
+            android:icon="@drawable/search"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.DEFAULT" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

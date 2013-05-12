@@ -41,7 +41,7 @@ import fragments.PastFragment;
 public class PartiesActivity extends FragmentActivity implements FogActivityInterface {
 	// new stuff
 	/* Tab identifiers */
-	private String TAB_A = "Current/Future Parties";
+	private String TAB_A = "Upcoming Parties";
 	private String TAB_B = "Past Parties";
 
 	private TabHost mTabHost;
@@ -84,8 +84,8 @@ public class PartiesActivity extends FragmentActivity implements FogActivityInte
 		mTabHost.setup();
 
 		ActionBar bar = getActionBar();
-		bar.setIcon(R.drawable.ic_a_stiff_drink);
-		bar.setTitle("Your/Requested Parties");
+		//bar.setIcon(R.drawable.ic_a_stiff_drink);
+		//bar.setTitle("Your/Requested Parties");
 		bar.setHomeButtonEnabled(true);
 		initializeTab();
 	}
@@ -125,7 +125,7 @@ public class PartiesActivity extends FragmentActivity implements FogActivityInte
 				return findViewById(android.R.id.tabcontent);
 			}
 		});
-		spec.setIndicator(createTabView(TAB_A, R.drawable.ic_a_stiff_drink));
+		spec.setIndicator(createTabView(TAB_A, R.drawable.page));
 		mTabHost.addTab(spec);
 
 		spec = mTabHost.newTabSpec(TAB_B);
@@ -134,7 +134,7 @@ public class PartiesActivity extends FragmentActivity implements FogActivityInte
 				return findViewById(android.R.id.tabcontent);
 			}
 		});
-		spec.setIndicator(createTabView(TAB_B, R.drawable.ic_add));
+		spec.setIndicator(createTabView(TAB_B, R.drawable.page_full));
 		mTabHost.addTab(spec);
 
 	}
@@ -174,6 +174,7 @@ public class PartiesActivity extends FragmentActivity implements FogActivityInte
 		View view = LayoutInflater.from(this).inflate(R.layout.tabs_icon, null);
 		ImageView imageView = (ImageView) view.findViewById(R.id.tab_icon);
 		imageView.setImageDrawable(getResources().getDrawable(id));
+		imageView.getLayoutParams().width=100;
 		((TextView) view.findViewById(R.id.tab_text)).setText(text);
 		return view;
 	}
