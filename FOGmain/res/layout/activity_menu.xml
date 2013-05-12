@@ -19,7 +19,7 @@
     
     <Button
         android:id="@+id/btn_addparty"
-        style="@style/ButtonText"
+        style="@style/ButtonText_Bold_DrakRed"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_username_menu"
@@ -37,7 +37,7 @@
         android:text="@string/btn_Search" 
         android:onClick="gotoSearch"
         android:drawableLeft="@drawable/ic_search"
-        style="@style/ButtonText"
+        style="@style/ButtonText_Bold_White"
         android:background="@drawable/greenbutton"
         />
 
@@ -50,7 +50,7 @@
         android:text="@string/btn_Parties" 
         android:onClick="gotoParties"
         android:drawableLeft="@drawable/ic_a_stiff_drink"
-        style="@style/ButtonText"
+        style="@style/ButtonText_Italic_DrakRed"
         android:background="@drawable/bluebutton"
         />
 
@@ -63,7 +63,7 @@
         android:text="@string/btn_Profile" 
         android:onClick="gotoProfile"
         android:drawableLeft="@drawable/ic_settings"
-        style="@style/ButtonText"
+        style="@style/ButtonText_Italic_White"
         android:background="@drawable/redbutton"
         />
 
