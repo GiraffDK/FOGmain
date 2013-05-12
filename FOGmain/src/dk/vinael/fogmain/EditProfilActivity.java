@@ -2,6 +2,8 @@ package dk.vinael.fogmain;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Calendar;
 
 import org.json.JSONArray;
@@ -30,6 +32,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+import asynctasks.ProfilePictureHandler;
+import asynctasks.ProfilePictureHandler.Execute;
 
 public class EditProfilActivity extends FragmentActivity implements FogActivityInterface {
 	private EditText fname;
@@ -197,6 +201,8 @@ public class EditProfilActivity extends FragmentActivity implements FogActivityI
 					Bitmap yourSelectedImage = BitmapFactory.decodeStream(imageStream);
 					ImageView i = (ImageView) findViewById(R.id.editprof_iv_profil);
 					i.setImageBitmap(yourSelectedImage);
+					
+					new ProfilePictureHandler(yourSelectedImage, Execute.SEND, this).execute();
 
 				} catch (FileNotFoundException e) {
 					// TODO Auto-generated catch block
@@ -222,6 +228,12 @@ public class EditProfilActivity extends FragmentActivity implements FogActivityI
 	}
 
 	public void setValues(User user) {
+		try {
+			new ProfilePictureHandler((ImageView) findViewById(R.id.editprof_iv_profil), Execute.RECIEVE).execute(new URL(user.getProfilPic()));
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		checkData(fname, user.getFirstName());
 		checkData(lname,user.getLastName());
 		if (!(user.getBirthdate().equals("null"))) bday.setText(user.getBirthdate());

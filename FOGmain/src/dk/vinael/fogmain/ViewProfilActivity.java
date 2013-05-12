@@ -1,5 +1,6 @@
 package dk.vinael.fogmain;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import dk.vinael.domain.FOGmain;
@@ -16,6 +17,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+import asynctasks.ProfilePictureHandler;
+import asynctasks.ProfilePictureHandler.Execute;
 
 public class ViewProfilActivity extends Activity {
 
@@ -77,11 +81,10 @@ public class ViewProfilActivity extends Activity {
 
 	private void addInfo(User u) {
 		try {
-			URL url = new URL(""+ u.getProfilPic());
-			Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-			im_profile.setImageBitmap(bmp);
-		} catch (Exception ex) {
-			// Nothing
+			new ProfilePictureHandler((ImageView) findViewById(R.id.profileImages),Execute.RECIEVE).execute(new URL(u.getProfilPic()));
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		et_name.setText("Name : " + u.getFirstName());
 		et_lastname.setText("Lastname : " + u.getLastName());
