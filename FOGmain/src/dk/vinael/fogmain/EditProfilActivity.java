@@ -77,7 +77,6 @@ public class EditProfilActivity extends FragmentActivity implements FogActivityI
 
 	public void makeToast(EditText e, String msg) {
 		Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
-		e.setTextColor(Color.RED);
 	}
 
 	public boolean checkLength(EditText e, String msg) {
