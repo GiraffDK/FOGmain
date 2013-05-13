@@ -71,8 +71,8 @@ public class EditProfilActivity extends FragmentActivity implements FogActivityI
 		desc = (EditText) findViewById(R.id.editprof_et_desc);
 
 		ActionBar bar = getActionBar();
-		bar.setIcon(R.drawable.ic_settings);
-		bar.setTitle("Edit Profile");
+		//bar.setIcon(R.drawable.ic_settings);
+		//bar.setTitle("Edit Profile");
 		bar.setHomeButtonEnabled(true);
 		setValues(user);
 		oldText = takeText();

@@ -53,8 +53,8 @@ public class ViewProfilActivity extends Activity {
 		et_description = (TextView) findViewById(R.id.profil_tv_description);
 
 		ActionBar bar = getActionBar();
-		bar.setIcon(R.drawable.ic_settings);
-		bar.setTitle("View Profile");
+		//bar.setIcon(R.drawable.ic_settings);
+		//bar.setTitle("View Profile");
 		bar.setHomeButtonEnabled(true);
 		
 		Bundle bundle = getIntent().getExtras();

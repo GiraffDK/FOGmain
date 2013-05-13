@@ -32,10 +32,13 @@
         android:allowBackup="true"
         android:icon="@drawable/megaphone"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme" 
+        >
         <activity
             android:name="dk.vinael.fogmain.MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:screenOrientation="portrait"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -45,6 +48,7 @@
             android:name="dk.vinael.fogmain.MenuActivity"
             android:label="Menu" 
             android:icon="@drawable/home"
+            android:screenOrientation="portrait"
             >
             <intent-filter>
                 <action android:name="android.intent.action.DEFAULT" />
@@ -55,6 +59,7 @@
             android:name="dk.vinael.fogmain.LoginActivity"
             android:label="Login" 
             android:icon="@drawable/lock"
+            android:screenOrientation="portrait"
             >
             <intent-filter>
                 <action android:name="android.intent.action.DEFAULT" />
@@ -63,8 +68,9 @@
         </activity>
         <activity
             android:name="dk.vinael.fogmain.ViewProfilActivity"
-            android:label="Profile"
+            android:label="View Profile"
             android:icon="@drawable/id_card"
+            android:screenOrientation="portrait"
             >
             <intent-filter>
                 <action android:name="android.intent.action.DEFAULT" />
@@ -75,6 +81,7 @@
             android:name="dk.vinael.fogmain.AddEditPartyActivity"
             android:label="Add Party" 
             android:icon="@drawable/add"
+            android:screenOrientation="portrait"
             >
             <intent-filter>
                 <action android:name="android.intent.action.DEFAULT" />
@@ -85,6 +92,7 @@
             android:name="dk.vinael.fogmain.PartiesActivity"
             android:label="Parties" 
             android:icon="@drawable/map_pin"
+            android:screenOrientation="portrait"
             >
             <intent-filter>
                 <action android:name="android.intent.action.DEFAULT" />
@@ -93,7 +101,9 @@
         </activity>
         <activity
             android:name="dk.vinael.fogmain.MapsActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:screenOrientation="portrait"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.DEFAULT" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -103,6 +113,7 @@
             android:name="dk.vinael.fogmain.ViewPartyActivity"
             android:label="View Party" 
             android:icon="@drawable/target"
+            android:screenOrientation="portrait"
             >
             <intent-filter>
                 <action android:name="android.intent.action.DEFAULT" />
@@ -113,6 +124,7 @@
             android:name="dk.vinael.fogmain.SearchForPartyActivity"
             android:label="Search For Party" 
             android:icon="@drawable/search"
+            android:screenOrientation="portrait"
             >
             <intent-filter>
                 <action android:name="android.intent.action.DEFAULT" />
@@ -121,7 +133,10 @@
         </activity>
         <activity
             android:name="dk.vinael.fogmain.EditProfilActivity"
-            android:label="@string/app_name" >
+            android:label="Edit Profile"
+            android:icon="@drawable/pencil"
+            android:screenOrientation="portrait"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.DEFAULT" />
 
@@ -132,6 +147,7 @@
             android:name="dk.vinael.fogmain.SearchResultActivity"
             android:label="Search Results" 
             android:icon="@drawable/map_pin"
+            android:screenOrientation="portrait"
             >
             <intent-filter>
                 <action android:name="android.intent.action.DEFAULT" />
@@ -143,10 +159,10 @@
             android:name="dk.vinael.fogmain.ShowPartyRequestersActivity"
             android:label="Party Requesters" 
             android:icon="@drawable/question_mark"
+            android:screenOrientation="portrait"
             >
             <intent-filter>
                 <action android:name="android.intent.action.DEFAULT" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -154,30 +170,33 @@
             android:name="dk.vinael.fogmain.ShowPartyAttendeesActivity"
             android:label="Party Attendees" 
             android:icon="@drawable/users"
+            android:screenOrientation="portrait"
             >
             <intent-filter>
                 <action android:name="android.intent.action.DEFAULT" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         
         <activity
             android:name="dk.vinael.fogmain.NotificationResultActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:screenOrientation="portrait"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.DEFAULT" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         
         <activity
             android:name="dk.vinael.fogmain.NoInternetActivity"
-            android:label="@string/app_name" >
+            android:label="No Internet" 
+            android:icon="@drawable/warning"
+            android:screenOrientation="portrait"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.DEFAULT" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

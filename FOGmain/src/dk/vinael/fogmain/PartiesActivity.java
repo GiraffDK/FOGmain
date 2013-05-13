@@ -58,6 +58,8 @@ public class PartiesActivity extends FragmentActivity implements FogActivityInte
 	private ExpandableGroup req = new ExpandableGroup();
 	private ArrayList<Party> reqList = new ArrayList<Party>();
 	
+	private User user;
+	
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -72,6 +74,7 @@ public class PartiesActivity extends FragmentActivity implements FogActivityInte
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_parties);
 		initializaAll();
+		user = ((FOGmain)getApplication()).user;
 	}
 	public void initializaAll() {
 		fragment1 = new FutureFragment();
@@ -97,9 +100,9 @@ public class PartiesActivity extends FragmentActivity implements FogActivityInte
 
 		int month = ((NumberPicker) findViewById(R.id.np_month)).getValue();
 		int year = ((NumberPicker) findViewById(R.id.np_year)).getValue();
-		new Party().getPartiesUserAttended(this, "past_parties", month, year);
+		new Party().getPartiesUserAttended(this, "past_parties", user, month, year);
 		((TextView)findViewById(R.id.fragment_tv_label_month_year)).setText("You've selected : " + new DateFormatSymbols().getMonths()[month-1] + " - " + year);	
-		new Party().getPartiesUserAttended(this, "past_parties", ((NumberPicker)findViewById(R.id.np_month)).getValue(), ((NumberPicker)findViewById(R.id.np_year)).getValue());
+		new Party().getPartiesUserAttended(this, "past_parties", user, ((NumberPicker)findViewById(R.id.np_month)).getValue(), ((NumberPicker)findViewById(R.id.np_year)).getValue());
 
 	}
 

@@ -27,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import dk.vinael.domain.DateAndTimeStringHandler;
+import dk.vinael.domain.DateAndTimeStringHandler.RETURN_TYPE;
 import dk.vinael.domain.FOGmain;
 import dk.vinael.domain.Party;
 import dk.vinael.domain.User;
@@ -42,6 +43,7 @@ public class ViewPartyActivity extends Activity implements FogActivityInterface,
 	private User OwnerUser = new User();
 	private Party party;
 	private Bundle bundle;
+	private Activity thisActivity; 
 	
 	private View viewbyall;
 	private View viewbyrequesterattendee;
@@ -63,13 +65,15 @@ public class ViewPartyActivity extends Activity implements FogActivityInterface,
 	
 	private String action;
 	
+	private boolean pastParty;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_viewparty);
 		
 		bundle = getIntent().getExtras();
-		
+		thisActivity = this;
 		action = getIntent().getAction();
 		
 		user = ((FOGmain)getApplicationContext()).user;
@@ -121,6 +125,14 @@ public class ViewPartyActivity extends Activity implements FogActivityInterface,
 		onLocationChanged(locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER));
 		
 		/* Determing user status - end */
+		
+		Calendar now = DateAndTimeStringHandler.getDateStringAsCalendar(DateAndTimeStringHandler.getCurrentDateAndTime());
+		Calendar party_time = DateAndTimeStringHandler.getDateStringAsCalendar(party.getEndDateAndTime());
+		int difference = DateAndTimeStringHandler.dateDifference(party_time, now, RETURN_TYPE.MINUTES);
+		if (difference<0){
+			btn_requestcancelunsub_viewparty.setVisibility(View.GONE);
+			btn_editparty_viewparty.setVisibility(View.GONE);
+		}
 	}
 	
 	public void showLayouts(){
@@ -190,7 +202,7 @@ public class ViewPartyActivity extends Activity implements FogActivityInterface,
 				public void onClick(View v) {
 					Intent intent = new Intent(fai, AddEditPartyActivity.class);
 					intent.putExtra("party", party);
-					//this.finish();
+					finish();
 					fai.startActivity(intent);
 				}
 			});
@@ -272,7 +284,18 @@ public class ViewPartyActivity extends Activity implements FogActivityInterface,
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			tv_ownername_viewparty.setText(OwnerUser.getFirstName()+"");
+			tv_ownername_viewparty.setText(OwnerUser.getFirstName()+" "+OwnerUser.getLastName());
+			tv_ownername_viewparty.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					if (OwnerUser!=null){
+						Intent intent = new Intent(thisActivity, ViewProfilActivity.class);
+						intent.putExtra("user", OwnerUser);
+						thisActivity.startActivity(intent);
+					}
+				}
+			});
 		}
 		else if (identifier.equals("userRequestParty") || identifier.equals("userCancelRequestParty")){
 			Intent intent = new Intent(this, ViewPartyActivity.class);
@@ -294,19 +317,19 @@ public class ViewPartyActivity extends Activity implements FogActivityInterface,
 		String endDate = party.getEndDateAndTime();
 		beginTime.set(
 				DateAndTimeStringHandler.getYearFromDateAndTime(startDate), 
-				DateAndTimeStringHandler.getMonthFromDateAndTime(startDate),
+				(DateAndTimeStringHandler.getMonthFromDateAndTime(startDate)-1),
 				DateAndTimeStringHandler.getDayOfMonthFromDateAndTime(startDate),
 				DateAndTimeStringHandler.getHourFromDateAndTime(startDate),
 				DateAndTimeStringHandler.getMinuttesFromDateAndTime(startDate));
-		Toast.makeText(this, ""+DateAndTimeStringHandler.getYearFromDateAndTime(startDate) + "-" +
-				DateAndTimeStringHandler.getMonthFromDateAndTime(startDate) + "-" +
-				DateAndTimeStringHandler.getDayOfMonthFromDateAndTime(startDate) + " @ " + 
-				DateAndTimeStringHandler.getHourFromDateAndTime(startDate) + " : " +
-				DateAndTimeStringHandler.getMinuttesFromDateAndTime(startDate), Toast.LENGTH_LONG).show();
+//		Toast.makeText(this, ""+DateAndTimeStringHandler.getYearFromDateAndTime(startDate) + "-" +
+//				DateAndTimeStringHandler.getMonthFromDateAndTime(startDate) + "-" +
+//				DateAndTimeStringHandler.getDayOfMonthFromDateAndTime(startDate) + " @ " + 
+//				DateAndTimeStringHandler.getHourFromDateAndTime(startDate) + " : " +
+//				DateAndTimeStringHandler.getMinuttesFromDateAndTime(startDate), Toast.LENGTH_LONG).show();
 		Calendar endTime = Calendar.getInstance();
 		endTime.set(
 				DateAndTimeStringHandler.getYearFromDateAndTime(endDate), 
-				DateAndTimeStringHandler.getMonthFromDateAndTime(endDate),
+				(DateAndTimeStringHandler.getMonthFromDateAndTime(endDate)-1),
 				DateAndTimeStringHandler.getDayOfMonthFromDateAndTime(endDate),
 				DateAndTimeStringHandler.getHourFromDateAndTime(endDate),
 				DateAndTimeStringHandler.getMinuttesFromDateAndTime(endDate));

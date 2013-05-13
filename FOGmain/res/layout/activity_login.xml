@@ -9,64 +9,124 @@
     tools:context=".LoginActivity"
     android:orientation="vertical"
     >
-
-    <TextView
-        android:id="@+id/tv_pleaselogin_loginactivity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hi there, please login.." 
-        style="@style/mediumTextSize"
-        />
-
-    <EditText
-        android:id="@+id/txt_email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:ems="10"
-        android:hint="@string/Email"
-        android:inputType="textEmailAddress"
-        android:text="@string/et_email" >
-
-        <requestFocus />
-    </EditText>
     
-    <EditText
-        android:id="@+id/txt_password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/Password"
-        android:inputType="textPassword"
-        android:text="@string/et_password"
-         />
+    <ScrollView
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+        >
 
-    <Button
-        android:id="@+id/btn_login"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/btn_Login"
-        android:onClick="login"
-        android:background="@drawable/standardbutton"
-        style="@style/standardbutton"
-         />
+        <LinearLayout
+    		android:layout_width="match_parent"
+    		android:layout_height="wrap_content"
+    		android:orientation="vertical"
+    		>
     
-    <!-- com.facebook.widget.LoginButton
-        android:id="@+id/authButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/btn_login"
-        android:layout_below="@+id/btn_login"
-        /-->
-
-    <Button
-        android:id="@+id/btn_createprofile_login"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/btn_create_profile"
-        android:enabled="false"
-        android:background="@drawable/disabledbutton"
-        style="@style/disabledbutton"
-         />
-
+		    <ImageView
+		        android:id="@+id/logo"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_gravity="center_horizontal"
+		        android:src="@drawable/big_megaphone" />
+		
+		    <LinearLayout
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content" 
+		        android:layout_gravity="center_horizontal"
+		        >
+		        
+		        <TextView
+		        android:id="@+id/app_name1_loginactivity"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="Party"
+		        android:textAppearance="?android:attr/textAppearanceLarge"
+		        android:textSize="30sp" />
+		        
+		        <TextView
+		        android:id="@+id/app_name2_loginactivity"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="Now"
+		        android:textColor="#b01319"
+		        android:textAppearance="?android:attr/textAppearanceLarge"
+		        android:textSize="30sp" />
+		        
+		    </LinearLayout>
+		
+		    <TextView
+		        android:id="@+id/companyname_loginactivity"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="A Product of Vinael Solutions"
+		        android:layout_gravity="center_horizontal"
+				android:layout_marginBottom="30dp"
+		         />
+		    
+		    <View
+			    android:layout_width="fill_parent"
+			    android:layout_height="1dp"
+			    android:background="#b01319"
+			    android:layout_marginBottom="30dp"
+			    />
+		
+		    <TextView
+		        android:id="@+id/tv_pleaselogin_loginactivity"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_gravity="center_horizontal"
+		        android:text="Hi there, please login.." 
+		        style="@style/mediumTextSize"
+		        />
+		
+		    <EditText
+		        android:id="@+id/txt_email"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_marginTop="10dp"
+		        android:ems="10"
+		        android:hint="@string/Email"
+		        android:inputType="textEmailAddress"
+		        android:text="@string/et_email" 
+		        >
+		    </EditText>
+		    
+		    <EditText
+		        android:id="@+id/txt_password"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:ems="10"
+		        android:hint="@string/Password"
+		        android:inputType="textPassword"
+		        android:text="@string/et_password"
+		         />
+		
+		    <CheckBox
+		        android:id="@+id/remember_loginactivity"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="Remember me" 
+		        android:checked="true"
+		        />
+		
+		    <Button
+		        android:id="@+id/btn_login"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:text="@string/btn_Login"
+		        android:onClick="login"
+		        android:background="@drawable/standardbutton"
+		        style="@style/standardbutton"
+		         />
+		
+		    <Button
+		        android:id="@+id/btn_createprofile_login"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:text="@string/btn_create_profile"
+		        android:enabled="false"
+		        android:background="@drawable/disabledbutton"
+		        style="@style/disabledbutton"
+		         />
+		</LinearLayout>
+	</ScrollView>
 </LinearLayout>

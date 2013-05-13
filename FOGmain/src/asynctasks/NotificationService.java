@@ -20,6 +20,7 @@ import android.R;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationCompat.Builder;
 import android.util.Log;
+import android.widget.Toast;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -43,14 +44,15 @@ public class NotificationService extends Service implements FogServiceInterface 
 	
 	private NotificationManager notificationManager;
 	
-	private final static int INTERVAL = (60*1000)*10; // 10 min
+	private final static int INTERVAL = (60*1000)*10; // 10 min (testing 1 min.)
+	int counter;
 	
 	private PowerManager pm;
 	private PowerManager.WakeLock wl;
 	
 	@Override
 	public void onCreate() {
-		
+		counter = 0;
 		user = ((FOGmain)getApplicationContext()).user;
 		
 		pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
@@ -62,6 +64,10 @@ public class NotificationService extends Service implements FogServiceInterface 
 		{
 		    public void run() 
 		    {
+		    	if (counter==3){ // every 30 min. start over
+		    		al_requested_parties=null;
+		    		al_attending_parties=null;
+		    	}
 		    	checkForChanges();
 		        handler.postDelayed(this, INTERVAL);
 		    }
@@ -108,7 +114,7 @@ public class NotificationService extends Service implements FogServiceInterface 
 			Log.i("NotificationService", "checkForChanges(), " + user.getFirstName());
 		}
 		if (((FOGmain)this.getApplicationContext()).isNetworkConnected()==true){
-			//Toast.makeText(this, user.getFirstName(), Toast.LENGTH_LONG).show();
+			//Toast.makeText(this, "checkForChanges()", Toast.LENGTH_LONG).show();
 			if (user.getToken()!=null){
 				//Toast.makeText(this, ""+al_requested_parties.size()+", "+al_attending_parties.size(), Toast.LENGTH_LONG).show();
 				if (al_requested_parties==null || al_attending_parties==null){
@@ -117,6 +123,7 @@ public class NotificationService extends Service implements FogServiceInterface 
 					//Toast.makeText(this, ""+al_requested_parties.size()+", "+al_attending_parties.size(), Toast.LENGTH_LONG).show();
 					if (al_requested_parties.size()>0){checkRequestedParties();}
 					if (al_attending_parties.size()>0){checkAttendingParties();}
+					counter++;
 					/*
 					if (al_requested_parties.size()==0 && al_requested_parties.size()==0){
 						startKevService();

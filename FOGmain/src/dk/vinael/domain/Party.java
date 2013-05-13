@@ -271,8 +271,8 @@ public class Party implements Serializable {
 		}
 
 	}
-	public void getPartiesUserAttended(FogActivityInterface activity, String identifier, int month, int year) {
-		SqlWrapper.selectPartiesUserAttended(activity, identifier, month, year);
+	public void getPartiesUserAttended(FogActivityInterface activity, String identifier, User u, int month, int year) {
+		SqlWrapper.selectPartiesUserAttended(activity, identifier, u, month, year);
 	}
 	public void setPartyWithAttributes(
 			int id, int owner_user_id, int status_id, 

@@ -23,9 +23,9 @@ public class SqlWrapper {
 		
 		new WebserviceCaller(activity, identifier).execute("select", sqlString);
 	}
-	public static void selectPartiesUserAttended(FogActivityInterface activity, String identifier, int month, int year) {
+	public static void selectPartiesUserAttended(FogActivityInterface activity, String identifier, User u, int month, int year) {
 		String sqlString = "SELECT party.* FROM user_in_party " +
-				"INNER JOIN party ON user_in_party.party_id = party.id WHERE user_in_party.user_id = 3 AND " +
+				"INNER JOIN party ON user_in_party.party_id = party.id WHERE user_in_party.user_id = "+u.getUserId()+" AND " +
 				"(SELECT RIGHT(LEFT(DATE_FORMAT(party.end_time, '%Y-%m-%d'), 7), 2)) = " + month + " AND " +
 				"(SELECT LEFT(DATE_FORMAT(party.end_time, '%Y-%m-%d'), 4)) = " + year + " " +
 				"AND NOW() > party.start_time;";

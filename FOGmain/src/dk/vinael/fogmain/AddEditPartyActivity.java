@@ -8,6 +8,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.ActionBar;
+import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
@@ -15,6 +17,7 @@ import android.location.LocationListener;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -71,6 +74,8 @@ public class AddEditPartyActivity extends FragmentActivity implements FogActivit
 	private double lon;
 	public String addressToLookup;
 	private View buttonClicked;
+	
+	private int state;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -117,8 +122,10 @@ public class AddEditPartyActivity extends FragmentActivity implements FogActivit
 		btn_createParty = (Button) findViewById(R.id.btn_createParty);
 		btn_editParty = (Button) findViewById(R.id.btn_editParty);
 
-		btn_editParty.setVisibility(View.GONE);
-
+		btn_editParty.setVisibility(View.GONE); // hide on Add - show on Edit
+		spin_party_status.setVisibility(View.GONE); // hide on Add - show on Edit
+		
+		
 		// Edit party
 		ActionBar bar = getActionBar();
 		bundle = getIntent().getExtras();
@@ -128,9 +135,12 @@ public class AddEditPartyActivity extends FragmentActivity implements FogActivit
 				putDataInItems(party);
 				btn_createParty.setVisibility(View.GONE);
 				btn_editParty.setVisibility(View.VISIBLE);
+				spin_party_status.setVisibility(View.VISIBLE); 
 				bar.setTitle("Edit Party");
+				state=1;
 			} else {
 				bar.setTitle("Create New Party");
+				state=0;
 			}
 		}
 
@@ -149,7 +159,7 @@ public class AddEditPartyActivity extends FragmentActivity implements FogActivit
 		et_city.setOnFocusChangeListener(ofl);
 		et_country.setOnFocusChangeListener(ofl);
 
-		if (party!=null){
+		if (state==1){
 			bar.setIcon(R.drawable.pencil);
 		}
 		bar.setHomeButtonEnabled(true);
@@ -338,6 +348,25 @@ public class AddEditPartyActivity extends FragmentActivity implements FogActivit
 		// new WebserviceCaller(this, "latestParty").execute("select", query);
 	}
 
+	@Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK){
+        	if (state==1){
+	        	Intent intent = new Intent(this, ViewPartyActivity.class);
+				intent.putExtra("party", party);
+				this.finish();
+				this.startActivity(intent);
+        	}
+        	else{
+        		return super.onKeyDown(keyCode, event);
+        	}
+        }
+        return super.onKeyDown(keyCode, event);
+        
+        // use this instead if you want to preserve onKeyDown() behavior
+        // 
+    }
+	
 	@Override
 	public void jsonArrayHandler(JSONArray ja, String identifier) {
 		if (identifier.equals("partyCreated")) {
