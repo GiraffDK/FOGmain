@@ -13,260 +13,263 @@
 		android:paddingBottom="@dimen/activity_vertical_margin"
 		android:paddingLeft="@dimen/activity_horizontal_margin"
 		android:paddingRight="@dimen/activity_horizontal_margin"
-		android:paddingTop="@dimen/activity_vertical_margin"
-        >
+		android:paddingTop="@dimen/activity_vertical_margin">
+
         <LinearLayout
             android:id="@+id/ll_layoutwrapper_viewparty"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            
-	        <LinearLayout
-	            android:id="@+id/ll_party_viewbyall_viewparty"
-	            android:layout_width="match_parent"
-	            android:layout_height="wrap_content"
-	            android:orientation="vertical">
-	
-	            <TextView
-	                android:id="@+id/tv_partyname_viewparty"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:text="Party name"
-	                android:textAppearance="?android:attr/textAppearanceLarge" />
 
-	            <TextView
-	                android:id="@+id/viewparty_tv_ownertext"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:text="Owner" />
-	
-	            <TextView
-	                android:id="@+id/tv_description_viewparty"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:text="Description" 
-	                android:layout_marginTop="10dp"
-	                />
+            <LinearLayout
+                android:id="@+id/ll_party_viewbyall_viewparty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-	            <GridLayout
+                <TextView
+                    android:id="@+id/tv_partyname_viewparty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Party name"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                <TextView
+                    android:id="@+id/tv_ownername_viewparty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Owner" />
+
+                <TextView
+                    android:id="@+id/tv_description_viewparty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Description" />
+
+                <GridLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/party_info_boxes"
+                    android:columnCount="3" >
+
+                    <LinearLayout
+                        android:layout_height="wrap_content"
+                        android:layout_column="2"
+                        android:layout_gravity="center_horizontal|center_vertical"
+                        android:layout_row="2"
+                        android:orientation="vertical"
+                        android:padding="5dp" >
+                        
+                        <TextView
+                            android:id="@+id/tv_start_date_time_viewparty"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2013-05-01 : 20:40:00" />
+                        
+                        <TextView
+                            android:id="@+id/tv_end_date_time_viewparty"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2013-05-02 : 20:40:00" />
+                        
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="55dp"
+                        android:layout_height="wrap_content"
+                        android:layout_column="2"
+                        android:layout_gravity="left|center_vertical"
+                        android:layout_row="2"
+                        android:orientation="vertical"
+                        android:padding="5dp" >
+
+                        <TextView
+                            android:id="@+id/tv_start_viewparty"
+                            android:layout_width="60dp"
+                            android:layout_height="wrap_content"
+                            android:text="Start:" />
+
+                        <TextView
+                            android:id="@+id/tv_end_viewparty"
+                            android:layout_width="60dp"
+                            android:layout_height="wrap_content"
+                            android:text="End:" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/imageView1"
+                        android:layout_width="50dp"
+                        android:layout_column="2"
+                        android:layout_gravity="right|top"
+                        android:layout_row="2"
+                        android:onClick="makeAppointment"
+                        android:src="@drawable/calendar_icon" 
+                        android:layout_marginRight="5dp"
+                        />
+                </GridLayout>
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp" >
+
+                    <TableRow
+                        android:id="@+id/tr_age_viewparty"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" >
+
+                        <TextView
+                            android:id="@+id/tv_age_viewparty"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:text="Age level: " />
+
+                        <TextView
+                            android:id="@+id/tv_age_level_viewparty"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="18-60" />
+                        
+                    </TableRow>
+                    
+                </TableLayout>
+                
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_party_viewbyattendees_viewparty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+	                <GridLayout
 	                android:layout_width="match_parent"
-	                android:layout_height="wrap_content"
-	                android:layout_marginTop="10dp"
-	                android:background="#d0edf7"
-	                android:columnCount="3" >
-
-	                <LinearLayout
-	                    android:layout_width="157dp"
-	                    android:layout_height="wrap_content"
-	                    android:layout_column="2"
-	                    android:layout_gravity="center_horizontal|fill_vertical"
-	                    android:layout_row="2"
-	                    android:orientation="vertical" >
-
-	                    <TextView
-	                        android:id="@+id/tv_start_date_time_viewparty"
-	                        android:layout_width="wrap_content"
-	                        android:layout_height="wrap_content"
-	                        android:paddingTop="10dp"
-	                        android:text="2013-05-01 : 20:40:00" />
-
-	                    <TextView
-	                        android:id="@+id/tv_end_date_time_viewparty"
-	                        android:layout_width="wrap_content"
-	                        android:layout_height="wrap_content"
-	                        android:text="2013-05-02 : 20:40:00" />
-
-	                </LinearLayout>
-
-	                <ImageView
-	                    android:id="@+id/imageView1"
-	                    android:layout_width="61dp"
-	                    android:layout_height="60dp"
-	                    android:layout_column="2"
-	                    android:layout_gravity="right|top"
-	                    android:layout_row="2"
-	                    android:paddingRight="10dp"
-	                    android:onClick="makeAppointment"
-	                    android:src="@drawable/calendar_icon" />
-
-	                <LinearLayout
-	                    android:layout_width="55dp"
-	                    android:layout_height="wrap_content"
-	                    android:layout_column="2"
-	                    android:layout_gravity="left|top"
-	                    android:layout_row="2"
-	                    android:orientation="vertical" >
-
-	                    <TextView
-	                        android:id="@+id/tv_start_viewparty"
-	                        android:layout_width="60dp"
-	                        android:layout_height="wrap_content"
-	                        android:paddingLeft="10dp"
-	                        android:paddingTop="10dp"
-	                        android:text="Start:" />
-
-	                    <TextView
-	                        android:id="@+id/tv_end_viewparty"
-	                        android:layout_width="60dp"
-	                        android:layout_height="wrap_content"
-	                        android:paddingLeft="10dp"
-	                        android:text="End:" />
-	                </LinearLayout>
-
+	                android:layout_height="65dp"
+	                android:background="@drawable/party_info_boxes"
+	                android:columnCount="4">
+	
+		                <TextView
+		                    android:id="@+id/tv_party_address_viewparty"
+		                    android:layout_width="match_parent"
+		                    android:layout_height="wrap_content"
+		                    android:layout_gravity="left"
+		                    android:text="Address\nZip, City\nCountry" 
+		                    android:padding="5dp" />
+	
+		                <ImageView
+		                    android:id="@+id/iv_showdirections_viewparty"
+		                    android:layout_width="50dp"
+		                    android:layout_column="0"
+		                    android:layout_gravity="right|top"
+		                    android:layout_row="0"
+		                    android:onClick="showDirections"
+		                    android:src="@drawable/maps_direction" 
+		                    android:layout_marginRight="5dp" />
 	            </GridLayout>
-	            
-	            <TableLayout
-	                android:layout_width="match_parent"
-	                android:layout_height="wrap_content" 
-	                android:layout_marginTop="10dp"
-	                >
-	
-	                <TableRow
-	                    android:id="@+id/tr_age_viewparty"
-	                    android:layout_width="wrap_content"
-	                    android:layout_height="wrap_content" >
-						
-	                    <TextView
-						android:id="@+id/tv_age_viewparty"
-						android:layout_width="100dp"
-						android:layout_height="wrap_content"
-						android:text="Age level: "
-						/>
-	                    
-	            		<TextView
-						android:id="@+id/tv_age_level_viewparty"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:text="18-60" 
-						/>
-	                </TableRow>
-	            </TableLayout>
-	            
-	        </LinearLayout>
+                
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp" >
 
-	        <GridLayout
-	            android:layout_width="match_parent"
-	            android:layout_height="wrap_content"
-	            android:columnCount="4" >
+                    <TableRow
+                        android:id="@+id/tr_doorcode_viewparty"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" >
 
-	            <TextView
-	                android:id="@+id/tv_party_address_viewparty"
-	                android:layout_width="match_parent"
-	                android:layout_height="wrap_content"
-	                android:layout_gravity="left"
-	                android:background="#d0edf7"
-	                android:padding="5dp"
-	                android:layout_marginTop="10dp"
-	                android:text="Address\nZip, City\nCountry" />
+                        <TextView
+                            android:id="@+id/tv_doorcode_label_viewparty"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:text="Door code: " />
 
-	            <ImageView
-	                android:id="@+id/iv_showdirections_viewparty"
-	                android:layout_width="66dp"
-	                android:layout_height="60dp"
-	                android:layout_column="0"
-	                android:layout_gravity="right|top"
-	                android:layout_row="0"
-	                android:paddingRight="10dp"
-	                android:src="@drawable/maps_direction"
-	                android:onClick="showDirections" />
+                        <TextView
+                            android:id="@+id/tv_doorcode_viewparty"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="*******" />
+                        
+                    </TableRow>
+                    
+                </TableLayout>
 
-	        </GridLayout>
+                <Button
+                    android:id="@+id/btn_gotophotos_viewparty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:onClick="showDirections"
+                    android:text="Photos (x)" 
+                    android:background="@drawable/disabledbutton"
+                    style="@style/disabledbutton"
+                    />
 
-	        <LinearLayout
-	            android:id="@+id/ll_party_viewbyattendees_viewparty"
-	            android:layout_width="match_parent"
-	            android:layout_height="wrap_content"
-	            android:orientation="vertical"
-	            android:layout_marginTop="10dp"
-	            >
-	            
-	            <TableLayout
-	                android:layout_width="match_parent"
-	                android:layout_height="wrap_content" 
-	                android:layout_marginTop="10dp"
-	                >
-	
-	                <TableRow
-	                    android:id="@+id/tr_doorcode_viewparty"
-	                    android:layout_width="wrap_content"
-	                    android:layout_height="wrap_content" >
-						
-	                    <TextView
-						android:id="@+id/tv_doorcode_label_viewparty"
-						android:layout_width="100dp"
-						android:layout_height="wrap_content"
-						android:text="Door code: " 
-						/>
-	                    
-	            		<TextView
-						android:id="@+id/tv_doorcode_viewparty"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:text="*******" 
-						/>
-	                </TableRow>
-	            </TableLayout>
-	            
-	            <Button
-	                android:id="@+id/btn_gotophotos_viewparty"
-	                android:layout_width="match_parent"
-	                android:layout_height="wrap_content"
-	                android:text="Photos (x)"
-	                android:layout_marginTop="10dp"
-	                android:onClick="showDirections"
-	                />
-	            <Button
-	                android:id="@+id/btn_gotowall_viewparty"
-	                android:layout_width="match_parent"
-	                android:layout_height="wrap_content"
-	                android:text="Wall (x)"
-	                />
-	            <Button
-	                android:id="@+id/btn_gotoattendingguests_viewparty"
-	                android:layout_width="match_parent"
-	                android:layout_height="wrap_content"
-	                android:text="Attending (x)"
-	                />
-	            
-	        </LinearLayout>
-			<LinearLayout
-	            android:id="@+id/ll_party_viewbyowner_viewparty"
-	            android:layout_width="match_parent"
-	            android:layout_height="wrap_content"
-	            android:orientation="vertical"
-	            android:layout_marginTop="10dp"
-	            >
-	            
-	            <Button
-	                android:id="@+id/btn_gotorequests_viewparty"
-	                android:layout_width="match_parent"
-	                android:layout_height="wrap_content"
-	                android:text="Requests (x)"
-	                android:onClick="seeRequesters"
-	                />
-	            
-	            <Button
-	                android:id="@+id/btn_editparty_viewparty"
-	                android:layout_width="match_parent"
-	                android:layout_height="wrap_content"
-	                android:text="Edit party"
-	                />
-	        </LinearLayout>
-	        <LinearLayout
-	            android:id="@+id/ll_party_viewbyrequesterattendees_viewparty"
-	            android:layout_width="match_parent"
-	            android:layout_height="wrap_content"
-	            android:orientation="vertical"
-	            android:layout_marginTop="10dp"
-	            >
-	            
-	            <Button
-	                android:id="@+id/btn_requestcancelunsub_viewparty"
-	                android:layout_width="match_parent"
-	                android:layout_height="wrap_content"
-	                android:text="Request/Cancel/Unsubsribe"
-	                />
-	        </LinearLayout>
+                <Button
+                    android:id="@+id/btn_gotowall_viewparty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Wall (x)" 
+                    android:background="@drawable/disabledbutton"
+                    style="@style/disabledbutton"
+                    />
+
+                <Button
+                    android:id="@+id/btn_gotoattendingguests_viewparty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Attending (x)" 
+                    android:background="@drawable/standardbutton"
+                    style="@style/standardbutton"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_party_viewbyowner_viewparty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <Button
+                    android:id="@+id/btn_gotorequests_viewparty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="seeRequesters"
+                    android:text="Requests (x)" 
+                    android:background="@drawable/standardbutton"
+                    style="@style/standardbutton"
+                    />
+
+                <Button
+                    android:id="@+id/btn_editparty_viewparty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Edit party" 
+                    android:background="@drawable/standardbutton"
+                    style="@style/standardbutton"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_party_viewbyrequesterattendees_viewparty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <Button
+                    android:id="@+id/btn_requestcancelunsub_viewparty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Request/Cancel/Unsubsribe" 
+                    android:background="@drawable/standardbutton"
+                    style="@style/standardbutton"
+                    />
+            </LinearLayout>
+            
         </LinearLayout>
+
     </ScrollView>
+    
 </RelativeLayout>

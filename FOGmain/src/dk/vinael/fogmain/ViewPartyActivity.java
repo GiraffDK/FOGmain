@@ -49,7 +49,7 @@ public class ViewPartyActivity extends Activity implements FogActivityInterface,
 	private View viewbyattendee;
 	
 	private int user_status = -1; /* -2 = denied, -1 = looker, 0=requester, 1=owner, 2=attending guest */
-	private TextView viewparty_tv_ownertext;
+	private TextView tv_ownername_viewparty;
 	private TextView tv_partyname_viewparty;
 	private TextView tv_description_viewparty;
 	private TextView tv_start_date_time_viewparty;
@@ -79,7 +79,7 @@ public class ViewPartyActivity extends Activity implements FogActivityInterface,
 		OwnerUser.selectUserByUserID(this, "owner_user");
 		
 		/* Set elements */
-		viewparty_tv_ownertext = (TextView) findViewById(R.id.viewparty_tv_ownertext);
+		tv_ownername_viewparty = (TextView) findViewById(R.id.tv_ownername_viewparty);
 		tv_partyname_viewparty = ((TextView) findViewById(R.id.tv_partyname_viewparty));
 		tv_description_viewparty = ((TextView) findViewById(R.id.tv_description_viewparty));
 		tv_start_date_time_viewparty = ((TextView) findViewById(R.id.tv_start_date_time_viewparty));
@@ -87,6 +87,7 @@ public class ViewPartyActivity extends Activity implements FogActivityInterface,
 		tv_age_level_viewparty = ((TextView) findViewById(R.id.tv_age_level_viewparty));
 		tv_party_address_viewparty = ((TextView) findViewById(R.id.tv_party_address_viewparty));
 		tv_doorcode_viewparty = ((TextView) findViewById(R.id.tv_doorcode_viewparty));
+		
 		btn_requestcancelunsub_viewparty = ((Button) findViewById(R.id.btn_requestcancelunsub_viewparty));
 		btn_editparty_viewparty = ((Button) findViewById(R.id.btn_editparty_viewparty));
 		btn_gotoattendingguests_viewparty = ((Button) findViewById(R.id.btn_gotoattendingguests_viewparty));
@@ -104,8 +105,8 @@ public class ViewPartyActivity extends Activity implements FogActivityInterface,
 		viewbyowner.setVisibility(View.GONE);
 		
 		ActionBar bar = getActionBar();
-		bar.setIcon(R.drawable.ic_a_stiff_drink);
-		bar.setTitle("View Party");
+		//bar.setIcon(R.drawable.ic_a_stiff_drink);
+		//bar.setTitle("View Party");
 		bar.setHomeButtonEnabled(true);
 		
 		if (user.getUserId() == party.getOwnerId()){
@@ -271,7 +272,7 @@ public class ViewPartyActivity extends Activity implements FogActivityInterface,
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			viewparty_tv_ownertext.setText(OwnerUser.getFirstName() + "(" + OwnerUser.getFbUserId()+ ")");
+			tv_ownername_viewparty.setText(OwnerUser.getFirstName()+"");
 		}
 		else if (identifier.equals("userRequestParty") || identifier.equals("userCancelRequestParty")){
 			Intent intent = new Intent(this, ViewPartyActivity.class);
@@ -318,7 +319,9 @@ public class ViewPartyActivity extends Activity implements FogActivityInterface,
 		        .putExtra(Events.EVENT_LOCATION, party.getAddress() + "\n" + party.getZip() + ", " + party.getCity())
 		        .putExtra(Events.AVAILABILITY, Events.AVAILABILITY_BUSY)
 		        .putExtra(Intent.EXTRA_EMAIL, "");
-		startActivity(intent);
+		if (user_status==1 || user_status==2){
+			startActivity(intent);
+		}
 	}
 
 	@Override

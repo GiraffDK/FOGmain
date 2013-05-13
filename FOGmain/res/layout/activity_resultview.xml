@@ -4,17 +4,19 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <Button
-        android:id="@+id/button1"
+    <!-- Button
+        android:id="@+id/bn_seeonmap_resultview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/SeeOnMap"
-        android:onClick="onClick" />
+        android:onClick="onClick" /-->
 
     <ListView
         android:id="@+id/list_search_result"
         android:layout_width="match_parent"
-        android:layout_height="392dp" >
+        android:layout_height="fill_parent"
+        android:listSelector="@drawable/standardlistview"
+        >
     </ListView>
 
 </LinearLayout>

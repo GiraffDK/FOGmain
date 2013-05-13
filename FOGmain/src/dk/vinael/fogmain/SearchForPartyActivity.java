@@ -77,7 +77,7 @@ public class SearchForPartyActivity extends Activity implements LocationListener
 			}
 		});
 		
-		ActionBar bar = getActionBar();
+		//ActionBar bar = getActionBar();
 		//bar.setIcon(R.drawable.ic_search);
 		//bar.setTitle("Search For Party");
 
@@ -152,7 +152,9 @@ public class SearchForPartyActivity extends Activity implements LocationListener
 	@Override
 	public void returningAddress(String Address, String identifier) {
 		if (identifier.equals("SetAddressText")) {
-			((EditText) findViewById(R.id.et_location)).setText(Address);	
+			((EditText) findViewById(R.id.et_location)).setText(Address);
+			(findViewById(R.id.linlay_searchparties)).requestFocus();
+			
 		} 
 	}
 

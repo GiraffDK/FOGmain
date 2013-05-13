@@ -9,6 +9,10 @@ import org.json.JSONException;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
@@ -38,12 +42,16 @@ public class SearchResultActivity extends Activity implements OnClickListener, F
 	private int min_age;
 	private int max_age;
 	private String start_date;
+	
+	private Activity activity_result;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_resultview);
 
+		this.activity_result=this;
+		
 		// Getting incoming data.
 		bun = getIntent().getExtras();
 		loc = new Location("");
@@ -53,9 +61,9 @@ public class SearchResultActivity extends Activity implements OnClickListener, F
 		max_age = bun.getInt("Max_age");
 		// start_date = bun.getString("Start_date");
 		
-		ActionBar bar = getActionBar();
-		bar.setIcon(R.drawable.ic_search);
-		bar.setTitle("Search Results");
+		//ActionBar bar = getActionBar();
+		//bar.setIcon(R.drawable.ic_search);
+		//bar.setTitle("Search Results");
 		
 		getPartiesByRadius();
 
@@ -75,7 +83,7 @@ public class SearchResultActivity extends Activity implements OnClickListener, F
 	public void getPartiesByRadius() {
 		Double loclat = loc.getLatitude();
 		Double loclon = loc.getLongitude();
-		Toast.makeText(this, ""+loclat + " " + loclon + " " + radius + " " + min_age + " " + max_age + " " +((FOGmain) getApplicationContext()).user.getUserId(), Toast.LENGTH_LONG).show();
+		//Toast.makeText(this, ""+loclat + " " + loclon + " " + radius + " " + min_age + " " + max_age + " " +((FOGmain) getApplicationContext()).user.getUserId(), Toast.LENGTH_LONG).show();
 		new Party().selectParties(this, "getParties", loclat, loclon, radius, min_age, max_age, ((FOGmain) getApplicationContext()).user.getUserId());
 	}
 
@@ -90,14 +98,34 @@ public class SearchResultActivity extends Activity implements OnClickListener, F
 	@Override
 	public void jsonArrayHandler(JSONArray ja, String identifier) {
 		if (identifier.equals("getParties")) {
-
 			try {
-				for (int i = 0; i < ja.length(); i++) {
-					Party temp = new Party();
-					temp.setPartyWithJSON(ja.getJSONObject(i));
-					partyList.add(temp);
+				if (!ja.getJSONObject(0).has("results")){
+					try {
+						for (int i = 0; i < ja.length(); i++) {
+							Party temp = new Party();
+							temp.setPartyWithJSON(ja.getJSONObject(i));
+							partyList.add(temp);
+						}
+						sortByName(partyList);
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
 				}
-				sortByName(partyList);
+				else{
+					Builder builder = new AlertDialog.Builder(this);
+					builder.setTitle("Information");
+				    builder.setMessage("No parties found with those search criteria.");
+				    builder.setPositiveButton("OK", new Dialog.OnClickListener(){
+				    	
+						@Override
+						public void onClick(DialogInterface arg0, int arg1) {
+							activity_result.finish();
+						}
+				    	
+				    });
+				    AlertDialog dialog = builder.create();
+				    dialog.show();
+				}
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}

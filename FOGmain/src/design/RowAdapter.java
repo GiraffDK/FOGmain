@@ -59,10 +59,11 @@ public class RowAdapter extends BaseAdapter {
 		name.setText(p.getName());
 		
 		// Only allows one line description in the listview.
-		Scanner input = new Scanner(p.getDescription());
+		String desc = ""+p.getDescription();
+		Scanner input = new Scanner(desc);
 		if (input.hasNextLine()) {
 			String temp = input.nextLine();
-			if (p.getDescription().length() > 99) {
+			if (desc.length() > 99) {
 				description.setText(temp.substring(0, 100) + "...");
 			} else {
 				description.setText(temp);

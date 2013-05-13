@@ -1,6 +1,7 @@
 package fragments;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import dk.vinael.fogmain.R;
 
@@ -22,9 +23,14 @@ public class DatePickerFragment extends DialogFragment implements OnDateSetListe
 		int year = c.get(Calendar.YEAR);
 		int month = c.get(Calendar.MONTH);
 		int day = c.get(Calendar.DAY_OF_MONTH);
+		DatePickerDialog dpd = new DatePickerDialog(getActivity(), this, year, month, day);
+		if (this.getTag().equals("party_end_date_picker")) {
+			day++;
+			dpd.getDatePicker().setMinDate(c.getTimeInMillis());
+		}
 		
 		// Create a new instance of DatePickerDialog and return it
-		return new DatePickerDialog(getActivity(), this, year, month, day);
+		return dpd;
 	}
 
 	@Override

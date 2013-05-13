@@ -90,10 +90,10 @@
     
     
     <!-- SearchParty -->
-    <string name="tv_Radius">Radius:</string>
+    <string name="tv_Radius">Radius (km):</string>
     <string name="tv_SelectLocationOnMap">Select Location On Map</string>
     <string name="tv_FromLocation">From Location</string>
-    <string name="tv_Age">Age:</string>
+    <string name="tv_Age">Age range:</string>
     <!-- And a search here aswell -->
     
     

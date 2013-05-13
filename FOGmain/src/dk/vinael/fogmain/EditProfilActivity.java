@@ -2,6 +2,8 @@ package dk.vinael.fogmain;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Calendar;
 
 import org.json.JSONArray;
@@ -18,7 +20,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
@@ -31,7 +32,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-import asynctasks.LocationHandler;
+import asynctasks.ProfilePictureHandler;
+import asynctasks.ProfilePictureHandler.Execute;
 
 public class EditProfilActivity extends FragmentActivity implements FogActivityInterface {
 	private EditText fname;
@@ -47,6 +49,7 @@ public class EditProfilActivity extends FragmentActivity implements FogActivityI
 	private String oldText = "";
 	private String newText = "";
 	private User user;
+	private ImageView im_profile;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +57,8 @@ public class EditProfilActivity extends FragmentActivity implements FogActivityI
 		setContentView(R.layout.activity_editprofil);
 
 		user = ((FOGmain) getApplicationContext()).user;
-
+		im_profile = (ImageView) findViewById(R.id.editprof_iv_profil);
+		
 		fname = (EditText) findViewById(R.id.editprof_et_fname);
 		lname = (EditText) findViewById(R.id.editprof_et_lname);
 		bday = (Button) findViewById(R.id.editprof_btn_birth);
@@ -77,7 +81,6 @@ public class EditProfilActivity extends FragmentActivity implements FogActivityI
 
 	public void makeToast(EditText e, String msg) {
 		Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
-		e.setTextColor(Color.RED);
 	}
 
 	public boolean checkLength(EditText e, String msg) {
@@ -153,34 +156,30 @@ public class EditProfilActivity extends FragmentActivity implements FogActivityI
 
 	public void selectDate(View v) {
 		DialogFragment newFragment = new DatePickerFragment();
-		if (v.getId() == R.id.editprof_btn_birth) {
+		if (v.getId() == R.id.editprof_btn_birth){
 			newFragment.show(getSupportFragmentManager(), "birthday");
 		}
 	}
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.menu_to_main_menu, menu);
 		return true;
 	}
-
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		((FOGmain) getApplicationContext()).onOptionsItemSelected(item, this);
+		((FOGmain) getApplicationContext()).onOptionsItemSelected(item,this);
 		return true;
 	}
 
 	public String takeText() {
-		return "" + fname.getText() + lname.getText() + street.getText() + zip.getText() + country.getText() + phoneNr.getText() + email.getText() + desc.getText();
+		return "" + fname.getText() + lname.getText()  + street.getText() + zip.getText() + country.getText() + phoneNr.getText() + email.getText() + desc.getText();
 	}
-
 	public void checkData(EditText et, String str) {
 		if (!(str.equals("null"))) {
 			et.setText(str);
-		}
+		} 
 	}
-
 	public void changePicture(View v) {
 		Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
 		photoPickerIntent.setType("image/*");
@@ -202,6 +201,8 @@ public class EditProfilActivity extends FragmentActivity implements FogActivityI
 					Bitmap yourSelectedImage = BitmapFactory.decodeStream(imageStream);
 					ImageView i = (ImageView) findViewById(R.id.editprof_iv_profil);
 					i.setImageBitmap(yourSelectedImage);
+					
+					new ProfilePictureHandler(yourSelectedImage, Execute.SEND, this).execute();
 
 				} catch (FileNotFoundException e) {
 					// TODO Auto-generated catch block
@@ -225,31 +226,24 @@ public class EditProfilActivity extends FragmentActivity implements FogActivityI
 	public void onSaveClick(View v) {
 		this.onBackPressed();
 	}
-	public void addDataToUser() {
-		user.setFirstName(fname.getText().toString());
-		user.setLastName(lname.getText().toString());
-		user.setBirthdate(bday.getText().toString());
-		user.setAddress(street.getText().toString());
-		user.setZip(zip.getText().toString());
-		user.setCity(city.getText().toString());
-		user.setCountry(country.getText().toString());
-		user.setEmail(email.getText().toString());
-		user.setPhoneNr(phoneNr.getText().toString());
-		user.setDescription(desc.getText().toString());
-		
-	}
+
 	public void setValues(User user) {
+		try {
+			new ProfilePictureHandler((ImageView) findViewById(R.id.editprof_iv_profil), Execute.RECIEVE).execute(new URL(user.getProfilPic()));
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		checkData(fname, user.getFirstName());
-		checkData(lname, user.getLastName());
-		if (!(user.getBirthdate().equals("null")))
-			bday.setText(user.getBirthdate());
+		checkData(lname,user.getLastName());
+		if (!(user.getBirthdate().equals("null"))) bday.setText(user.getBirthdate());
 		checkData(street, user.getAddress());
-		checkData(zip, user.getZip());
+		checkData(zip,user.getZip());
 		checkData(city, user.getCity());
-		checkData(country, user.getCountry());
-		checkData(phoneNr, user.getPhoneNr());
-		checkData(email, user.getEmail());
-		checkData(desc, user.getDescription());
+		checkData(country,user.getCountry());
+		//checkData(phoneNr.setText("88888888");
+		checkData(email,user.getEmail());
+		checkData(desc,user.getDescription());
 	}
 
 	public void confirmSaveOrCancel() {
@@ -258,10 +252,8 @@ public class EditProfilActivity extends FragmentActivity implements FogActivityI
 			public void onClick(DialogInterface dialog, int which) {
 				switch (which) {
 				case DialogInterface.BUTTON_POSITIVE:
-					if (validateInput()) {
-						addDataToUser();
-						LocationHandler.convertAddressToLocation(EditProfilActivity.this, street.getText().toString() +  ", " + city.getText().toString() + ", " + country.getText().toString(), "CheckAddress");
-					}
+					setValues(user);
+					SqlWrapper.updateUser(EditProfilActivity.this, "updateUser", user);
 					break;
 				case DialogInterface.BUTTON_NEGATIVE:
 					finish();
@@ -289,16 +281,10 @@ public class EditProfilActivity extends FragmentActivity implements FogActivityI
 		// TODO Auto-generated method stub
 
 	}
+
 	@Override
 	public void returningLocation(Location location, String identifier) {
-		Toast.makeText(this, "returned", Toast.LENGTH_LONG).show();
-		
-			if (location != null) {
-				SqlWrapper.updateUser(EditProfilActivity.this, "updateUser", user);
-			} else {
-				Toast.makeText(this, "Address Couldn't be validated, check your input", Toast.LENGTH_LONG).show();
-			}
-		
+		// TODO Auto-generated method stub
 
 	}
 }

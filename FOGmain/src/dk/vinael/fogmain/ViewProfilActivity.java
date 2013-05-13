@@ -1,19 +1,29 @@
 package dk.vinael.fogmain;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import dk.vinael.domain.FOGmain;
 import dk.vinael.domain.User;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+import asynctasks.ProfilePictureHandler;
+import asynctasks.ProfilePictureHandler.Execute;
 
 public class ViewProfilActivity extends Activity {
 
+	private ImageView im_profile;
 	private Button btn_editProfile;
 	private TextView et_name;
 	private TextView et_lastname;
@@ -36,6 +46,7 @@ public class ViewProfilActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_profil);
+		im_profile = (ImageView) findViewById(R.id.profileImages);
 		btn_editProfile = (Button) findViewById(R.id.btn_edit_profile);
 		et_name = (TextView) findViewById(R.id.profil_tv_firstname);
 		et_lastname = (TextView) findViewById(R.id.profil_tv_lastname);
@@ -69,6 +80,12 @@ public class ViewProfilActivity extends Activity {
 	}
 
 	private void addInfo(User u) {
+		try {
+			new ProfilePictureHandler((ImageView) findViewById(R.id.profileImages),Execute.RECIEVE).execute(new URL(u.getProfilPic()));
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		et_name.setText("Name : " + u.getFirstName());
 		et_lastname.setText("Lastname : " + u.getLastName());
 		et_description.setText("Description : " + u.getDescription());
