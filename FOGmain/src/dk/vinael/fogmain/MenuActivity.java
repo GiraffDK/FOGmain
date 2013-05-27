@@ -8,6 +8,7 @@ import dk.vinael.interfaces.FogActivityInterface;
 import android.app.Activity;
 import android.content.Intent;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,7 +26,14 @@ public class MenuActivity extends Activity implements FogActivityInterface {
 		setContentView(R.layout.activity_menu);
 		
 		user = ((FOGmain)getApplicationContext()).user;
-		
+		if (user.getFirstName().equals("null")){
+			((FOGmain)getApplicationContext()).user.resetUserToken(this, "logout");
+			((FOGmain)getApplicationContext()).user = new User();
+			Intent intent = new Intent(this, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
+		}
 		((TextView)findViewById(R.id.tv_username_menu)).setText("Hi " + user.getFirstName()+", what to do?!");
 
 		// Service start
@@ -74,6 +82,13 @@ public class MenuActivity extends Activity implements FogActivityInterface {
 		intent.putExtra("user", ((FOGmain)getApplicationContext()).user);
 		this.startActivity(intent);
 		overridePendingTransition(R.anim.activity_slide_in_left, R.anim.activity_slide_out_left);
+	}
+	
+	public void goToAdvertisementUrl(View view){
+		String url = "http://www.cphdistortion.dk/";
+		Intent intent = new Intent(Intent.ACTION_VIEW);
+		intent.setData(Uri.parse(url));
+		startActivity(intent);
 	}
 	
 	@Override

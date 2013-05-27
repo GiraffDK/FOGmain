@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -20,6 +21,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.NumberPicker.OnValueChangeListener;
+import android.widget.Toast;
 import asynctasks.LocationHandler;
 
 public class SearchForPartyActivity extends Activity implements LocationListener, FogActivityInterface {
@@ -42,10 +44,16 @@ public class SearchForPartyActivity extends Activity implements LocationListener
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_search_party);
 		btn_search = (Button) findViewById(R.id.btn_search_parties);
+		
+		Criteria criteria = new Criteria();
+	    
+		
 		locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-		locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
-		onLocationChanged(locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER));
+		String provider = locationManager.getBestProvider(criteria, true);
+		locationManager.requestLocationUpdates(provider, 0, 0, this);
+		onLocationChanged(locationManager.getLastKnownLocation(provider));
 
+		//Toast.makeText(this, provider, Toast.LENGTH_LONG).show();
 		// Setting Pickers:
 		np_radius = (NumberPicker) findViewById(R.id.np_radius);
 		np_radius.setMaxValue(2000);

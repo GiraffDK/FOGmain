@@ -3,86 +3,95 @@
     android:id="@+id/getusers"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".MenuActivity"
-    android:orientation="vertical"
-     >
-    
+    tools:context=".MenuActivity" >
+
     <TextView
         android:id="@+id/tv_username_menu"
+        style="@style/mediumTextSize"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:text="@string/tv_username"
-        style="@style/mediumTextSize"
-        />
+        android:text="@string/tv_username" />
 
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:stretchColumns="*"
-        >
+        android:stretchColumns="*" >
 
         <TableRow
-			android:id="@+id/tableRow1"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content">
-            
+            android:id="@+id/tableRow1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
             <Button
-			android:id="@+id/btn_addparty"
-			android:layout_width="0dip"
-			android:layout_height="wrap_content"
-			android:drawableTop="@drawable/add"
-			android:onClick="gotoAddParty"
-			android:text="@string/btn_AddParty"
-			style="@style/menubuttons"
-			android:background="@drawable/menubuttons"
-			/>
-            
+                android:id="@+id/btn_addparty"
+                style="@style/menubuttons"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:background="@drawable/menubuttons"
+                android:drawableTop="@drawable/add"
+                android:onClick="gotoAddParty"
+                android:text="@string/btn_AddParty" />
+
             <Button
-			android:id="@+id/btn_search"
-			android:layout_width="0dip"
-			android:layout_height="wrap_content"
-			android:text="@string/btn_Search" 
-			android:onClick="gotoSearch"
-			android:drawableTop="@drawable/search"
-			style="@style/menubuttons"
-			android:background="@drawable/menubuttons"
-			/>
-            
+                android:id="@+id/btn_search"
+                style="@style/menubuttons"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:background="@drawable/menubuttons"
+                android:drawableTop="@drawable/search"
+                android:onClick="gotoSearch"
+                android:text="@string/btn_Search" />
         </TableRow>
 
         <TableRow
             android:id="@+id/tableRow2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            
+            android:layout_height="wrap_content" >
+
             <Button
-			android:id="@+id/btn_parties"
-			android:layout_width="0dip"
-			android:layout_height="wrap_content"
-			android:text="@string/btn_Parties" 
-			android:onClick="gotoParties"
-			android:drawableTop="@drawable/map_pin"
-			style="@style/menubuttons"
-			android:background="@drawable/menubuttons"
-			/>
-            
+                android:id="@+id/btn_parties"
+                style="@style/menubuttons"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:background="@drawable/menubuttons"
+                android:drawableTop="@drawable/map_pin"
+                android:onClick="gotoParties"
+                android:text="@string/btn_Parties" />
+
             <Button
-			android:id="@+id/btn_profile"
-			android:layout_width="0dip"
-			android:layout_height="wrap_content"
-			android:text="@string/btn_Profile" 
-			android:onClick="gotoProfile"
-			android:drawableTop="@drawable/id_card"
-			style="@style/menubuttons"
-			android:background="@drawable/menubuttons"
-        	/>
-            
+                android:id="@+id/btn_profile"
+                style="@style/menubuttons"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:background="@drawable/menubuttons"
+                android:drawableTop="@drawable/id_card"
+                android:onClick="gotoProfile"
+                android:text="@string/btn_Profile" />
         </TableRow>
     </TableLayout>
+
+    <TextView
+        android:id="@+id/tv_advertisement_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:text="Advertisement" />
+
+    <ImageView
+        android:id="@+id/img_advertisement_menu"
+        android:layout_width="match_parent"
+        android:layout_height="115dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_weight="0.28"
+        android:onClick="goToAdvertisementUrl"
+        android:src="@drawable/ad_distortion" />
 
 </LinearLayout>

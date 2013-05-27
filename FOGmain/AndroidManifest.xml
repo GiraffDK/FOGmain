@@ -201,6 +201,30 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name="dk.vinael.fogmain.PartyPhotosActivity"
+            android:label="Photos" 
+            android:icon="@drawable/image"
+            android:screenOrientation="portrait"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.DEFAULT" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name="dk.vinael.fogmain.PartyWallActivity"
+            android:label="Wall" 
+            android:icon="@drawable/comments"
+            android:screenOrientation="portrait"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.DEFAULT" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyDtvxFCLvGgsaNoUlju_U2u98CSXoqjE-8" />

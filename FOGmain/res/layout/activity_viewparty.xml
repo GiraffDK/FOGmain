@@ -218,26 +218,27 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:onClick="showDirections"
-                    android:text="Photos (x)" 
-                    android:background="@drawable/disabledbutton"
-                    style="@style/disabledbutton"
+                    android:onClick="showPhotos"
+                    android:text="Photos" 
+                    android:background="@drawable/standardbutton"
+                    style="@style/standardbutton"
                     />
 
                 <Button
                     android:id="@+id/btn_gotowall_viewparty"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Wall (x)" 
-                    android:background="@drawable/disabledbutton"
-                    style="@style/disabledbutton"
+                    android:onClick="showWall"
+                    android:text="Wall" 
+                    android:background="@drawable/standardbutton"
+                    style="@style/standardbutton"
                     />
 
                 <Button
                     android:id="@+id/btn_gotoattendingguests_viewparty"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Attending (x)" 
+                    android:text="Attending" 
                     android:background="@drawable/standardbutton"
                     style="@style/standardbutton"
                     />
@@ -254,7 +255,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:onClick="seeRequesters"
-                    android:text="Requests (x)" 
+                    android:text="Requests" 
                     android:background="@drawable/standardbutton"
                     style="@style/standardbutton"
                     />

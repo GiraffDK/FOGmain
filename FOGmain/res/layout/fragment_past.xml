@@ -46,52 +46,57 @@
             android:layout_height="wrap_content" />
 
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:background="#ffffff"
-        android:orientation="vertical" >
-
-        <Button
-            android:id="@+id/button1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Search!"
-            android:onClick="partiesAttended"
-            android:background="@drawable/standardbutton"
-            style="@style/standardbutton"
-             />
-
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="See attended parties on map"
-            android:onClick="seeInMap"
-            android:background="@drawable/standardbutton"
-            style="@style/standardbutton"
-             />
-
-        <TextView
-            android:id="@+id/fragment_tv_label_month_year"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            style="@style/mediumTextSize"
-            android:padding="5dp"
-             />
-
-        <ListView
-            android:id="@+id/fragment_lv_pastparties"
-            android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            android:layout_marginBottom="10dp"
-            android:listSelector="@drawable/standardlistview"
-            >
-        </ListView>
-    </LinearLayout>
-
+	<ScrollView
+	        android:layout_width="match_parent"
+	        android:layout_height="fill_parent"
+	        android:background="#ffffff"
+	        >
+	    <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:background="#ffffff"
+	        android:orientation="vertical" >
+	
+	        <Button
+	            android:id="@+id/button1"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:text="Search!"
+	            android:onClick="partiesAttended"
+	            android:background="@drawable/standardbutton"
+	            style="@style/standardbutton"
+	             />
+	
+	        <Button
+	            android:id="@+id/button2"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:text="See attended parties on map"
+	            android:onClick="seeInMap"
+	            android:background="@drawable/standardbutton"
+	            style="@style/standardbutton"
+	             />
+	
+	        <TextView
+	            android:id="@+id/fragment_tv_label_month_year"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text=""
+	            style="@style/mediumTextSize"
+	            android:padding="5dp"
+	             />
+	
+	        <ListView
+	            android:id="@+id/fragment_lv_pastparties"
+	            android:layout_width="match_parent"
+	            android:layout_height="200dp"
+	            android:layout_marginBottom="10dp"
+	            android:listSelector="@drawable/standardlistview"
+	            >
+	        </ListView>
+	    </LinearLayout>
+	</ScrollView>
+	<!-- 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
@@ -101,5 +106,5 @@
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-
+	-->
 </LinearLayout>

@@ -59,6 +59,11 @@ public class ViewProfilActivity extends Activity {
 		
 		Bundle bundle = getIntent().getExtras();
 		user = (User) bundle.get("user");
+		
+		if (user!=null){
+			checkUser(user);
+		}
+		
 
 	}
 	@Override

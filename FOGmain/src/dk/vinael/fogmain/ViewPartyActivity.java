@@ -346,7 +346,17 @@ public class ViewPartyActivity extends Activity implements FogActivityInterface,
 			startActivity(intent);
 		}
 	}
+	
+	public void showPhotos(View v){
+		Intent intent = new Intent(this, PartyPhotosActivity.class);
+		startActivity(intent);
+	}
 
+	public void showWall(View v){
+		Intent intent = new Intent(this, PartyWallActivity.class);
+		startActivity(intent);
+	}
+	
 	@Override
 	public void returningAddress(String Address, String identifier) {
 		// TODO Auto-generated method stub

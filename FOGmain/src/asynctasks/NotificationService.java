@@ -12,7 +12,6 @@ import dk.vinael.domain.DateAndTimeStringHandler.RETURN_TYPE;
 import dk.vinael.domain.FOGmain;
 import dk.vinael.domain.Party;
 import dk.vinael.domain.User;
-import dk.vinael.fogmain.NotificationResultActivity;
 import dk.vinael.fogmain.SearchForPartyActivity;
 import dk.vinael.fogmain.ViewPartyActivity;
 import dk.vinael.interfaces.FogServiceInterface;
@@ -28,6 +27,8 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -44,7 +45,8 @@ public class NotificationService extends Service implements FogServiceInterface 
 	
 	private NotificationManager notificationManager;
 	
-	private final static int INTERVAL = (60*1000)*10; // 10 min (testing 1 min.)
+	private final static int INTERVAL = (60*1000)*10; // 10 min (production)
+	//private final static int INTERVAL = (10000); // 10 sek (testing)
 	int counter;
 	
 	private PowerManager pm;
@@ -64,11 +66,13 @@ public class NotificationService extends Service implements FogServiceInterface 
 		{
 		    public void run() 
 		    {
-		    	if (counter==3){ // every 30 min. start over
-		    		al_requested_parties=null;
-		    		al_attending_parties=null;
-		    	}
 		    	checkForChanges();
+		    	/*
+		    	if (counter==3){ // every 30 min. start over
+		    		
+		    		counter=0;
+		    	}
+		    	*/
 		        handler.postDelayed(this, INTERVAL);
 		    }
 		};
@@ -112,14 +116,21 @@ public class NotificationService extends Service implements FogServiceInterface 
 	public void checkForChanges(){
 		if (user!=null){
 			Log.i("NotificationService", "checkForChanges(), " + user.getFirstName());
+			if (al_requested_parties!=null){
+				Log.i("NotificationService", "al_requested_parties: " + al_requested_parties.size());
+			}
+			if (al_attending_parties!=null){
+				Log.i("NotificationService", "al_attending_parties: " + al_attending_parties.size());
+			}
 		}
-		if (((FOGmain)this.getApplicationContext()).isNetworkConnected()==true){
+		if (((FOGmain)this.getApplicationContext()).isNetworkConnected()==true && user!=null){
 			//Toast.makeText(this, "checkForChanges()", Toast.LENGTH_LONG).show();
 			if (user.getToken()!=null){
 				//Toast.makeText(this, ""+al_requested_parties.size()+", "+al_attending_parties.size(), Toast.LENGTH_LONG).show();
-				if (al_requested_parties==null || al_attending_parties==null){
+				if (al_requested_parties==null && al_attending_parties==null){
 					startKevService();
-				}else{
+				}
+				else{
 					//Toast.makeText(this, ""+al_requested_parties.size()+", "+al_attending_parties.size(), Toast.LENGTH_LONG).show();
 					if (al_requested_parties.size()>0){checkRequestedParties();}
 					if (al_attending_parties.size()>0){checkAttendingParties();}
@@ -151,7 +162,8 @@ public class NotificationService extends Service implements FogServiceInterface 
 		String sqlString = "SELECT party.* FROM user_in_party " +
 				"INNER JOIN party ON user_in_party.party_id = party.id " +
 				"WHERE user_in_party.user_id = "+u.getUserId()+" " +
-				"AND user_in_party.attending_status_id = 2;";
+				"AND user_in_party.attending_status_id = 2 " +
+				"AND STR_TO_DATE(party.start_time, '%Y-%m-%d %H:%i:%s')>NOW();";
 		new ServiceHandler(user, "attendingParties", this).execute("select", sqlString);
 	}
 	
@@ -159,7 +171,8 @@ public class NotificationService extends Service implements FogServiceInterface 
 		String sqlString = "SELECT party.* FROM user_in_party " +
 				"INNER JOIN party ON user_in_party.party_id = party.id " +
 				"WHERE user_in_party.user_id = "+u.getUserId()+" " +
-				"AND (user_in_party.attending_status_id = 1 OR user_in_party.attending_status_id = 3);";
+				"AND (user_in_party.attending_status_id = 1 OR user_in_party.attending_status_id = 3) " +
+				"AND STR_TO_DATE(party.start_time, '%Y-%m-%d %H:%i:%s')>NOW();";
 		new ServiceHandler(user, "requestedParties", this).execute("select", sqlString);
 	}
 	
@@ -176,7 +189,10 @@ public class NotificationService extends Service implements FogServiceInterface 
 	public void checkAttendingParties(){ // check if party has been cancelled or it's time to party
 		if (al_attending_parties!=null){
 			for (Party p : al_attending_parties){
-				String sqlString = "SELECT party.start_time, party.status_id, user_in_party.start_time_notified, user_in_party.attending_status_id, user_in_party.party_id FROM user_in_party INNER JOIN party ON user_in_party.party_id = party.id WHERE user_in_party.user_id="+user.getUserId()+";";
+				String sqlString = "SELECT party.start_time, party.status_id, user_in_party.start_time_notified, " +
+						"user_in_party.attending_status_id, user_in_party.party_id FROM user_in_party " +
+						"INNER JOIN party ON user_in_party.party_id = party.id " +
+						"WHERE user_in_party.user_id="+user.getUserId()+" AND party.id="+p.getId()+";";
 				new ServiceHandler(user, "attendingParty", this).execute("select", sqlString);
 			}
 		}
@@ -218,15 +234,17 @@ public class NotificationService extends Service implements FogServiceInterface 
 						}
 						else if(identifier.equals("requestedParty")){
 							if(jo.has("results")){
-								startKevService();
+								//startKevService();
 							}
 							else{
+								
 								int attending_status=Integer.parseInt(jo.getString("attending_status_id"));
 								int party_id=Integer.parseInt(jo.getString("party_id"));
 								
 								if (attending_status==2){ // user accepted to party
 									for (Party p : al_requested_parties){
 										if (p.getId()==party_id){
+											Log.i("NotificationService", "requestedParty - attending: " + p.getName());
 											al_attending_parties.add(p);
 											al_requested_parties.remove(p);
 											showNotification("accepted", p);
@@ -237,7 +255,7 @@ public class NotificationService extends Service implements FogServiceInterface 
 						}
 						else if(identifier.equals("attendingParty")){
 							if(jo.has("results")){
-								startKevService();
+								//startKevService();
 							}
 							else{
 								String start_date_time = jo.getString("start_time");
@@ -246,11 +264,13 @@ public class NotificationService extends Service implements FogServiceInterface 
 								int party_id=Integer.parseInt(jo.getString("party_id"));
 								int party_start_time_notified = Integer.parseInt(jo.getString("start_time_notified"));
 								
+								Log.i("NotificationService", "status: " + attending_status + ", " + party_id);
 								//Toast.makeText(this, "party_start_time_notified: "+party_start_time_notified, Toast.LENGTH_LONG).show();
 								
 								if (party_status==0){ // party has been cancelled
 									for (Party p : al_attending_parties){
 										if (p.getId()==party_id){
+											Log.i("NotificationService", "attendingParty - cancelled: " + p.getName());
 											showNotification("party_cancelled", p);
 										}
 									}
@@ -260,6 +280,7 @@ public class NotificationService extends Service implements FogServiceInterface 
 										//showNotification("declined", new Party());
 										for (Party p : al_attending_parties){
 											if (p.getId()==party_id){
+												Log.i("NotificationService", "attendingParty - declined: " + p.getName());
 												al_requested_parties.add(p);
 												al_attending_parties.remove(p);
 												showNotification("declined", p);
@@ -277,6 +298,7 @@ public class NotificationService extends Service implements FogServiceInterface 
 													
 													int diff = DateAndTimeStringHandler.dateDifference(party_c, now_c, RETURN_TYPE.MINUTES);
 													if (diff<60 && diff>0){
+														Log.i("NotificationService", "attendingParty - partytime: " + p.getName());
 														String sqlString = "UPDATE user_in_party SET start_time_notified=1 WHERE user_in_party.user_id="+user.getUserId()+" AND user_in_party.party_id="+p.getId()+";";
 														new ServiceHandler(user, "userPartyTimeNotified", this).execute("update", sqlString);
 														showNotification("partytime", p);
@@ -308,8 +330,8 @@ public class NotificationService extends Service implements FogServiceInterface 
 	public void showNotification(String identifier, Party p){
 		
 		//Toast.makeText(this, identifier, Toast.LENGTH_LONG).show();
-		Intent intendo = new Intent(this, NotificationResultActivity.class);
-		PendingIntent pIntent = PendingIntent.getActivity(this, 0, intendo, 0);
+		//Intent intendo = new Intent(this, NotificationResultActivity.class);
+		//PendingIntent pIntent = PendingIntent.getActivity(this, 0, intendo, 0);
 		
 		Intent view_party_activity = new Intent(this, ViewPartyActivity.class);
 		view_party_activity.putExtra("party", p);
@@ -364,8 +386,11 @@ public class NotificationService extends Service implements FogServiceInterface 
 				.addAction(0, "View party", p_view_party_activity)
 				.addAction(0, "Directions", p_show_directions_activity);
 		}
-
-			
+		
+		// Sound when notification arrives
+		Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+		notificationbuilder.setSound(alarmSound);
+		
 		Notification n = notificationbuilder.build();
 		
 		long[] vibrate = {0,100,200,300};

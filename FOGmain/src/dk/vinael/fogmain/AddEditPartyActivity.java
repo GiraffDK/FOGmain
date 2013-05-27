@@ -314,8 +314,14 @@ public class AddEditPartyActivity extends FragmentActivity implements FogActivit
 		start.add(Calendar.MINUTE, 59);
 		end.set(Integer.parseInt(end_data[0]), Integer.parseInt(end_data[1]), Integer.parseInt(end_data[2]), Integer.parseInt(end_data_time[0]), Integer.parseInt(end_data_time[1]),
 				Integer.parseInt(end_data_time[2]));
-		int min = Integer.parseInt(et_min_age.getText().toString());
-		int max = Integer.parseInt(et_max_age.getText().toString());
+		int min = 0;
+		int max = 0;
+		try{
+			min = Integer.parseInt(et_min_age.getText().toString());
+			max = Integer.parseInt(et_max_age.getText().toString());
+		}catch(Exception e){
+			
+		}
 
 		if (checkLength(et_party_name, "To short party name")) {
 			valid = false;

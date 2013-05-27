@@ -257,7 +257,7 @@ public class PartiesActivity extends FragmentActivity implements FogActivityInte
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			req.setNameOfGroup("Rquested Parties! (" + reqList.size() + ")");
+			req.setNameOfGroup("Requested Parties! (" + reqList.size() + ")");
 			req.setParties(reqList);
 			fragment1.addToList(req);
 		} else if (identifier.equals("past_parties")) {
