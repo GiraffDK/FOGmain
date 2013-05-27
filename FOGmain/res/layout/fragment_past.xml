@@ -3,11 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#b01319"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    
+    >
 
     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
+        android:id="@+id/tv_monthyear_past"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Month and year:"
         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -15,9 +17,12 @@
         android:background="#b01319"
         android:padding="5dp"
         android:textSize="22sp"
+        android:onClick="showHideMonthYear"
+        android:clickable="true"
          />
 
     <LinearLayout
+        android:id="@+id/ll_monthyear_past"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="fill_horizontal"
@@ -46,14 +51,10 @@
             android:layout_height="wrap_content" />
 
     </LinearLayout>
-	<ScrollView
-	        android:layout_width="match_parent"
-	        android:layout_height="fill_parent"
-	        android:background="#ffffff"
-	        >
+	
 	    <LinearLayout
 	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
+	        android:layout_height="match_parent"
 	        android:background="#ffffff"
 	        android:orientation="vertical" >
 	
@@ -76,7 +77,6 @@
 	            android:background="@drawable/standardbutton"
 	            style="@style/standardbutton"
 	             />
-	
 	        <TextView
 	            android:id="@+id/fragment_tv_label_month_year"
 	            android:layout_width="wrap_content"
@@ -85,17 +85,18 @@
 	            style="@style/mediumTextSize"
 	            android:padding="5dp"
 	             />
-	
-	        <ListView
-	            android:id="@+id/fragment_lv_pastparties"
-	            android:layout_width="match_parent"
-	            android:layout_height="200dp"
-	            android:layout_marginBottom="10dp"
-	            android:listSelector="@drawable/standardlistview"
-	            >
-	        </ListView>
+			
+		        <ListView
+		            android:id="@+id/fragment_lv_pastparties"
+		            android:layout_width="match_parent"
+		            android:layout_height="fill_parent"
+		            android:layout_marginBottom="10dp"
+		            android:listSelector="@drawable/standardlistview"
+		            >
+		        </ListView>
+	        
 	    </LinearLayout>
-	</ScrollView>
+	
 	<!-- 
     <TextView
         android:id="@+id/textView3"

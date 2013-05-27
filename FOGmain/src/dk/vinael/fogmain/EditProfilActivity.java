@@ -173,7 +173,7 @@ public class EditProfilActivity extends FragmentActivity implements FogActivityI
 	}
 
 	public String takeText() {
-		return "" + fname.getText() + lname.getText()  + street.getText() + zip.getText() + country.getText() + phoneNr.getText() + email.getText() + desc.getText();
+		return "" + fname.getText() + lname.getText()  + street.getText() + zip.getText() +  city.getText() + country.getText() + phoneNr.getText() + email.getText() + desc.getText() + bday.getText();
 	}
 	public void checkData(EditText et, String str) {
 		if (!(str.equals("null"))) {
@@ -241,7 +241,7 @@ public class EditProfilActivity extends FragmentActivity implements FogActivityI
 		checkData(zip,user.getZip());
 		checkData(city, user.getCity());
 		checkData(country,user.getCountry());
-		//checkData(phoneNr.setText("88888888");
+		checkData(phoneNr, user.getPhoneNr());
 		checkData(email,user.getEmail());
 		checkData(desc,user.getDescription());
 	}
@@ -252,8 +252,20 @@ public class EditProfilActivity extends FragmentActivity implements FogActivityI
 			public void onClick(DialogInterface dialog, int which) {
 				switch (which) {
 				case DialogInterface.BUTTON_POSITIVE:
-					setValues(user);
-					SqlWrapper.updateUser(EditProfilActivity.this, "updateUser", user);
+					if (validateInput()){
+						user.setFirstName(fname.getText().toString());
+						user.setLastName(lname.getText().toString());
+						user.setBirthdate(bday.getText().toString());
+						user.setAddress(street.getText().toString());
+						user.setZip(zip.getText().toString());
+						user.setCity(city.getText().toString());
+						user.setCountry(country.getText().toString());
+						user.setPhoneNr(phoneNr.getText().toString());
+						user.setEmail(email.getText().toString());
+						user.setDescription(desc.getText().toString());
+						SqlWrapper.updateUser(EditProfilActivity.this, "updateUser", user);
+					}
+					
 					break;
 				case DialogInterface.BUTTON_NEGATIVE:
 					finish();

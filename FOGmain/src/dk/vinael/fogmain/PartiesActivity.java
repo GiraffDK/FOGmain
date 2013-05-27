@@ -23,10 +23,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.NumberPicker;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import design.ExpandableGroup;
 import dk.vinael.domain.FOGmain;
@@ -97,7 +99,7 @@ public class PartiesActivity extends FragmentActivity implements FogActivityInte
 	 * Initialize the tabs and set views and identifiers for the tabs
 	 */
 	public void partiesAttended(View v) {
-
+		showHideNumberPicker();
 		int month = ((NumberPicker) findViewById(R.id.np_month)).getValue();
 		int year = ((NumberPicker) findViewById(R.id.np_year)).getValue();
 		new Party().getPartiesUserAttended(this, "past_parties", user, month, year);
@@ -182,6 +184,22 @@ public class PartiesActivity extends FragmentActivity implements FogActivityInte
 		return view;
 	}
 
+	
+	public void showHideMonthYear(View v){
+		showHideNumberPicker();
+	}
+	
+	public void showHideNumberPicker(){
+		if (((LinearLayout)findViewById(R.id.ll_monthyear_past)).getVisibility()==View.GONE){
+			((TextView)findViewById(R.id.tv_monthyear_past)).setText("Month and year (close):");
+			((LinearLayout)findViewById(R.id.ll_monthyear_past)).setVisibility(View.VISIBLE);
+		}
+		else{
+			((TextView)findViewById(R.id.tv_monthyear_past)).setText("Month and year (open):");
+			((LinearLayout)findViewById(R.id.ll_monthyear_past)).setVisibility(View.GONE);
+		}
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.

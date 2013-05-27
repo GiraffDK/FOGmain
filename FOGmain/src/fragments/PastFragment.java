@@ -14,7 +14,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView.FindListener;
+import android.widget.LinearLayout;
 import android.widget.NumberPicker;
+import android.widget.Toast;
 
 public class PastFragment extends Fragment {
 	private NumberPicker month;
@@ -45,5 +47,5 @@ public class PastFragment extends Fragment {
 	public void setA(Activity a) {
 		this.a = a;
 	}
-	
+
 }

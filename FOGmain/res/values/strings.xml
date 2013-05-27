@@ -90,7 +90,7 @@
     
     
     <!-- SearchParty -->
-    <string name="tv_Radius">Radius (km):</string>
+    <string name="tv_Radius">Distance (km):</string>
     <string name="tv_SelectLocationOnMap">Select Location On Map</string>
     <string name="tv_FromLocation">From Location</string>
     <string name="tv_Age">Age range:</string>
