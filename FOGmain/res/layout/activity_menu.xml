@@ -86,11 +86,10 @@
 
     <ImageView
         android:id="@+id/img_advertisement_menu"
-        android:layout_width="match_parent"
-        android:layout_height="115dp"
+        android:layout_width="258dp"
+        android:layout_height="128dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
-        android:layout_weight="0.28"
         android:onClick="goToAdvertisementUrl"
         android:src="@drawable/ad_distortion" />
 

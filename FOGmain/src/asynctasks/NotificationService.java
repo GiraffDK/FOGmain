@@ -45,7 +45,8 @@ public class NotificationService extends Service implements FogServiceInterface 
 	
 	private NotificationManager notificationManager;
 	
-	private final static int INTERVAL = (60*1000)*10; // 10 min (production)
+	//private final static int INTERVAL = (60*1000)*10; // 10 min (production)
+	private final static int INTERVAL = (60*1000)*2; // 2 min (exams)
 	//private final static int INTERVAL = (10000); // 10 sek (testing)
 	int counter;
 	

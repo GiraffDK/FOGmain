@@ -214,7 +214,9 @@ public class PartiesActivity extends FragmentActivity implements FogActivityInte
 				for (int i = 0; i < ja.length(); i++) {
 					Party temp = new Party();
 					temp.setPartyWithJSON(ja.getJSONObject(i));
-					ownerList.add(temp);
+					if (temp.getName()!=null){
+						ownerList.add(temp);
+					}
 				}
 			} catch (Exception e) {
 
