@@ -86,7 +86,7 @@
 		        android:ems="10"
 		        android:hint="@string/Email"
 		        android:inputType="textEmailAddress"
-		        android:text="@string/et_email" 
+		        
 		        >
 		    </EditText>
 		    
@@ -97,7 +97,7 @@
 		        android:ems="10"
 		        android:hint="@string/Password"
 		        android:inputType="textPassword"
-		        android:text="@string/et_password"
+		        
 		         />
 		
 		    <CheckBox
@@ -105,7 +105,7 @@
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:text="Remember me" 
-		        android:checked="true"
+		        
 		        />
 		
 		    <Button
